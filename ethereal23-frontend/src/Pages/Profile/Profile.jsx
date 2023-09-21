@@ -80,9 +80,9 @@ function Profile() {
           id="spline"
           scene="https://prod.spline.design/1CXBumz9jWVu325v/scene.splinecode"
         /> */}
-        <div className="logo">
+        {/* <div className="logo">
           <img src={logo} alt="logo" />
-        </div>
+        </div> */}
         <video className="AuthVid" src={vid} autoPlay muted loop></video>
       </div>
       <div className="content">
@@ -98,7 +98,7 @@ function Profile() {
                   </div>
                   <div className="prow">
                     <h2>College</h2>
-                    <p>{user.isInnerCollege ? "KCG College" : "Outer"}</p>
+                    <p>{user.college}</p>
                   </div>
                   {user.isInnerCollege && (
                     <div className="prow">
@@ -106,10 +106,13 @@ function Profile() {
                       <p>{user.department}</p>
                     </div>
                   )}
-                  <div className="prow">
-                    <h2>Year</h2>
-                    <p>{user.year}</p>
-                  </div>
+                  {user.isInnerCollege && (
+                    <div className="prow">
+                      <h2>Year</h2>
+                      <p>{user.year}</p>
+                    </div>
+                  )}
+
                   <div className="prow">
                     <h2>Email</h2>
                     <p>
@@ -140,13 +143,17 @@ function Profile() {
                   ) : (
                     <p>No events yet</p>
                   )}
+                  <button className="pb">Participate in events</button>
                 </div>
-                <button className="pb">Participate in events</button>
               </div>
               <div className="right">
                 <div className="rsec">
                   <h2>Ethereal Access</h2>
-                  <p className="code">CODE 2kjh342</p>
+                  {user.ethereal !== null ? (
+                    <p className="code">CODE {user.ethereal}</p>
+                  ) : (
+                    <p className="buyP">Buy Ethereal tickets</p>
+                  )}
                 </div>
                 <div className="rsec">
                   <h2>Concert Access</h2>
@@ -154,23 +161,28 @@ function Profile() {
                     {qrCodeDataURL != "" ? (
                       <>
                         <img src={qrCodeDataURL} alt="qrCodeDataURL" />
-                        <button
+                        {/* <button
                           className="downloadQR"
                           onClick={() => {
                             downloadQRCode();
                           }}
                         >
                           Download
-                        </button>
+                        </button> */}
                       </>
                     ) : (
-                      <p>
+                      <p className="buyP">
+                        {" "}
                         Buy concert ticket <br />
                         to reveal access
                       </p>
                     )}
                   </div>
-                  <p className="code">CODE 2kjh342</p>
+                  {user.concert_code !== null ? (
+                    <p className="code">CODE {user.concert_code}</p>
+                  ) : (
+                    <></>
+                  )}
                 </div>
               </div>
             </div>

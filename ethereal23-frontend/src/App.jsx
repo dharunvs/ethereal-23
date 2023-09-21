@@ -46,7 +46,7 @@ function App() {
         // });
         for (const asset of assetsToPreload) {
           await preloadAsset(asset);
-          console.log(asset, await preloadAsset(asset));
+          // console.log(asset, await preloadAsset(asset));
         }
 
         setTimeout(() => {

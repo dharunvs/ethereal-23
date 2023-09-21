@@ -1,32 +1,32 @@
 .Profile {
   width: 100%;
-  height: 100vh;
-  overflow: hidden;
+  min-height: 100vh;
+  /* overflow: hidden; */
   position: relative;
   top: 0;
   left: 0;
   z-index: 0;
 }
 
+.profileBg {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  z-index: -2;
+}
 .AuthVid {
   width: 100%;
-  position: absolute;
+  height: 100vh;
+  height: inherit;
+  position: fixed;
   bottom: 0;
   left: 0;
   z-index: -4;
 }
 
-.profileBg {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  filter: blur(10px);
-}
-
 .profileBg .logo {
   width: 330px;
+  height: 100vh;
 }
 
 .profileBg .logo {
@@ -43,10 +43,17 @@
   z-index: -5;
 }
 
+.buyP {
+  font-family: "Jura";
+  color: white;
+  font-weight: bold;
+  text-align: center;
+}
+
 .Profile .content {
   width: 100%;
-  height: 100vh;
-  position: absolute;
+  min-height: 100vh;
+  position: relative;
   top: 0;
   left: 0;
   z-index: 0;
@@ -62,19 +69,26 @@
 }
 
 .profileScreen .box {
-  width: 100%;
-  /* display: grid;
-  grid-template-columns: 3fr 3fr; */
+  width: 70%;
+  margin: 0 auto;
+  /*
+  display: grid;
+  grid-template-columns: 3fr 3fr; 
+  */
   display: flex;
+  flex-direction: column;
   /* align-items: center; */
   justify-content: center;
-  gap: 15%;
+  gap: 5vh;
+  backdrop-filter: blur(10px);
+  background-color: rgba(240, 248, 255, 0.089);
+  padding: 30px;
 }
 
 .profileScreen .box .left {
-  display: flex;
-  flex-direction: column;
+  display: grid;
   gap: 20px;
+  grid-template-columns: 1fr 1fr;
 }
 
 .profileScreen .box .left .profile {
@@ -105,8 +119,9 @@
 }
 
 .profileScreen .box .left .events p {
-  text-align: center;
+  /* text-align: center; */
   padding: 30px;
+  padding-left: 0;
   padding-bottom: 30px;
   font-family: "Jura";
   font-weight: 800;
@@ -126,9 +141,12 @@
 }
 
 .profileScreen .box .right {
-  display: flex;
-  flex-direction: column;
+  /* display: flex; */
+  /* flex-direction: column; */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 10vh;
+  place-items: start;
 }
 
 .profileScreen .box .right .rsec {
@@ -162,13 +180,12 @@
   width: 300px;
   height: 300px;
   margin: 0 auto;
-  background-color: gray;
   position: relative;
-  border-radius: 20px;
+  border-radius: 0;
 }
 .profileScreen .box .right .qr img {
   width: 100%;
-  border-radius: 20px;
+  /* border-radius: 20px; */
 }
 
 .downloadQR {
@@ -183,4 +200,37 @@
   font-family: "Akira";
   color: black;
   cursor: pointer;
+}
+
+@media screen and (max-width: 1400px) {
+  .profileScreen .box {
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .profileScreen .box {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .profileScreen .box {
+    width: 80%;
+  }
+  .profileScreen .box .left {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .profileScreen .box .right {
+    display: flex;
+    flex-direction: column;
+
+    gap: 10vh;
+    place-items: center;
+  }
+  .Profile .content {
+    padding-top: 7vh;
+  }
 }
