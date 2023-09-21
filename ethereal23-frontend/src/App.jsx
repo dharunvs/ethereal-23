@@ -15,11 +15,22 @@ import loaderVid from "./Assets/Videos/Loader.mp4";
 function App() {
   const [loading, setLoading] = useState(true);
 
-  const Loader = () => (
-    <div className={loading ? "MainLoader" : "MainLoaderAnim"}>
-      <video src={loaderVid} muted autoPlay loop></video>
-    </div>
-  );
+  const Loader = () => {
+    return (
+      <div className={loading ? "MainLoader" : "MainLoaderAnim"}>
+        <video
+          id="loader"
+          src={loaderVid}
+          muted
+          loop
+          onLoadedData={(e) => {
+            console.log(e);
+          }}
+        ></video>
+        {/* <script>{"document.getElementById('loader').play();"}</script> */}
+      </div>
+    );
+  };
 
   useEffect(() => {
     let assetsToPreload = [];

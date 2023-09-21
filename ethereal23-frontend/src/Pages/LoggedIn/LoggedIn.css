@@ -318,7 +318,7 @@
 .CBannerActive .img,
 .CBannerActiveHalf .img {
   position: relative;
-  background-color: #b86d05;
+  /* background-color: #b86d05; */
 }
 .CBanner .img img,
 .CBannerActive .img img,

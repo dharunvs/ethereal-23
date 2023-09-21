@@ -9,25 +9,29 @@
   overflow: hidden;
 }
 
-.AuthVid {
-  width: 100%;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  z-index: -4;
-}
-
 .authBg {
-  width: 100%;
-  height: 100%;
+  /* width: 100%; */
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   filter: blur(10px);
+  position: relative;
+}
+
+.authBg .AuthVid {
+  position: absolute;
+  height: fit-content;
+  width: 1920px;
+  z-index: -4;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .authBg .logo {
   width: 330px;
+  z-index: -3;
 }
 
 .authBg .logo {

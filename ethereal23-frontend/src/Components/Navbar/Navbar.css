@@ -21,6 +21,16 @@ nav .contentMob {
   height: 100vh;
 }
 
+/* .mbnBG {
+  background-color: red;
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 999999999999999;
+} */
+
 .navLink,
 .navLink * {
   outline: none;
@@ -148,12 +158,12 @@ nav .contentMob > ul > li > * {
   nav .content,
   nav .contentMob {
     width: 100%;
-    height: 100vh;
+    height: 100dvh;
     top: 0;
     left: 0;
     transform: translate(0, 0);
     border-radius: 0;
-    background-color: rgba(0, 0, 0, 0.589);
+    background-color: rgba(0, 0, 0, 0.9);
     transition: all 300ms ease-in-out;
     position: fixed;
   }
@@ -185,17 +195,17 @@ nav .contentMob > ul > li > * {
 
   .mbnBG {
     width: 100%;
-    height: 100vh;
+    height: 0;
     position: absolute;
     top: 0;
     left: 0;
     z-index: -1;
 
-    background: rgba(255, 255, 255, 0);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    background-color: rgba(0, 0, 0, 1);
+    opacity: 0;
+    /* box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37); */
+    /* backdrop-filter: blur(20px); */
+    /* -webkit-backdrop-filter: blur(20px); */
+    /* filter: blur(20px); */
   }
 }

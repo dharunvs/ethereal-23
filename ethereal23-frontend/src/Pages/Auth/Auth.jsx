@@ -346,9 +346,9 @@ function Auth() {
           id="spline"
           scene="https://prod.spline.design/1CXBumz9jWVu325v/scene.splinecode"
         /> */}
-        <div className="logo">
+        {/* <div className="logo">
           <img src={logo} alt="logo" />
-        </div>
+        </div> */}
         <video className="AuthVid" src={vid} autoPlay muted loop></video>
       </div>
       <div className="content">
