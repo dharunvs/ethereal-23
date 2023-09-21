@@ -21,11 +21,13 @@
   z-index: -2;
   /* background-color: rgb(15, 5, 5); */
   background: linear-gradient(to right, #77a1d3, #79cbca, #e684ae);
-  filter: brightness(0.05);
+  filter: brightness(0.1);
+  display: flex;
+  flex-direction: column;
 }
 
 .teambg img {
-  width: 200%;
+  width: 100%;
   animation: bgRotate 20s linear infinite;
   /* height: 100vh; */
 }
@@ -45,7 +47,6 @@
 
 .TeamPage .teamGroup .teamMembers {
   width: 100%;
-
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -56,6 +57,7 @@
 .Card {
   width: var(--size);
   overflow: hidden;
+  position: relative;
   /* background-color: blue; */
   /* box-shadow: 2px 2px 0px 0px rgba(255, 255, 255, 0.281); */
 }
@@ -72,13 +74,9 @@
 
 .Card .content {
   width: 100%;
-  /* background-color: green; */
   display: flex;
   flex-direction: column;
-  /* padding: 20px; */
-  /* height: 80px; */
   justify-content: center;
-  /* gap: 5px; */
   padding: 15px;
   padding-top: 12px;
   color: white;
@@ -109,7 +107,7 @@
   }
   .TeamPage {
     padding-top: 10vh;
-    padding-bottom: 10vh;
+    /* padding-bottom: 10vh; */
   }
 }
 
@@ -126,6 +124,31 @@
     font-family: "Akira";
     padding: 5vh 0%;
     font-size: 2rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  :root {
+    --size: 200px;
+  }
+  .Card .content {
+    padding: 15px;
+    padding-top: 10px;
+  }
+  .TeamPage .teamGroup > h1 {
+    color: white;
+    font-family: "Akira";
+    padding: 5vh 0%;
+    font-size: 2rem;
+    text-align: center;
+  }
+  .TeamPage .teamGroup .teamMembers {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
   }
 }
 

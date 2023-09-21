@@ -1,24 +1,27 @@
 .Profile {
   width: 100%;
   min-height: 100vh;
-  /* overflow: hidden; */
+  overflow: hidden;
   position: relative;
   top: 0;
   left: 0;
   z-index: 0;
+  position: relative;
+  padding-bottom: 10vh;
 }
 
 .profileBg {
   width: 100%;
   height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: blur(5px);
   position: fixed;
-  z-index: -2;
 }
-.AuthVid {
+.profileBg .ProfileVid {
   width: 100%;
-  height: 100vh;
-  height: inherit;
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0;
   z-index: -4;
@@ -81,7 +84,7 @@
   justify-content: center;
   gap: 5vh;
   backdrop-filter: blur(10px);
-  background-color: rgba(240, 248, 255, 0.089);
+  background-color: rgba(255, 255, 255, 0.089);
   padding: 30px;
 }
 
@@ -102,20 +105,23 @@
   font-family: "Jura";
   font-size: 1rem;
   font-weight: 800;
-  color: gray;
+  color: rgb(85, 85, 85);
   text-transform: uppercase;
 }
 .profileScreen .box .left .profile .prow p {
   font-size: 1rem;
   font-family: "Akira";
-  color: whitesmoke;
+  color: rgb(180, 180, 180);
 }
 
-.profileScreen .box .left .events h1 {
+/* .profileScreen .box .left .events h1, */
+.profileScreen .box .left h1,
+.profileScreen .box .right h1 {
   font-size: 2rem;
   font-family: "Akira";
   color: white;
-  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  color: rgb(255, 238, 141);
 }
 
 .profileScreen .box .left .events p {
@@ -156,11 +162,6 @@
   flex-direction: column;
   gap: 2vh;
 }
-.profileScreen .box .right h2 {
-  font-size: 1.6rem;
-  font-family: "Akira";
-  color: white;
-}
 
 .profileScreen .box .right .code {
   background-color: white;
@@ -168,8 +169,6 @@
   font-family: "Jura";
   width: max-content;
   padding: 10px 30px;
-  /* padding-right: 20px;    */
-  /* letter-spacing: 10px; */
   font-size: 1.4rem;
   border-radius: 20px;
   font-weight: 800;
@@ -226,11 +225,53 @@
   .profileScreen .box .right {
     display: flex;
     flex-direction: column;
-
+    padding-top: 5vh;
     gap: 10vh;
     place-items: center;
   }
   .Profile .content {
     padding-top: 7vh;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .profileScreen .box .left h1,
+  .profileScreen .box .right h1 {
+    font-size: 1.2rem;
+    text-align: center;
+  }
+  .profileScreen .box {
+    width: 100%;
+  }
+  .Profile {
+    padding: 0;
+  }
+  /* .profileScreen .box .right h2 {
+    font-size: 1.6rem;
+    font-family: "Akira";
+    color: white;
+    text-align: center;
+  } */
+  .profileScreen .box .right .code {
+    background-color: white;
+    color: black;
+    padding: 8px 20px;
+    font-size: 1.2rem;
+  }
+  .pb {
+    width: 100%;
+  }
+
+  .profileScreen .box .left .profile .prow h2 {
+    font-family: "Jura";
+    font-size: 0.6rem;
+    font-weight: 800;
+    color: gray;
+    text-transform: uppercase;
+    padding-bottom: 2px;
+  }
+  .profileScreen .box .left .profile .prow p {
+    font-size: 0.8rem;
+    font-family: "Akira";
   }
 }

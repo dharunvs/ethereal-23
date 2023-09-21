@@ -155,7 +155,7 @@ function Home({ data }) {
                 <img src={overlay} alt="" />
               </div>
               <div className="text text2">
-                <h1>Celebritiy's onboard</h1>
+                <h1>Celebrity's onboard</h1>
               </div>
               <div className="text">
                 <h1>About Ethereal</h1>

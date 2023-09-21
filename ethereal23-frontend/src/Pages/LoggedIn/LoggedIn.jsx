@@ -82,10 +82,10 @@ function LoggedIn() {
         <div className="logo">
           <img src={logo} alt="logo" />
         </div>
-        <video className="AuthVid" src={vid} autoPlay muted loop></video>
+        <video className="LoggedInVid" src={vid} autoPlay muted loop></video>
       </div>
       <div className="content">
-        <div
+        {/* <div
           className={
             CBannerActive && EBannerActive
               ? "CBannerActiveHalf"
@@ -110,7 +110,7 @@ function LoggedIn() {
           <div className="img">
             <img src={ethPoster} alt="ethPoster" />
           </div>
-        </div>
+        </div> */}
         {loggedIn && (
           <div className="AuthScreen">
             <div className="box">

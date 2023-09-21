@@ -23,6 +23,7 @@ function App() {
           src={loaderVid}
           muted
           loop
+          autoPlay
           onLoadedData={(e) => {
             console.log(e);
           }}

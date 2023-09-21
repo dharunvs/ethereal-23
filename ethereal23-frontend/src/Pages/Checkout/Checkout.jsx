@@ -271,7 +271,7 @@ function Checkout() {
           </>
         ) : message == "Already Submitted" ? (
           <>
-            <h1>Thank you</h1>
+            <h1>Verification Pending</h1>
 
             <p>
               You have already submitted the <br /> Transaction ID {mes.tid}{" "}
@@ -475,9 +475,9 @@ function Checkout() {
                     .then((res) => {
                       console.log(res);
                       if (res.message == undefined) {
-                        setMessage("Failure");
+                        setMessage({ message: "Failure" });
                       } else {
-                        setMessage(res.message);
+                        setMessage(res);
                       }
                       setSubmitted(true);
                     });

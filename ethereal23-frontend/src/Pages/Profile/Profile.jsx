@@ -10,16 +10,16 @@ import { events } from "../../data";
 import "./Profile.css";
 
 function Profile() {
-  function scrollToId(id) {
-    var element = document.getElementById(id);
-    element.scrollIntoView({
-      block: "start",
-      behavior: "smooth",
-    });
-  }
-  useEffect(() => {
-    scrollToId("root");
-  }, []);
+  // function scrollToId(id) {
+  //   var element = document.getElementById(id);
+  //   element.scrollIntoView({
+  //     block: "start",
+  //     behavior: "smooth",
+  //   });
+  // }
+  // useEffect(() => {
+  //   scrollToId("root");
+  // }, []);
 
   const navigate = useNavigate();
   const [user, setUser] = useState({});
@@ -37,21 +37,26 @@ function Profile() {
     }
   };
 
-  const downloadQRCode = () => {
-    const downloadLink = document.createElement("a");
-    downloadLink.href = qrCodeDataURL;
-    downloadLink.download = "qrcode.png";
-    downloadLink.click();
-  };
+  // const downloadQRCode = () => {
+  //   const downloadLink = document.createElement("a");
+  //   downloadLink.href = qrCodeDataURL;
+  //   downloadLink.download = "qrcode.png";
+  //   downloadLink.click();
+  // };
 
   useEffect(() => {
+    console.log("Hi");
     axios
       .post(baseURL + "/check-loggedin", {
         id: localStorage.getItem("id"),
       })
-      .then((res) => res["data"])
       .then((res) => {
         console.log(res);
+        return res["data"];
+      })
+      .then((res) => {
+        console.log(res);
+
         if (res["logged_in"]) {
           setUser(res);
           if (res.concert != null) {
@@ -71,6 +76,7 @@ function Profile() {
         console.log(res);
         setUserEvents(res.events);
       });
+    console.log("Bye");
   }, []);
 
   return (
@@ -83,7 +89,7 @@ function Profile() {
         {/* <div className="logo">
           <img src={logo} alt="logo" />
         </div> */}
-        <video className="AuthVid" src={vid} autoPlay muted loop></video>
+        <video className="ProfileVid" src={vid} autoPlay muted loop></video>
       </div>
       <div className="content">
         {user.logged_in && (
@@ -92,6 +98,8 @@ function Profile() {
               {/* <div className="dummy"></div> */}
               <div className="left">
                 <div className="profile">
+                  <h1>Profile</h1>
+
                   <div className="prow">
                     <h2>Name</h2>
                     <p>{user.name}</p>
@@ -148,15 +156,16 @@ function Profile() {
               </div>
               <div className="right">
                 <div className="rsec">
-                  <h2>Ethereal Access</h2>
+                  <h1>Ethereal Access</h1>
                   {user.ethereal !== null ? (
-                    <p className="code">CODE {user.ethereal}</p>
+                    <p className="code">Code: {user.ethereal}</p>
                   ) : (
                     <p className="buyP">Buy Ethereal tickets</p>
                   )}
                 </div>
                 <div className="rsec">
-                  <h2>Concert Access</h2>
+                  <h1>Concert Access</h1>
+
                   <div className="qr">
                     {qrCodeDataURL != "" ? (
                       <>
@@ -172,9 +181,8 @@ function Profile() {
                       </>
                     ) : (
                       <p className="buyP">
-                        {" "}
                         Buy concert ticket <br />
-                        to reveal access
+                        to get access
                       </p>
                     )}
                   </div>

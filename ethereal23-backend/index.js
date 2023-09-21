@@ -366,7 +366,6 @@ app.post("/userEvents", async (req, res) => {
       );
     }
 
-    console.log("-- 104 -->", filtered);
     res.json({ events: filtered });
   } catch (error) {
     console.log(error);
@@ -498,8 +497,6 @@ app.post("/events/:id/join", async (req, res) => {
   const eventId = req.params.id;
   const { userId, team } = req.body;
 
-  console.log("-- 108 -->", team);
-
   try {
     const event = await client.query(
       "SELECT * from events where event_id = $1",
@@ -513,11 +510,8 @@ app.post("/events/:id/join", async (req, res) => {
       [userId]
     );
     college = college.rows[0].college;
-    console.log("-- 109 --> ", college);
     let members =
       team.members !== null ? team.members : team.members == null ? [] : null;
-    console.log("-- 110 --> ", members);
-    console.log("-- 111 --> ", event.rows[0].max);
 
     if (members.length < event.rows[0].max) {
       if (college == team.college) {
@@ -526,7 +520,6 @@ app.post("/events/:id/join", async (req, res) => {
           "UPDATE teams SET members = $1 WHERE id = $2",
           [members, team.id]
         );
-        console.log(update);
       }
     }
   } catch (error) {
@@ -540,15 +533,12 @@ app.post("/users", async (req, res) => {
   const { ids } = req.body;
   let arr = [];
 
-  console.log("-- 9 -->", ids);
-
   const users = await client.query("SELECT name, id FROM users", []);
   ids.forEach((id) => {
     const filtered = users.rows.filter((user) => user.id == id);
     arr.push(filtered[0]);
   });
 
-  console.log("-- 10 -->", arr);
   res.json({ userIds: arr });
 });
 
@@ -564,7 +554,6 @@ app.post("/removeTeamate", async (req, res) => {});
 
 // Login
 app.post("/login", async (req, res) => {
-  console.log(req.body);
   const { email, otp } = req.body;
 
   try {
@@ -630,7 +619,6 @@ app.post("/logout", (req, res) => {
 
 app.post("/check-new", async (req, res) => {
   const { email } = req.body;
-  console.log(email);
 
   try {
     const userQuery = await client.query(
@@ -678,7 +666,6 @@ app.post("/check-loggedin", async (req, res) => {
 
 app.post("/getQR", (req, res) => {
   const { type } = req.body;
-  console.log("-- 111 -> ", type);
 
   try {
     const imagePath = `./qr/${type}.png`;
@@ -702,7 +689,6 @@ app.post("/transaction", async (req, res) => {
 
   transactionId = transactionId.trim();
 
-  console.log(req.body);
   if (transactionId !== "") {
     try {
       const transactions = await client.query("SELECT * from transactions");
@@ -711,12 +697,12 @@ app.post("/transaction", async (req, res) => {
       let tid = "";
       if (transactions.rowCount > 0) {
         transactions.rows.forEach((row) => {
-          if (row.transactionId == transactionId) {
+          if (row.transaction_id == transactionId) {
             found = true;
             return;
           } else if (row.user_id == userId && row.type == type) {
             sameTypeSameUser = true;
-            tid = row.transactionId;
+            tid = row.transaction_id;
             return;
           }
         });
@@ -770,7 +756,6 @@ app.get("/", (req, res) => {
 app.get("/get-fees", async (req, res) => {
   try {
     const query = await client.query("SELECT * FROM fees", []);
-    console.log(query.rows[0]);
     res.json(query.rows[0]);
   } catch (error) {
     console.log(error);
@@ -786,7 +771,6 @@ const getCollegeById = async (id) => {
       "SELECT college FROM users WHERE id = $1",
       [id]
     );
-    console.log("-- 101 --> ", college.rows[0]);
     return college.rows[0];
   } catch (error) {
     console.log(error);

@@ -9,21 +9,22 @@
   position: relative;
 }
 
-.AuthVid {
+.LIbg {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: blur(5px);
+  position: relative;
+}
+
+.LIbg .LoggedInVid {
   width: 100%;
   position: absolute;
   bottom: 0;
   left: 0;
   z-index: -4;
-}
-
-.LIbg {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  filter: blur(10px);
 }
 
 .LIbg .logo {
@@ -158,9 +159,7 @@
 .AuthScreen .box > div button.sel,
 .AuthScreen .box > div button.sel2 {
   overflow: hidden;
-
   cursor: pointer;
-
   background-image: linear-gradient(
     100deg,
     rgb(250, 158, 255) 0%,
@@ -172,7 +171,7 @@
   position: relative;
   z-index: 1;
 }
-/* .AuthScreen .box > div button.EthBtnSel::before  */
+
 .AuthScreen .box > div button.sel2::before {
   content: "";
   position: absolute;
@@ -256,7 +255,7 @@
   overflow: hidden;
 }
 
-.EBanner::after,
+/* .EBanner::after,
 .EBannerActive::after,
 .EBannerActiveHalf::after {
   content: "";
@@ -279,7 +278,7 @@
 @keyframes rotateLight {
   0% {
     transform: rotate(30deg);
-  }
+  } 
 
   50% {
     transform: rotate(390deg);
@@ -289,6 +288,8 @@
     transform: rotate(30deg);
   }
 }
+
+*/
 
 .CBanner .img,
 .CBannerActive .img,
@@ -409,5 +410,77 @@
     100% {
       transform: translateX(-100%);
     }
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .AuthScreen .box > div button {
+    color: black;
+    background-color: white;
+    padding: 30px 70px;
+    font-size: 1.2rem;
+    border: none;
+    outline: none;
+    border-radius: 20px;
+    transition: all 200ms ease-in-out;
+    position: relative;
+    width: 280px;
+  }
+
+  .AuthScreen .box > div button:disabled {
+    color: rgb(196, 196, 196);
+  }
+
+  .AuthScreen .box > div button p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    color: black;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    color: black;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+    z-index: 2;
+  }
+
+  .AuthScreen .box > div button h2 {
+    font-size: 1.2rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .AuthScreen .box > div button {
+    padding: 20px 70px;
+    font-size: 1.4rem;
+    border-radius: 20px;
+    width: 240px;
+  }
+
+  .AuthScreen .box > div button:disabled {
+    color: rgb(196, 196, 196);
+  }
+
+  .AuthScreen .box > div button p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    color: black;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    color: black;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+    z-index: 2;
+  }
+
+  .AuthScreen .box > div button h2 {
+    font-size: 1rem;
+  }
+  .AuthScreen .box > div button .bought {
+    font-size: 1.6rem;
+  }
+
+  .sel p,
+  .sel2 p {
+    font-size: 1.6rem;
   }
 }
