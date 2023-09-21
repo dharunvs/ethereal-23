@@ -1,0 +1,270 @@
+.Events {
+  width: 100%;
+  min-height: 100vh;
+  padding-bottom: 10vh;
+}
+
+:root {
+  --eWidth: 400px;
+  --eHeight: 300px;
+  --gap: 50px;
+}
+
+.EventsScreen {
+  /* width: calc(var(--eWidth) * 4+ ((var(--gap) * 3))); */
+  margin: 0 auto;
+  padding-top: 22vh;
+  width: fit-content;
+}
+
+.EventsScreen .esControls {
+  padding-bottom: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: right;
+}
+
+.EventsScreen .esControls .SearchBar {
+  border: 2px solid rgba(173, 216, 230, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.EventsScreen .esControls .SearchBar p {
+  color: white;
+  padding: 0 20px;
+}
+.EventsScreen .esControls .SearchBar input {
+  padding: 10px 30px;
+  padding-left: 0;
+  outline: none;
+  color: white;
+  border: none;
+  background-color: transparent;
+  outline: none;
+  font-family: "Jura";
+  font-size: 1.2rem;
+  width: 500px;
+  font-weight: 800;
+}
+
+.EventsScreen .events {
+  /* border: 2px solid green; */
+  width: calc(var(--eWidth) * 3 + ((var(--gap) * 2)));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--gap);
+}
+
+/* .SearchBar input {
+} */
+
+.Event {
+  width: var(--eWidth);
+  height: var(--eHeight);
+  background-color: gray;
+  transition: all 1000ms ease-in-out;
+  position: relative;
+  overflow: hidden;
+}
+
+.Event img {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transform: translateY(30px);
+}
+
+.Event h1 {
+  background-color: rgb(243, 243, 243);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  /* color: white; */
+  font-family: "Akira";
+  font-size: 1.4rem;
+  width: 100%;
+  height: 80px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+}
+
+.Event::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 100%;
+  width: 200%;
+  height: 100%;
+  background-color: aliceblue;
+  background: rgb(239, 0, 255);
+  background: linear-gradient(
+    30deg,
+    rgba(239, 0, 255, 0) 40%,
+    rgba(255, 255, 255, 0.6) 50%,
+    rgba(0, 168, 255, 0) 60%
+  );
+  z-index: 2;
+  transition: 600ms ease-in-out;
+}
+
+.Event:hover:after {
+  left: -200%;
+}
+
+@media screen and (max-width: 1500px) {
+  :root {
+    --eWidth: 380px;
+    --eHeight: 285px;
+    --gap: 50px;
+  }
+
+  .EventsScreen .events {
+    width: calc(var(--eWidth) * 3 + ((var(--gap) * 2)));
+    gap: var(--gap);
+  }
+}
+
+@media screen and (max-width: 1300px) {
+  :root {
+    --eWidth: 380px;
+    --eHeight: 285px;
+    --gap: 50px;
+  }
+
+  .EventsScreen .events {
+    width: calc(var(--eWidth) * 2 + ((var(--gap) * 1)));
+    gap: var(--gap);
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .EventsScreen {
+    padding-top: 10vh;
+  }
+  .EventsScreen .esControls {
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  :root {
+    --eWidth: 300px;
+    --eHeight: 250px;
+    --gap: 30px;
+  }
+
+  .EventsScreen .events {
+    width: calc(var(--eWidth) * 2 + ((var(--gap) * 1)));
+    gap: var(--gap);
+  }
+  .Event h1 {
+    font-family: "Akira";
+    font-size: 1rem;
+    height: 60px;
+  }
+
+  .EventsScreen .esControls .SearchBar input {
+    font-size: 1.1rem;
+    width: 400px;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  :root {
+    --eWidth: 250px;
+    --eHeight: 200px;
+    --gap: 20px;
+  }
+
+  .EventsScreen .events {
+    width: calc(var(--eWidth) * 2 + ((var(--gap) * 1)));
+    gap: var(--gap);
+  }
+  .Event h1 {
+    font-size: 1rem;
+    height: 50px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  :root {
+    --eWidth: 200px;
+    --eHeight: 150px;
+    --gap: 20px;
+  }
+
+  .EventsScreen .events {
+    width: calc(var(--eWidth) * 2 + ((var(--gap) * 1)));
+    gap: var(--gap);
+  }
+  .Event h1 {
+    font-size: 0.7rem;
+    height: 40px;
+  }
+  .EventsScreen .esControls .SearchBar input {
+    font-size: 1.1rem;
+    width: 350px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  :root {
+    --eWidth: 200px;
+    --eHeight: 150px;
+    --gap: 20px;
+  }
+
+  .EventsScreen {
+    width: 100%;
+  }
+
+  .EventsScreen .events {
+    width: 100%;
+    gap: var(--gap);
+    flex-direction: column;
+  }
+  .Event h1 {
+    font-size: 0.7rem;
+    height: 40px;
+  }
+
+  .EventsScreen .esControls .SearchBar {
+    width: 90%;
+  }
+  .EventsScreen .esControls .SearchBar input {
+    font-size: 1rem;
+    width: 100%;
+  }
+  .Event {
+    width: 90%;
+    position: relative;
+  }
+  .Event img {
+    width: 100%;
+    position: absolute;
+    bottom: 50%;
+    /* top: 50%; */
+    left: 50%;
+    transform: translate(-50%, 50%);
+  }
+}
+
+@media screen and (max-width: 300px) {
+  :root {
+    --eWidth: 200px;
+    --eHeight: 100px;
+    --gap: 20px;
+  }
+
+  .Event {
+    width: 90%;
+    height: var(--eHeight);
+  }
+}

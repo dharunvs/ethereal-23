@@ -1,0 +1,629 @@
+.Checkout {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+.AuthVid {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: -4;
+}
+
+.checkoutBg {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: blur(10px);
+}
+
+.checkoutBg .logo {
+  width: 330px;
+}
+
+.checkoutBg .logo {
+  position: relative;
+}
+
+.checkoutBg .logo > img {
+  color: white;
+  width: 330px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -80%);
+  z-index: -5;
+}
+
+.Checkout .content {
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.CheckoutScreen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.CheckoutScreen .box {
+  /* background-color: rgba(71, 71, 71, 0.5); */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 50px;
+  gap: 30px;
+  border-radius: 20px;
+  width: 100%;
+  height: 100%;
+  /* gap: 10vh; */
+  transform: translateY(5vh);
+}
+
+.CheckoutScreen .box2 {
+  display: flex;
+  height: 430px;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+}
+
+.CheckoutScreen .box .ckItems,
+.CheckoutScreen .box .ckItemsA {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 30px;
+  transition: all 300ms ease-in-out;
+}
+
+.CheckoutScreen .box .ckItemsA {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 30px;
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  transform: translate(0%, -50%);
+}
+
+.EthItem,
+.ConItem {
+  width: 500px;
+  height: 200px;
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  /* box-shadow: 0 0 0 3px rgb(192, 240, 255); */
+  /* border: 2px solid white; */
+  /* box-shadow: 0 0 10px rgba(124, 255, 227, 0.15); */
+}
+
+.EthItem video {
+  width: 500px;
+  height: auto;
+  /* height: 101%; */
+  position: absolute;
+  /* z-index: 0; */
+  /* border-radius: 20px; */
+}
+.ConItem img {
+  width: 500px;
+  /* height: 101%; */
+  position: absolute;
+  /* border-radius: 20px; */
+}
+
+.EthItem h1,
+.ConItem h1 {
+  position: absolute;
+  top: 20px;
+  left: 30px;
+  font-family: "Akira";
+  z-index: 1;
+  color: white;
+  text-shadow: 0 0 5px rgba(62, 0, 68, 0.4);
+}
+
+.EthItem > div {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  bottom: 10%;
+  width: 400px;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+}
+.EthItem > div p {
+  text-align: center;
+  font-family: "Jura";
+  font-weight: 700;
+}
+
+.EthItem > div button {
+  padding: 10px 20px;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  font-family: "Jura";
+  font-weight: 800;
+  font-size: 1rem;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0 0 10px rgba(62, 0, 68, 0.15);
+}
+
+.EventsTab {
+  width: 400px;
+  height: 430px;
+  background-color: white;
+  border-radius: 20px;
+  /* overflow: hidden; */
+  /* overflow-y: scroll; */
+  position: absolute;
+  border: 2px solid violet;
+  right: 0;
+  top: 0;
+  animation: etAnim 500ms ease-in-out forwards;
+}
+
+.EventsTab .container {
+  width: inherit;
+  height: inherit;
+  overflow-y: scroll;
+  padding: 20px 30px;
+}
+.EventsTab .container h1 {
+  font-family: "Akira";
+  text-align: center;
+  font-size: 1.4rem;
+  padding-bottom: 20px;
+}
+
+.EventsTab .container .Ev,
+.EventsTab .container .EvSel {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  font-family: "Jura";
+  font-weight: 800;
+  transition: all 200ms ease-in-out;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.EventsTab .container .Ev .bd,
+.EventsTab .container .EvSel .bd {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(239, 0, 255, 1) 0%,
+    rgba(0, 168, 255, 1) 100%
+  );
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  opacity: 0;
+  transition: all 200ms ease-in-out;
+}
+
+.EventsTab .container .Ev p,
+.EventsTab .container .EvSel p {
+  font-family: "Jura";
+  font-weight: 800;
+  color: black;
+  transition: all 200ms ease-in-out;
+}
+
+.EventsTab .container .EvSel p {
+  color: white;
+}
+
+.EventsTab .container .EvSel .bd {
+  opacity: 1;
+}
+
+@keyframes etAnim {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.EventsTab .back {
+  position: absolute;
+  bottom: 100%;
+  right: 30px;
+}
+
+.EventsTab .back h1 {
+  color: white;
+}
+
+@media screen and (max-width: 600px) {
+  .EthItem,
+  .ConItem {
+    width: 90%;
+  }
+
+  .CheckoutScreen .box {
+    padding: 0 10%;
+    gap: 30px;
+    width: 100%;
+  }
+
+  .CheckoutScreen .box2 {
+    width: 100%;
+  }
+
+  .EthItem,
+  .ConItem {
+    width: 100%;
+    height: 200px;
+  }
+
+  .CheckoutScreen .box .ckItems,
+  .CheckoutScreen .box .ckItemsA {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 30px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 300ms ease-in-out;
+    width: 100%;
+  }
+  .EventsTab {
+    width: 100%;
+    height: 430px;
+    background-color: white;
+    border-radius: 20px;
+    /* overflow: hidden; */
+    /* overflow-y: scroll; */
+    position: relative;
+    right: 0;
+    top: 0;
+    animation: none;
+  }
+}
+
+/* ------------------------------------------ */
+/* ------------------------------------------ */
+/* ------------------------------------------ */
+/* ------------------------------------------ */
+/* ------------------------------------------ */
+/* ------------------------------------------ */
+
+.Checkout .content1 {
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Checkout .content1 .qrBox {
+  /* background-color: white; */
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+  backdrop-filter: blur(40px);
+}
+
+.QR {
+  width: 250px;
+  height: 250px;
+  background-color: white;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* border-radius: 20px; */
+  overflow: hidden;
+}
+
+.QR .qrNote,
+.QR .qrNoteO {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(20px);
+  transition: all 300ms ease-in-out;
+  opacity: 1;
+  /* padding: 30px; */
+  background-color: rgba(0, 0, 0, 0.5);
+  gap: 20px;
+}
+
+.QR .qrNoteO {
+  opacity: 0;
+}
+
+.QR .qrNote p,
+.QR .qrNoteO p {
+  font-family: "Jura";
+  font-size: 1rem;
+  font-weight: bolder;
+  color: white;
+  text-shadow: 0 2px 0px rgba(0, 0, 0, 0.5);
+  width: 90%;
+  text-align: center;
+}
+
+.QR .qrNote p span,
+.QR .qrNoteO p span {
+  font-family: "Jura";
+  font-size: 1rem;
+  font-weight: bolder;
+  color: white;
+  /* text-shadow: 0 0 3px rgb(255, 0, 0); */
+  width: 90%;
+  text-align: center;
+}
+
+.qrNoteBtn {
+  padding: 10px 20px;
+  font-family: "Akira";
+  border-radius: 20px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+
+.QR img {
+  width: 90%;
+  height: 90%;
+}
+
+.qrBox h1 {
+  color: white;
+  font-family: "Akira";
+  text-align: left;
+  width: 100%;
+}
+.qrBox .products {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+}
+
+.qrBox .products .pRow {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+}
+
+.qrBox .products .pRow p {
+  font-family: "Jura";
+  font-weight: bold;
+  color: white;
+  font-size: 1.1rem;
+  padding: 5px 0;
+  width: max-content;
+}
+.qrBox .products .pRow p:nth-child(2) {
+  place-self: end;
+}
+
+.qrBox .products .pRow .prpBold {
+  font-weight: bolder;
+}
+
+.qrBox input {
+  width: 100%;
+  padding: 10px 30px;
+  border-radius: 20px;
+  color: black;
+  /* background-color: white; */
+  outline: none;
+  border: none;
+  font-family: "Akira";
+  border: 2px solid white;
+  transition: 100ms ease-in-out;
+  background-color: white;
+}
+
+.qrBox input.red {
+  border: 2px solid rgb(255, 216, 216);
+  box-shadow: 0 0 5px 2px rgb(255, 129, 112);
+  background-color: rgb(255, 179, 179);
+}
+
+.line {
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.363);
+  height: 1px;
+  margin: 5px 0;
+}
+
+.qrBox button {
+  padding: 10px 20px;
+  border-radius: 20px;
+  color: black;
+  background-color: white;
+  outline: none;
+  border: none;
+  font-family: "Akira";
+}
+
+.qrBox button {
+  font-size: 1rem;
+  font-family: "Akira";
+  width: max-content;
+  width: 300px;
+  overflow: hidden;
+  padding: 10px 30px;
+  border-radius: 20px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+
+  background-image: linear-gradient(
+    100deg,
+    rgb(250, 158, 255) 0%,
+    rgb(138, 216, 255) 51%,
+    rgb(249, 139, 255) 100%
+  );
+  background-size: 200% auto;
+  transition: 0.5s;
+  position: relative;
+  z-index: 1;
+}
+
+.qrBox button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 150%;
+  height: 100%;
+  background: linear-gradient(
+    30deg,
+    rgba(239, 0, 255, 0) 40%,
+    rgba(255, 255, 255, 0.6) 50%,
+    rgba(0, 168, 255, 0) 60%
+  );
+  transition: 600ms ease-in-out;
+}
+
+.qrBox button:hover::before {
+  left: -150%;
+}
+
+.qrBox button:hover {
+  background-position: right center; /* change the direction of the change here */
+  text-decoration: none;
+}
+
+.PostSubmit {
+  padding: 10vh 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5vh;
+  backdrop-filter: blur(40px);
+  width: fit-content;
+  /* background: linear-gradient(
+    45deg,
+    rgba(250, 158, 255, 1) 0%,
+    rgba(138, 216, 255, 1) 51%,
+    rgba(249, 139, 255, 1) 100%
+  ); */
+  /* width: 350px; */
+  border-radius: 20px;
+  /* box-shadow: -5px 2px 50px 0px rgba(249, 139, 255, 0.26) inset; */
+}
+
+.PostSubmit h1 {
+  font-family: "Akira";
+  color: white;
+  text-align: center;
+  font-size: 2rem;
+}
+
+.PostSubmit p {
+  font-family: "Jura";
+  font-size: 1.2rem;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  /* width: 80%; */
+}
+
+.PostSubmit button {
+  font-size: 1rem;
+  font-family: "Akira";
+  width: max-content;
+  width: 300px;
+  overflow: hidden;
+  padding: 10px 30px;
+  border-radius: 20px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+
+  background-image: linear-gradient(
+    100deg,
+    rgb(250, 158, 255) 0%,
+    rgb(138, 216, 255) 51%,
+    rgb(249, 139, 255) 100%
+  );
+  background-size: 200% auto;
+  transition: 0.5s;
+  position: relative;
+  z-index: 1;
+}
+
+.PostSubmit button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 150%;
+  height: 100%;
+  background: linear-gradient(
+    30deg,
+    rgba(239, 0, 255, 0) 40%,
+    rgba(255, 255, 255, 0.6) 50%,
+    rgba(0, 168, 255, 0) 60%
+  );
+  transition: 600ms ease-in-out;
+}
+
+.PostSubmit button:hover::before {
+  left: -150%;
+}
+
+.PostSubmit button:hover {
+  background-position: right center; /* change the direction of the change here */
+  text-decoration: none;
+}

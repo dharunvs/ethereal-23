@@ -1,0 +1,186 @@
+.Profile {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+.AuthVid {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: -4;
+}
+
+.profileBg {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: blur(10px);
+}
+
+.profileBg .logo {
+  width: 330px;
+}
+
+.profileBg .logo {
+  position: relative;
+}
+
+.profileBg .logo > img {
+  color: white;
+  width: 330px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -80%);
+  z-index: -5;
+}
+
+.Profile .content {
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  /* display: flex; */
+  /* align-items: center; */
+  /* justify-content: center; */
+  padding-top: 25vh;
+}
+
+.profileScreen {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.profileScreen .box {
+  width: 100%;
+  /* display: grid;
+  grid-template-columns: 3fr 3fr; */
+  display: flex;
+  /* align-items: center; */
+  justify-content: center;
+  gap: 15%;
+}
+
+.profileScreen .box .left {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.profileScreen .box .left .profile {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-bottom: 5vh;
+}
+
+.profileScreen .box .left .profile .prow h2 {
+  font-family: "Jura";
+  font-size: 1rem;
+  font-weight: 800;
+  color: gray;
+  text-transform: uppercase;
+}
+.profileScreen .box .left .profile .prow p {
+  font-size: 1rem;
+  font-family: "Akira";
+  color: whitesmoke;
+}
+
+.profileScreen .box .left .events h1 {
+  font-size: 2rem;
+  font-family: "Akira";
+  color: white;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+.profileScreen .box .left .events p {
+  text-align: center;
+  padding: 30px;
+  padding-bottom: 30px;
+  font-family: "Jura";
+  font-weight: 800;
+  color: white;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+  font-size: 1.4rem;
+}
+
+.profileScreen .box .left .pb {
+  padding: 10px 20px;
+  background-color: white;
+  outline: none;
+  border: 2px solid white;
+  font-family: "Akira";
+  color: black;
+  cursor: pointer;
+}
+
+.profileScreen .box .right {
+  display: flex;
+  flex-direction: column;
+  gap: 10vh;
+}
+
+.profileScreen .box .right .rsec {
+  display: flex;
+  /* align-items: center; */
+  justify-content: center;
+  flex-direction: column;
+  gap: 2vh;
+}
+.profileScreen .box .right h2 {
+  font-size: 1.6rem;
+  font-family: "Akira";
+  color: white;
+}
+
+.profileScreen .box .right .code {
+  background-color: white;
+  color: black;
+  font-family: "Jura";
+  width: max-content;
+  padding: 10px 30px;
+  /* padding-right: 20px;    */
+  /* letter-spacing: 10px; */
+  font-size: 1.4rem;
+  border-radius: 20px;
+  font-weight: 800;
+  margin: 0 auto;
+}
+
+.profileScreen .box .right .qr {
+  width: 300px;
+  height: 300px;
+  margin: 0 auto;
+  background-color: gray;
+  position: relative;
+  border-radius: 20px;
+}
+.profileScreen .box .right .qr img {
+  width: 100%;
+  border-radius: 20px;
+}
+
+.downloadQR {
+  position: absolute;
+  left: calc(100% + 20px);
+  bottom: 0px;
+  padding: 10px 20px;
+  background-color: white;
+  outline: none;
+  border: 2px solid white;
+  /* border-radius: 10px; */
+  font-family: "Akira";
+  color: black;
+  cursor: pointer;
+}

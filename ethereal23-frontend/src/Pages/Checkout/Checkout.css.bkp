@@ -1,0 +1,326 @@
+.Checkout {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+.AuthVid {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: -4;
+}
+
+.checkoutBg {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: blur(10px);
+}
+
+.checkoutBg .logo {
+  width: 330px;
+}
+
+.checkoutBg .logo {
+  position: relative;
+}
+
+.checkoutBg .logo > img {
+  color: white;
+  width: 330px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -80%);
+  z-index: -5;
+}
+
+.Checkout .content {
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.CheckoutScreen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.CheckoutScreen .box {
+  /* background-color: rgba(71, 71, 71, 0.5); */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 50px;
+  gap: 30px;
+  border-radius: 20px;
+  width: 60%;
+  height: 100%;
+  /* gap: 10vh; */
+  transform: translateY(5vh);
+}
+
+.CheckoutScreen .box2 {
+  display: flex;
+  height: 430px;
+  width: 90%;
+
+  position: relative;
+}
+
+.CheckoutScreen .box .ckItems,
+.CheckoutScreen .box .ckItemsA {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 30px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 300ms ease-in-out;
+}
+
+.CheckoutScreen .box .ckItemsA {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 30px;
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  transform: translate(0%, -50%);
+}
+
+.EthItem,
+.ConItem {
+  width: 500px;
+  height: 200px;
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  /* box-shadow: 0 0 0 3px rgb(192, 240, 255); */
+  /* border: 2px solid white; */
+  /* box-shadow: 0 0 10px rgba(124, 255, 227, 0.15); */
+}
+
+.EthItem video {
+  width: 500px;
+  height: auto;
+  /* height: 101%; */
+  position: absolute;
+  /* z-index: 0; */
+  /* border-radius: 20px; */
+}
+.ConItem img {
+  width: 500px;
+  /* height: 101%; */
+  position: absolute;
+  /* border-radius: 20px; */
+}
+
+.EthItem h1,
+.ConItem h1 {
+  position: absolute;
+  top: 20px;
+  left: 30px;
+  font-family: "Akira";
+  z-index: 1;
+  color: white;
+  text-shadow: 0 0 5px rgba(62, 0, 68, 0.4);
+}
+
+.EthItem > div {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  bottom: 10%;
+  width: 400px;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+}
+.EthItem > div p {
+  text-align: center;
+  font-family: "Jura";
+  font-weight: 700;
+}
+
+.EthItem > div button {
+  padding: 10px 20px;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  font-family: "Jura";
+  font-weight: 800;
+  font-size: 1rem;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0 0 10px rgba(62, 0, 68, 0.15);
+}
+
+.EventsTab {
+  width: 400px;
+  height: 430px;
+  background-color: white;
+  border-radius: 20px;
+  /* overflow: hidden; */
+  /* overflow-y: scroll; */
+  position: absolute;
+  border: 2px solid violet;
+  right: 0;
+  top: 0;
+  animation: etAnim 500ms ease-in-out forwards;
+}
+
+.EventsTab .container {
+  width: inherit;
+  height: inherit;
+  overflow-y: scroll;
+  padding: 20px 30px;
+}
+.EventsTab .container h1 {
+  font-family: "Akira";
+  text-align: center;
+  font-size: 1.4rem;
+  padding-bottom: 20px;
+}
+
+.EventsTab .container .Ev,
+.EventsTab .container .EvSel {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  font-family: "Jura";
+  font-weight: 800;
+  transition: all 200ms ease-in-out;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.EventsTab .container .Ev .bd,
+.EventsTab .container .EvSel .bd {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(239, 0, 255, 1) 0%,
+    rgba(0, 168, 255, 1) 100%
+  );
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  opacity: 0;
+  transition: all 200ms ease-in-out;
+}
+
+.EventsTab .container .Ev p,
+.EventsTab .container .EvSel p {
+  font-family: "Jura";
+  font-weight: 800;
+  color: black;
+  transition: all 200ms ease-in-out;
+}
+
+.EventsTab .container .EvSel p {
+  color: white;
+}
+
+.EventsTab .container .EvSel .bd {
+  opacity: 1;
+}
+
+@keyframes etAnim {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.EventsTab .back {
+  position: absolute;
+  bottom: 100%;
+  right: 30px;
+}
+
+.EventsTab .back h1 {
+  color: white;
+}
+
+@media screen and (max-width: 600px) {
+  .EthItem,
+  .ConItem {
+    width: 90%;
+  }
+
+  .CheckoutScreen .box {
+    padding: 0 10%;
+    gap: 30px;
+    width: 100%;
+  }
+
+  .CheckoutScreen .box2 {
+    width: 100%;
+  }
+
+  .EthItem,
+  .ConItem {
+    width: 100%;
+    height: 200px;
+  }
+
+  .CheckoutScreen .box .ckItems,
+  .CheckoutScreen .box .ckItemsA {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 30px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 300ms ease-in-out;
+    width: 100%;
+  }
+  .EventsTab {
+    width: 100%;
+    height: 430px;
+    background-color: white;
+    border-radius: 20px;
+    /* overflow: hidden; */
+    /* overflow-y: scroll; */
+    position: relative;
+    right: 0;
+    top: 0;
+    animation: none;
+  }
+}
