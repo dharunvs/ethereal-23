@@ -125,6 +125,12 @@
     padding: 5vh 0%;
     font-size: 2rem;
   }
+  .Card .content h1 {
+    font-size: 1rem;
+  }
+  .Card .content p {
+    font-size: 0.8rem;
+  }
 }
 
 @media screen and (max-width: 600px) {

@@ -337,7 +337,15 @@ app.post("/send-otp", async (req, res) => {
       from: { name: "KCG Ethereal", address: fromEmail },
       to: EMAIL,
       subject: "OTP Verification",
-      text: `Your OTP for login is: ${OTP}`,
+      // text: `Your OTP for login is: ${OTP}`,
+      html: `<p>Your OTP for login is: ${OTP}</p><br /><img src="cid:unique_cid" alt="Profile Picture">`,
+      attachments: [
+        {
+          filename: "profile.webp", // The name of the attached file
+          path: "./qr/ETHEREAL.webp", // The path to your profile picture file
+          cid: "unique_cid", // Content-ID (cid) for referencing in the HTML body
+        },
+      ],
     };
 
     emailTransporter.sendMail(mailOptions, (err, info) => {
@@ -668,7 +676,7 @@ app.post("/getQR", (req, res) => {
   const { type } = req.body;
 
   try {
-    const imagePath = `./qr/${type}.png`;
+    const imagePath = `./qr/${type}.webp`;
     const image = fs.readFileSync(imagePath);
     res.contentType("image/jpeg");
     res.send(image);
@@ -679,7 +687,7 @@ app.post("/getQR", (req, res) => {
 
 app.get("/getQR/:type", (req, res) => {
   const type = req.params.type;
-  const imagePath = path.join(__dirname, "qr/" + type + ".png"); // Replace with your image path
+  const imagePath = path.join(__dirname, "qr/" + type + ".webp"); // Replace with your image path
   res.sendFile(imagePath);
 });
 
@@ -803,9 +811,17 @@ function parseEmail(email) {
   const depts = {
     it: "Information Technology",
     ad: "Artificial Intelligence and Data Science",
-    cs: "Computer Science",
+    cs: "Computer Science and Engineering",
     ft: "Fashion Technology",
     ae: "Aeronautical",
+    at: "Automobile",
+    ce: "Civil",
+    ec: "Electronics and Communication Engineering",
+    ee: "Electrical and Electronic Engineering",
+    ei: "Electronics and Instrumentation Engineering",
+    mc: "Mechatronics",
+    ao: "Aerospace",
+    me: "Mechanical",
     sh: "Science and Humanities",
   };
 
@@ -836,6 +852,197 @@ function parseEmail(email) {
 
   return message;
 }
+
+// --------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------
+
+const xl = require("xlsx");
+const multer = require("multer");
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
+
+app.post("/upload", upload.single("file"), async (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ message: "No file received" });
+  }
+
+  let arr = [];
+  let verifiedUsers = [];
+  let doneUsers = [];
+  let notDoneUsers = [];
+
+  // Process the uploaded file here
+  let transactions = loadFile(req.file.buffer);
+  transactions = transactions.slice(5);
+
+  transactions.forEach((t) => {
+    console.log("-- 97 -->", t);
+
+    const tid = t["__EMPTY_2"].split("/")[1];
+    const refname = t["__EMPTY_2"].split("/")[3];
+    arr.push({
+      tid: tid,
+      amount: t["__EMPTY_7"],
+      time: t["Statement of Account"],
+      refname: refname,
+    });
+  });
+  console.log("-- 98 -->", arr);
+
+  try {
+    const fees = await client.query("SELECT * FROM FEES");
+    console.log(fees.rows[0]);
+
+    const DbTransactions = await client.query("SELECT * FROM transactions");
+    console.log(DbTransactions.rows);
+
+    DbTransactions.rows.forEach((dt) => {
+      const ft = arr.find((t) => t.tid == dt.transaction_id);
+      console.log("-- 99 -->", ft);
+      if (ft.tid != undefined) {
+        console.log(
+          ft.amount,
+          fees[dt.type.toLowerCase()],
+          dt.type,
+          dt.type.toLowerCase(),
+          fees.rows[0]["oc_concert"],
+          fees.rows[0][dt.type.toLowerCase()]
+        );
+        if (ft.amount == fees.rows[0][dt.type.toLowerCase()] + 10) {
+          verifiedUsers.push({
+            userId: dt.user_id,
+            type: dt.type,
+            transactionId: ft.tid,
+          });
+        } else {
+          console.log("User not verified");
+        }
+      }
+    });
+
+    console.log(verifiedUsers);
+  } catch (error) {
+    console.log(error);
+  }
+
+  verifiedUsers.forEach(async (user) => {
+    if (user.type == "ETHEREAL") {
+      const ethCode = createCode();
+
+      try {
+        await client.query("UPDATE users SET ethereal= $1 WHERE id = $2", [
+          ethCode,
+          user.userId,
+        ]);
+        doneUsers.push(user);
+      } catch (err) {
+        notDoneUsers.push(user);
+        console.log(err);
+      }
+
+      console.log(ethCode);
+    } else if (
+      user.type == "IC_CONCERT" ||
+      user.type == "OC_CONCERT" ||
+      user.type == "IC_COMBO_CONCERT"
+    ) {
+      const conCode = createCode();
+      const conTicket = createConcert();
+
+      try {
+        await client.query("UPDATE users SET concert_code= $1 WHERE id = $2", [
+          conCode,
+          user.userId,
+        ]);
+        await client.query("UPDATE users SET concert= $1 WHERE id = $2", [
+          conTicket,
+          user.userId,
+        ]);
+        doneUsers.push(user);
+      } catch (err) {
+        notDoneUsers.push(user);
+        console.log(err);
+      }
+
+      console.log(conCode);
+      console.log(conTicket);
+    } else if (user.type == "IC_BOTH" || user.type == "OC_COMBO") {
+      const ethCode = createCode();
+      const conCode = createCode();
+      const conTicket = createConcert();
+
+      try {
+        await client.query("UPDATE users SET ethereal= $1 WHERE id = $2", [
+          ethCode,
+          user.userId,
+        ]);
+        await client.query("UPDATE users SET concert_code= $1 WHERE id = $2", [
+          conCode,
+          user.userId,
+        ]);
+        await client.query("UPDATE users SET concert= $1 WHERE id = $2", [
+          conTicket,
+          user.userId,
+        ]);
+        doneUsers.push(user);
+      } catch (err) {
+        notDoneUsers.push(user);
+        console.log(err);
+      }
+
+      console.log(ethCode);
+      console.log(conCode);
+      console.log(conTicket);
+    }
+  });
+
+  // console.log(arr);
+  // You can do whatever you need with the file data here
+  // For example, save it to disk or database
+
+  return res.status(200).json({ message: "File uploaded successfully" });
+});
+
+const loadFile = (file) => {
+  const book = xl.read(file);
+  const sheetName = book.SheetNames[0];
+  const worksheet = book.Sheets[sheetName];
+  const data = xl.utils.sheet_to_json(worksheet);
+
+  return data;
+};
+
+const createConcert = () => {
+  const uuid = uuidv4().toString();
+  const ticket = "concert_" + uuid;
+  return ticket;
+};
+
+function createCode() {
+  const uniqueId = uuidv4().toString();
+  const code = uniqueId.replace(/-/g, "").slice(0, 6);
+  return code;
+}
+
+// --------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

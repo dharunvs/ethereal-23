@@ -4,6 +4,8 @@ import axios from "axios";
 import { baseURL } from "../../data";
 import logo from "../../Assets/Images/logo.png";
 import vid from "../../Assets/Spline/gradient-waves.webm";
+import vid2 from "../../Assets/Spline/gradient-waves.mp4";
+
 import QRCode from "qrcode";
 import { events } from "../../data";
 
@@ -89,7 +91,11 @@ function Profile() {
         {/* <div className="logo">
           <img src={logo} alt="logo" />
         </div> */}
-        <video className="ProfileVid" src={vid} autoPlay muted loop></video>
+        {/* <video className="ProfileVid" src={vid} autoPlay muted loop></video> */}
+        <video className="ProfileVid" autoPlay muted loop>
+          {/* <source src={vid} type="video/webm" autoPlay muted loop></source> */}
+          <source src={vid2} type="video/mp4" autoPlay muted loop></source>
+        </video>
       </div>
       <div className="content">
         {user.logged_in && (

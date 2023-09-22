@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Events.css";
-import eventImg from "../../Assets/Images/event.jpeg";
+// import eventImg from "../../Assets/Images/event.jpeg";
 import { posterImg, posterImgArr } from "../../Assets/Images/posters";
+import { icons } from "../../Assets/Icons";
 import { events } from "../../data";
 
 function Events() {
@@ -81,7 +82,9 @@ function Events() {
         <div className="EventsScreen">
           <div className="esControls">
             <div className="SearchBar">
-              <p>S</p>
+              <p>
+                <icons.Search />
+              </p>
               <input
                 type="text"
                 placeholder="Search events"

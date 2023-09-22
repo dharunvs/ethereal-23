@@ -15,12 +15,12 @@ export const pages = [
     show: true,
   },
   {
-    name: "The Team",
+    name: "Team",
     path: "/team",
     show: true,
   },
   {
-    name: "Contact Us",
+    name: "Contact",
     path: "/contact",
     show: true,
   },
@@ -33,11 +33,19 @@ export const pages = [
 
 const depts = {
   it: "Information Technology",
-  ad: "Artificial Intelligence and Data Science",
-  cs: "Computer Science",
+  ad: "Artificial Intelligence ",
+  cs: "Computer Science ",
   ft: "Fashion Technology",
   ae: "Aeronautical",
-  sh: "Science and Humanities",
+  at: "Automobile",
+  ce: "Civil",
+  ec: "Electronics & Comm ",
+  ee: "Electrical & Electronic ",
+  ei: "Electronics & Instruments ",
+  mc: "Mechatronics",
+  ao: "Aerospace",
+  me: "Mechanical",
+  sh: "Science & Humanities",
 };
 
 export const colleges = [
@@ -488,17 +496,18 @@ export const events = [
   },
 ];
 
-import sricharan from "./Assets/Images/team/sricharan.jpg";
-import george from "./Assets/Images/team/george.jpg";
-import sai from "./Assets/Images/team/sai.jpg";
-import drishti from "./Assets/Images/team/drishti.jpg";
-import gowtham from "./Assets/Images/team/gowtham.jpg";
-import sunil from "./Assets/Images/team/sunil.jpg";
-import sriram from "./Assets/Images/team/sriram.jpg";
-import brijesh from "./Assets/Images/team/brijesh.jpg";
-import aashiq from "./Assets/Images/team/aashiq.jpg";
-import ruby from "./Assets/Images/team/ruby.jpg";
-import dummy from "./Assets/Images/team/dummy.jpg";
+import sricharan from "./Assets/Images/team/sricharan.webp";
+import george from "./Assets/Images/team/george.webp";
+import sai from "./Assets/Images/team/sai.webp";
+import drishti from "./Assets/Images/team/drishti.webp";
+import gowtham from "./Assets/Images/team/gowtham.webp";
+import sunil from "./Assets/Images/team/sunil.webp";
+import sriram from "./Assets/Images/team/sriram.webp";
+import brijesh from "./Assets/Images/team/brijesh.webp";
+import aashiq from "./Assets/Images/team/aashiq.webp";
+import ruby from "./Assets/Images/team/ruby.webp";
+import dharun from "./Assets/Images/team/dharun.webp";
+import dummy from "./Assets/Images/team/dummy.webp";
 
 // Sponsorship and support
 // Sreelakshmi
@@ -519,15 +528,15 @@ export const teams = {
     name: "Core Team",
     members: [
       { name: "George Britt", img: george, dept: depts.cs },
-      { name: "Sai Aravind", img: sai, dept: depts.cs },
       { name: "Sricharan", img: sricharan, dept: depts.ad },
+      { name: "Sai Aravind", img: sai, dept: depts.cs },
       { name: "Aashiq ", img: aashiq, dept: depts.ad },
       { name: "Rubasri", img: ruby, dept: depts.cs },
     ],
   },
   tech: {
     name: "Tech Team",
-    members: [{ name: "Dharun V S", img: dummy, dept: depts.ad }],
+    members: [{ name: "Dharun V S", img: dharun, dept: depts.ad }],
   },
   media: {
     name: "Media Team",
@@ -541,14 +550,48 @@ export const teams = {
     members: [
       { name: "Sreelakshmi", img: dummy, dept: depts.ad },
       { name: "Gowtham", img: gowtham, dept: depts.ad },
-      { name: "Brijesh", img: brijesh, dept: depts.ae },
+      { name: "Brijesh", img: brijesh, dept: depts.ao },
       { name: "Drishti", img: drishti, dept: depts.cs },
       { name: "Kavya", img: dummy, dept: depts.cs },
       { name: "Vineeth", img: dummy, dept: depts.ae },
       { name: "Shaan", img: dummy, dept: depts.ft },
     ],
   },
+  committee: {
+    name: "Committee",
+    members: [
+      { name: "NAUSHEEN A L", img: dummy, dept: depts.ft },
+      { name: "MRUTHULA", img: dummy, dept: depts.ao },
+      { name: "HARISH ", img: dummy, dept: depts.ad },
+      { name: "RAHUL S", img: dummy, dept: depts.mc },
+      { name: "NAGARAJ S", img: dummy, dept: depts.ei },
+      { name: "HARSHITHAN", img: dummy, dept: depts.it },
+      { name: "MUKESH  M", img: dummy, dept: depts.me },
+      { name: "DINESH S", img: dummy, dept: depts.ee },
+      { name: "VENGATESH", img: dummy, dept: depts.cs },
+      { name: "KARTHIK K", img: dummy, dept: depts.ec },
+      { name: "MANOJ KUMAR", img: dummy, dept: depts.at },
+      { name: "THANUSH J", img: dummy, dept: depts.ae },
+    ],
+  },
+  contact: {
+    name: "Media Team",
+    members: [
+      {
+        name: "Sricharan",
+        img: sricharan,
+        dept: depts.ad,
+        phone: "Ph. 63806 88350",
+      },
+      {
+        name: "George Britt",
+        img: george,
+        dept: depts.cs,
+        phone: "Ph. 95147 90999",
+      },
+    ],
+  },
 };
 
-export const baseURL = "http://localhost:8000";
-// export const baseURL = "https://laksh-358718.el.r.appspot.com";
+// export const baseURL = "http://localhost:8000";
+export const baseURL = "https://laksh-358718.el.r.appspot.com";

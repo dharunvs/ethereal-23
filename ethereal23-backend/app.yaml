@@ -1,9 +1,13 @@
 runtime: nodejs18
 
 env_variables:
+  # EMAIL_SERVICE: gmail
+  # EMAIL_USER: dharunsivakumar002@gmail.com
+  # EMAIL_PASS: qgfibvaxitsnuruu
+
   EMAIL_SERVICE: gmail
-  EMAIL_USER: dharunsivakumar002@gmail.com
-  EMAIL_PASS: qgfibvaxitsnuruu
+  EMAIL_USER: kcgethereal@gmail.com
+  EMAIL_PASS: bwcjwrwlzieheycd
 
   STRIPE_PUBLIC_KEY: pk_live_51J30NfSFg7MvYkkayugYw3ZEluSHO322PRW98ZcmbHq4H3TWNicKnUmBw5mni6TR9ltnRIy8BCqLLJsZ7rbHYDpw00V0pqkNOO
   STRIPE_SECRET_KEY: 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

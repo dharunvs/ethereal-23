@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { baseURL, events } from "../../data";
 import vid from "../../Assets/Spline/cubes.webm";
-import eventImg from "../../Assets/Images/event.jpeg";
+// import eventImg from "../../Assets/Images/event.jpeg";
 import "./EventPage.css";
 import { posterImg } from "../../Assets/Images/posters";
 import axios from "axios";

@@ -3,7 +3,7 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  useNavigate,
+  // useNavigate,
 } from "react-router-dom";
 import Pages from "./Pages";
 import Components from "./Components";
@@ -76,7 +76,7 @@ function App() {
     <div className="App">
       <Router>
         <>
-          <Loader />
+          {/* <Loader /> */}
 
           <Components.Navbar />
           <Routes>
@@ -94,10 +94,10 @@ function App() {
             <Route path="/schedule" element={<Pages.Schedule />} />
             <Route path="/team" element={<Pages.Team />} />
             <Route path="/contact" element={<Pages.Contact />} />
-            <Route
+            {/* <Route
               path="/paymentResult/:success"
               element={<Pages.PaymentResult />}
-            />
+            /> */}
 
             {/* <Route path="/gallery" element={<Pages.Gallery />} /> */}
           </Routes>

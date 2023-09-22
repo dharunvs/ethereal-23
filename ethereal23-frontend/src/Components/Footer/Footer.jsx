@@ -1,8 +1,82 @@
 import React from "react";
+import logo from "../../Assets/Images/logo.png";
+import { useNavigate } from "react-router-dom";
 import "./Footer.css";
 
 function Footer() {
-  return <footer>Footer</footer>;
+  const navigate = useNavigate();
+
+  return (
+    <footer>
+      <div className="fTop">
+        <div className="logo">
+          <img src={logo} alt="" />
+        </div>
+        <h1>Ethereal 23'</h1>
+        <p className="goldGlow">"Be all that you can be"</p>
+        <p className="clgName">KCG College of Technology</p>
+        <p className="clgLoc">Karapakkam, Chennai 600 097</p>
+      </div>
+      <div className="fBottom">
+        <div className="fbLeft">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.7850865227783!2d80.23770507601722!3d12.921530087389257!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a525c8cd4db4ed1%3A0x364f215f3cb4bb64!2sKCG%20COLLEGE%20OF%20TECHNOLOGY%2C%20Karapakkam%2C%20Chennai%2C%20Tamil%20Nadu%20600097!5e0!3m2!1sen!2sin!4v1695344714914!5m2!1sen!2sin"
+            // width="600"
+            // height="450"
+            // className="clgName"
+            // style="border:0;"
+            allowFullScreen=""
+            loading="lazy"
+            // referrerPolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+        <div className="fbRight">
+          <div className="fbButtons">
+            <button
+              onClick={() => {
+                navigate("/contact");
+              }}
+            >
+              Contact
+            </button>
+            <button
+              onClick={() => {
+                const a = document.createElement("a");
+                a.href = "https://www.instagram.com/kcgethereal/";
+                a.target = "_blank";
+                a.click();
+              }}
+            >
+              Instagram
+            </button>
+            <button
+              onClick={() => {
+                navigate("/events");
+              }}
+            >
+              Events
+            </button>
+            <button
+              onClick={() => {
+                const a = document.createElement("a");
+                a.href = "https://kcgcollege.ac.in/";
+                a.target = "_blank";
+                a.click();
+              }}
+            >
+              College site
+            </button>
+          </div>
+          <p>+91 63806 88350</p>
+          <p>kcgethereal@gmail.com</p>
+          <div className="ll">
+            <p>hey@kcgethereal.com</p>
+            <p>Designed and Developed by Dharun VS and Sricharan</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
 }
 
 export default Footer;

@@ -1,8 +1,8 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import logo from "../../Assets/Images/logo.png";
+// import logo from "../../Assets/Images/logo.png";
 import vid from "../../Assets/Spline/gradient-waves.webm";
-import Spline from "@splinetool/react-spline";
+import vid2 from "../../Assets/Spline/gradient-waves.mp4";
 import axios from "axios";
 import { baseURL, colleges } from "../../data";
 import { useNavigate } from "react-router-dom";
@@ -349,7 +349,10 @@ function Auth() {
         {/* <div className="logo">
           <img src={logo} alt="logo" />
         </div> */}
-        <video className="AuthVid" src={vid} autoPlay muted loop></video>
+        <video className="AuthVid" autoPlay muted loop>
+          <source src={vid} type="video/webm" autoPlay muted loop></source>
+          <source src={vid2} type="video/mp4" autoPlay muted loop></source>
+        </video>
       </div>
       <div className="content">
         <div className="AuthScreen">

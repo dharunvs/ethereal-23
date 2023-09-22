@@ -75,6 +75,8 @@
   color: white;
   font-size: 6rem;
   position: absolute;
+  width: fit-content;
+  height: fit-content;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -80%);
@@ -83,6 +85,16 @@
   user-select: none;
   /* letter-spacing: 0px; */
   /* font-weight: 1000; */
+}
+
+.kcg {
+  font-family: "Caveat", cursive;
+  font-size: 2.6rem;
+  position: absolute;
+  bottom: calc(100% - 1.4rem);
+  left: 0;
+  color: rgb(148, 148, 148);
+  text-shadow: 0 0 5px black;
 }
 
 .HScreen1 .logo > p {
@@ -161,9 +173,14 @@
 /* ----------------------------------------------------------- */
 /* ----------------------------------------------------------- */
 
+.HScreen4 {
+  width: 100%;
+  height: 100vh;
+}
+
 .HScreen2 {
   width: 100%;
-  min-height: 100vh;
+  /* min-height: 100vh; */
 }
 
 .HScreen2 .aboutDiv {
@@ -206,6 +223,11 @@
   z-index: 1;
   overflow: hidden;
 }
+
+.HScreen2 .aboutDiv .adTop .img img {
+  width: 100%;
+  height: 100vh;
+}
 /* 
 .HScreen2 .aboutDiv .adTop .img img {
 } */
@@ -226,6 +248,18 @@
   justify-content: center;
 }
 
+.HScreen2 .aboutDiv .adBottom .img img {
+  /* width: 100%; */
+  height: 100%;
+  width: 100%;
+}
+
+.HScreen2 .aboutDiv .adBottom .img img {
+  width: 100%;
+  /* height: 100%; */
+  /* width: auto; */
+}
+
 .HScreen2 .aboutDiv .adTop .text,
 .HScreen2 .aboutDiv .adBottom .text {
   position: relative;
@@ -234,7 +268,9 @@
 }
 .text2 {
   padding-bottom: 50vh;
+  /* border: 2px solid red; */
 }
+
 .HScreen2 .aboutDiv .adTop .text h1,
 .HScreen2 .aboutDiv .adBottom .text h1 {
   font-family: "Akira";
@@ -315,7 +351,7 @@
   display: flex;
   flex-direction: row;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   filter: brightness(1.1);
   position: relative;
   z-index: 1;
@@ -323,7 +359,7 @@
 
 .item {
   flex: 1;
-  height: 100%;
+  height: 100vh;
   width: 100px;
   background-position: center;
   background-size: cover;
@@ -333,7 +369,7 @@
 }
 
 .item img {
-  height: 100%;
+  height: 100vh;
   width: auto;
 }
 
@@ -385,14 +421,13 @@
 
   .HomeVidRight {
     width: 100%;
-    position: absolute;
     top: 20vh;
     right: 0;
     z-index: -2;
   }
   .HomeVidLeft {
     width: 100%;
-    position: absolute;
+    /* position: absolute; */
     top: 0;
     left: 0;
     z-index: -2;
@@ -432,14 +467,13 @@
   }
   .HomeVidLeft {
     width: 100%;
-    position: absolute;
+    /* position: absolute; */
     top: 0;
     left: 0;
     z-index: -2;
   }
   .HomeVidRight {
     width: 100%;
-    position: absolute;
     top: 25vh;
     right: 0;
     z-index: -2;
@@ -463,8 +497,10 @@
     font-size: 1.2rem;
   }
   .HomeVidLeft {
-    scale: 2;
-    transform: translate(20%, 20%);
+    /* width: 150%; */
+    /* scale: 2; */
+    /* transform: translate(20%, 20%); */
+    display: none;
   }
   .HomeVidRight {
     display: none;

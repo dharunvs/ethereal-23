@@ -1,36 +1,10 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import { GET_FEES } from "./apis";
+import { GET_FEES, BASE_URL } from "./apis";
 import axios from "axios";
 
 function App() {
-  const [fees, setFees] = useState([
-    {
-      id: 1,
-      name: "ETHEREAL",
-      price: "-",
-    },
-    {
-      id: 2,
-      name: "INNER_COLLEGE_COMBO_CONCERT",
-      price: "-",
-    },
-    {
-      id: 3,
-      name: "OUTER_COLLEGE_COMBO_CONCERT",
-      price: "-",
-    },
-    {
-      id: 4,
-      name: "INNER_COLLEGE_CONCERT",
-      price: "-",
-    },
-    {
-      id: 5,
-      name: "OUTER_COLLEGE_CONCERT",
-      price: "-",
-    },
-  ]);
+  const [fees, setFees] = useState({});
 
   useEffect(() => {
     axios
@@ -61,6 +35,38 @@ function App() {
     </tr>
   );
 
+  function FileUpload() {
+    const [selectedFile, setSelectedFile] = useState(null);
+
+    const handleFileChange = (e) => {
+      setSelectedFile(e.target.files[0]);
+    };
+
+    const handleUpload = () => {
+      const formData = new FormData();
+      formData.append("file", selectedFile);
+
+      fetch(BASE_URL + "/upload", {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("File upload response:", data);
+        })
+        .catch((error) => {
+          console.error("Error uploading file:", error);
+        });
+    };
+
+    return (
+      <div>
+        <input type="file" onChange={handleFileChange} />
+        <button onClick={handleUpload}>Update db</button>
+      </div>
+    );
+  }
+
   return (
     <div className="App">
       <h1>Ethereal Admin</h1>
@@ -82,9 +88,14 @@ function App() {
               </tr>
             </thead>
             <tbody>
-              {fees.map((value, key) => {
-                return <FeesElement i={key} key={value.id} />;
-              })}
+              {Object.keys(fees).map(
+                (value, key) => (
+                  <p>
+                    {value} {key}
+                  </p>
+                )
+                //  <FeesElement i={key} key={value.id} />
+              )}
             </tbody>
             <tfoot></tfoot>
           </table>
@@ -98,6 +109,20 @@ function App() {
             </button>
             <button>Save</button>
           </div>
+        </div>
+      </div>
+
+      <div className="controlBox">
+        <h2>Payments</h2>
+        <div className="CBContent">
+          <button>Pause Payments</button>
+        </div>
+      </div>
+
+      <div className="controlBox">
+        <h2>Update db</h2>
+        <div className="CBContent">
+          <FileUpload />
         </div>
       </div>
     </div>

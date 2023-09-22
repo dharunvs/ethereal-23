@@ -1,15 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./Home.css";
 import logo from "../../Assets/Images/logo.png";
-import collegeImg from "../../Assets/Images/college.png";
-import Spline from "@splinetool/react-spline";
+import collegeImg from "../../Assets/Images/college.webp";
 import { useNavigate } from "react-router-dom";
 // import chipsVid from "../../Assets/Spline/chips-main.webm";
 // import spl from "../../Assets/Spline/scene.splinecode";
-import chipsVidLeft from "../../Assets/Spline/chips-left.webm";
+import chipsVidLeft from "../../Assets/Spline/chips-left-bkp.webm";
 import chipsVidRight from "../../Assets/Spline/chips-right.webm";
 // import { galleryImgArr } from "../../Assets/Images/gallery";
-import overlay from "../../Assets/Images/homeOverlay.png";
+import overlay from "../../Assets/Images/homeBG.webp";
+import homePradeep from "../../Assets/Images/Pradeep.png";
 
 function Home({ data }) {
   const galleryImgArr = data.galleryImgs;
@@ -120,23 +120,25 @@ function Home({ data }) {
         <video
           className="HomeVidRight"
           src={chipsVidRight}
-          autoPlay
-          muted
-          loop
+          autoPlay={true}
+          muted={true}
+          loop={true}
         ></video>
         <video
           className="HomeVidLeft"
           src={chipsVidLeft}
-          autoPlay
-          muted
-          loop
+          autoPlay={true}
+          muted={true}
+          loop={true}
         ></video>
       </div>
       <div className="content">
         <div className="HScreen1">
           <div className="logo">
             <img src={logo} alt="" />
-            <h1>ETHEREAL</h1>
+            <h1>
+              <p className="kcg">KCG's</p>ETHEREAL
+            </h1>
             <p>"Be all that you can be"</p>
             <button
               className="customButton"
@@ -148,14 +150,21 @@ function Home({ data }) {
             </button>
           </div>
         </div>
+        {/* <div className="HScreen4">
+          <div className="imgContainer">
+            <img src={homePradeep} alt="" />
+          </div>
+        </div> */}
         <div className="HScreen2">
           <div className="aboutDiv">
             <div className="adTop">
               <div className="img">
                 <img src={overlay} alt="" />
               </div>
+
               <div className="text text2">
-                <h1>Celebrity's onboard</h1>
+                <h1>Celebrities onboard</h1>
+                <p></p>
               </div>
               <div className="text">
                 <h1>About Ethereal</h1>

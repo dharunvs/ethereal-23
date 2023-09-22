@@ -5,8 +5,8 @@ import axios from "axios";
 import { baseURL } from "../../data";
 import { useNavigate } from "react-router-dom";
 import "./LoggedIn.css";
-import ethPoster from "../../Assets/Images/ethPoster.png";
-import conPoster from "../../Assets/Images/Pradeep2.png";
+// import ethPoster from "../../Assets/Images/ethPoster.png";
+// import conPoster from "../../Assets/Images/Pradeep2.png";
 
 function LoggedIn() {
   function scrollToId(id) {
@@ -155,7 +155,7 @@ function LoggedIn() {
                     {fees.ethereal}/-
                   </h2>
                 </button>
-                {!eth && !innerClg && (
+                {(!eth || !con) && !innerClg && (
                   <button
                     onMouseEnter={() => {
                       setEBannerActive(true);

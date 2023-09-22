@@ -7,3 +7,50 @@
   align-items: center;
   justify-content: center;
 }
+
+.Contact .teamMembers {
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  gap: 30px;
+}
+.Contact .teamGroup {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.Contact .teamGroup,
+.Contact .teamMembers {
+  width: 100%;
+}
+
+.emailContact {
+  font-size: 2rem;
+  font-family: "Akira";
+  padding-top: 5vh;
+}
+
+@media screen and (max-width: 700px) {
+  .emailContact {
+    font-size: 1.2rem;
+    font-family: "Akira";
+    padding-top: 5vh;
+  }
+  .Contact .teamMembers {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    gap: 30px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .emailContact {
+    font-size: 1rem;
+    font-family: "Akira";
+    padding-top: 5vh;
+  }
+}

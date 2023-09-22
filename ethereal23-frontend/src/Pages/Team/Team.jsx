@@ -70,6 +70,7 @@ function Team() {
       <Teams team={teams.tech} />
       <Teams team={teams.media} />
       <Teams team={teams.support} />
+      <Teams team={teams.committee} />
 
       {/* <div className="teamGroup">
         <h1>Core team</h1>
