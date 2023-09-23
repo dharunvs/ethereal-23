@@ -292,7 +292,7 @@
 
   .EventPage .eventForm {
     color: white;
-    height: 50vh;
+    min-height: 50vh;
     width: 100%;
     display: flex;
     flex-direction: column;

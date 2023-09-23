@@ -100,6 +100,7 @@ nav .contentMob > ul > li > * {
   nav .contentMob {
     width: 90%;
   }
+
   nav .content > ul > li > *,
   nav .contentMob > ul > li > * {
     font-size: 1.3rem;
@@ -117,7 +118,7 @@ nav .contentMob > ul > li > * {
   }
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1100px) {
   .burger,
   .burgerAct {
     display: flex;

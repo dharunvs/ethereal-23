@@ -5,6 +5,7 @@ import vid from "../../Assets/Spline/cubes.webm";
 // import eventImg from "../../Assets/Images/event.jpeg";
 import "./EventPage.css";
 import { posterImg } from "../../Assets/Images/posters";
+import { icons } from "../../Assets/Icons";
 import axios from "axios";
 
 function EventPage() {
@@ -21,6 +22,8 @@ function EventPage() {
 
   const { id } = useParams();
   const navigate = useNavigate();
+
+  const [loading, setLoading] = useState(true);
 
   const [event, setEvent] = useState({});
   const [registered, setRegistered] = useState(false);
@@ -50,6 +53,7 @@ function EventPage() {
       });
 
     const selEvent = events.find((event) => event.eventId === id);
+    console(event);
     setEvent(selEvent);
 
     if (selEvent.min == 1 && selEvent.max == 1) {
@@ -435,7 +439,7 @@ function EventPage() {
             </>
           )}
 
-          {ethereal && (
+          {ethereal && !solo && (
             <p className="fontJura">
               Note: Participants of a team must be of same college.
             </p>

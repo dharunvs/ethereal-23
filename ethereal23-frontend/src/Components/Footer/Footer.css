@@ -15,6 +15,8 @@ footer {
   background-color: black;
   display: flex;
   flex-direction: column;
+  position: relative;
+  z-index: 99;
 }
 
 footer .fTop {
@@ -115,6 +117,10 @@ footer .fBottom {
   border-radius: 20px;
   outline: none;
   border: none;
+}
+.fkcg25 {
+  width: 150px;
+  transform: translateY(20px);
 }
 
 .fbRight p {

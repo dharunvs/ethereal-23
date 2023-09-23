@@ -8,6 +8,28 @@
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
+.loaderSVG {
+  fill: aliceblue;
+  width: 60px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.AllKcg25 {
+  width: 150px;
+  position: absolute;
+  top: -20px;
+  left: -8px;
+}
+
+@media screen and (max-width: 1100px) {
+  .AllKcg25 {
+    width: 140px;
+  }
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;

@@ -138,13 +138,13 @@
 
 .AuthScreen .box > div button.sel {
   /* box-shadow: 0 0 20px 5px rgb(96, 255, 255); */
-  animation: sel 1000ms ease-in-out infinite;
+  animation: sel 1000ms ease-in infinite;
 }
 
 @keyframes sel {
   0% {
     /* box-shadow: 2px 2px 0 2px rgb(3, 212, 13); */
-    box-shadow: 2px 2px 6px 4px rgb(140, 255, 146);
+    box-shadow: 0 0px 6px 5px rgb(254, 255, 192);
   }
   50% {
     box-shadow: 2px 2px 6px 4px rgba(0, 0, 0, 0);
@@ -152,8 +152,17 @@
   100% {
     /* box-shadow: 2px 2px 0 2px rgb(0, 153, 255); */
     /* box-shadow: 2px 2px 0 2px rgb(255, 163, 24); */
-    box-shadow: 2px 2px 6px 4px rgb(140, 255, 146);
+    box-shadow: 0 0px 6px 5px rgb(140, 255, 146);
+    box-shadow: 0 0px 6px 5px rgb(255, 234, 166);
+    box-shadow: 0 0px 6px 5px rgb(254, 255, 192);
   }
+}
+
+.paused {
+  font-family: "Akira";
+  color: rgb(187, 177, 122);
+  text-align: center;
+  width: 90%;
 }
 
 .AuthScreen .box > div button.sel,
@@ -195,6 +204,17 @@
 .AuthScreen .box > div button.sel2:hover {
   background-position: right center; /* change the direction of the change here */
   text-decoration: none;
+}
+
+.AuthScreen .box .cInf {
+  top: 100%;
+  color: white;
+  font-family: "Jura";
+  font-weight: 800;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.507);
+  font-size: 1.3rem;
+  text-align: center;
+  width: max-content;
 }
 
 .btButton {
@@ -333,6 +353,9 @@
 }
 
 @media screen and (max-width: 1000px) {
+  .paused {
+    font-size: 2rem;
+  }
   .AuthScreen .box h1 {
     width: fit-content;
     text-align: center;
@@ -414,6 +437,9 @@
 }
 
 @media screen and (max-width: 800px) {
+  .paused {
+    font-size: 1.8rem;
+  }
   .AuthScreen .box > div button {
     color: black;
     background-color: white;
@@ -449,6 +475,9 @@
 }
 
 @media screen and (max-width: 600px) {
+  .paused {
+    font-size: 1.4rem;
+  }
   .AuthScreen .box > div button {
     padding: 20px 70px;
     font-size: 1.4rem;
@@ -482,5 +511,16 @@
   .sel p,
   .sel2 p {
     font-size: 1.6rem;
+  }
+
+  .AuthScreen .box .cInf {
+    top: 100%;
+    color: white;
+    font-family: "Jura";
+    font-weight: 800;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.507);
+    font-size: 1rem;
+    text-align: center;
+    width: max-content;
   }
 }

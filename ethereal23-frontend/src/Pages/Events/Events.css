@@ -151,7 +151,7 @@
 
 @media screen and (max-width: 1000px) {
   .EventsScreen {
-    padding-top: 10vh;
+    padding-top: 12vh;
   }
   .EventsScreen .esControls {
     justify-content: center;

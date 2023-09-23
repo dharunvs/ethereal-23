@@ -7,9 +7,11 @@ import { posterImg, posterImgArr } from "../../Assets/Images/posters";
 import { icons } from "../../Assets/Icons";
 import { events } from "../../data";
 
+import kcg25 from "../../Assets/Images/kcg25.webp";
+
 function Events() {
   const [loading, setLoading] = useState(true);
-  const Loader = () => <div className="Loader">Loading...</div>;
+  const Loader = () => <icons.Loading />;
 
   useEffect(() => {
     let assetsToPreload = [];
@@ -77,29 +79,36 @@ function Events() {
 
   return (
     <>
-      {loading && <Loader />}
       <div className="Events">
-        <div className="EventsScreen">
-          <div className="esControls">
-            <div className="SearchBar">
-              <p>
-                <icons.Search />
-              </p>
-              <input
-                type="text"
-                placeholder="Search events"
-                onChange={(e) => {
-                  handleSearch(e.target.value);
-                }}
-              />
+        <img src={kcg25} className="AllKcg25" alt="kcg25" />
+        {loading ? (
+          <Loader />
+        ) : (
+          <>
+            {" "}
+            <div className="EventsScreen">
+              <div className="esControls">
+                <div className="SearchBar">
+                  <p>
+                    <icons.Search />
+                  </p>
+                  <input
+                    type="text"
+                    placeholder="Search events"
+                    onChange={(e) => {
+                      handleSearch(e.target.value);
+                    }}
+                  />
+                </div>
+              </div>
+              <div className="events">
+                {filteredEvents.map((event, key) => (
+                  <Event event={event} key={key} />
+                ))}
+              </div>
             </div>
-          </div>
-          <div className="events">
-            {filteredEvents.map((event, key) => (
-              <Event event={event} key={key} />
-            ))}
-          </div>
-        </div>
+          </>
+        )}
       </div>
     </>
   );

@@ -5,7 +5,8 @@ import { baseURL } from "../../data";
 import logo from "../../Assets/Images/logo.png";
 import vid from "../../Assets/Spline/gradient-waves.webm";
 import vid2 from "../../Assets/Spline/gradient-waves.mp4";
-
+import { icons } from "../../Assets/Icons";
+import kcg25 from "../../Assets/Images/kcg25.webp";
 import QRCode from "qrcode";
 import { events } from "../../data";
 
@@ -29,6 +30,8 @@ function Profile() {
   const [qrCodeDataURL, setQRCodeDataURL] = useState("");
   const [userEvents, setUserEvents] = useState([]);
 
+  const [loading, setLoading] = useState(true);
+
   const generateQRCode = async (text) => {
     try {
       const dataURL = await QRCode.toDataURL(text);
@@ -47,6 +50,7 @@ function Profile() {
   // };
 
   useEffect(() => {
+    let state = 0;
     console.log("Hi");
     axios
       .post(baseURL + "/check-loggedin", {
@@ -67,6 +71,8 @@ function Profile() {
         } else {
           navigate("/auth");
         }
+        state += 1;
+        console.log(state);
       });
 
     axios
@@ -77,106 +83,124 @@ function Profile() {
       .then((res) => {
         console.log(res);
         setUserEvents(res.events);
+        state += 1;
+        console.log(state);
+        if (state >= 2) {
+        }
       });
-    console.log("Bye");
+    setLoading(false);
   }, []);
 
   return (
     <div className="Profile">
-      <div className="profileBg">
-        {/* <Spline
+      <img src={kcg25} className="AllKcg25" alt="kcg25" />
+
+      {loading ? (
+        <icons.Loading />
+      ) : (
+        <>
+          <div className="profileBg">
+            {/* <Spline
           id="spline"
           scene="https://prod.spline.design/1CXBumz9jWVu325v/scene.splinecode"
         /> */}
-        {/* <div className="logo">
+            {/* <div className="logo">
           <img src={logo} alt="logo" />
         </div> */}
-        {/* <video className="ProfileVid" src={vid} autoPlay muted loop></video> */}
-        <video className="ProfileVid" autoPlay muted loop>
-          {/* <source src={vid} type="video/webm" autoPlay muted loop></source> */}
-          <source src={vid2} type="video/mp4" autoPlay muted loop></source>
-        </video>
-      </div>
-      <div className="content">
-        {user.logged_in && (
-          <div className="profileScreen">
-            <div className="box">
-              {/* <div className="dummy"></div> */}
-              <div className="left">
-                <div className="profile">
-                  <h1>Profile</h1>
+            {/* <video className="ProfileVid" src={vid} autoPlay muted loop></video> */}
+            <video className="ProfileVid" autoPlay muted loop>
+              {/* <source src={vid} type="video/webm" autoPlay muted loop></source> */}
+              <source src={vid2} type="video/mp4" autoPlay muted loop></source>
+            </video>
+          </div>
+          <div className="content">
+            {user.logged_in && (
+              <div className="profileScreen">
+                <div className="box">
+                  {/* <div className="dummy"></div> */}
+                  <div className="left">
+                    <div className="profile">
+                      <h1>Profile</h1>
 
-                  <div className="prow">
-                    <h2>Name</h2>
-                    <p>{user.name}</p>
-                  </div>
-                  <div className="prow">
-                    <h2>College</h2>
-                    <p>{user.college}</p>
-                  </div>
-                  {user.isInnerCollege && (
-                    <div className="prow">
-                      <h2>Department</h2>
-                      <p>{user.department}</p>
-                    </div>
-                  )}
-                  {user.isInnerCollege && (
-                    <div className="prow">
-                      <h2>Year</h2>
-                      <p>{user.year}</p>
-                    </div>
-                  )}
+                      <div className="prow">
+                        <h2>Name</h2>
+                        <p>{user.name}</p>
+                      </div>
+                      <div className="prow">
+                        <h2>College</h2>
+                        <p>{user.college}</p>
+                      </div>
+                      {user.isInnerCollege && (
+                        <div className="prow">
+                          <h2>Department</h2>
+                          <p>{user.department}</p>
+                        </div>
+                      )}
+                      {user.isInnerCollege && (
+                        <div className="prow">
+                          <h2>Year</h2>
+                          <p>{user.year}</p>
+                        </div>
+                      )}
 
-                  <div className="prow">
-                    <h2>Email</h2>
-                    <p>
-                      {/* {user.email.length > 21
+                      <div className="prow">
+                        <h2>Email</h2>
+                        <p>
+                          {/* {user.email.length > 21
                         ? user.email.slice(0, 21) + "..."
                         : user.email} */}
-                      {user.email}
-                    </p>
-                    {/* <p>{"20ad09@kcgcollege.com"}</p> */}
-                  </div>
-                </div>
-                <div className="events">
-                  <h1>Events particitipating</h1>
-                  {userEvents.length > 0 ? (
-                    userEvents.map((event, key) => (
-                      <p
-                        key={key}
+                          {user.email}
+                        </p>
+                        {/* <p>{"20ad09@kcgcollege.com"}</p> */}
+                      </div>
+                    </div>
+                    <div className="events">
+                      <h1>Events particitipating</h1>
+                      {userEvents.length > 0 ? (
+                        userEvents.map((event, key) => (
+                          <p
+                            key={key}
+                            onClick={() => {
+                              navigate("/event/" + event.event);
+                            }}
+                          >
+                            {
+                              events.filter(
+                                (ev) => ev.eventId == event.event
+                              )[0].name
+                            }
+                          </p>
+                        ))
+                      ) : (
+                        <p>No events yet</p>
+                      )}
+                      <button
+                        className="pb"
                         onClick={() => {
-                          navigate("/event/" + event.event);
+                          navigate("/events");
                         }}
                       >
-                        {
-                          events.filter((ev) => ev.eventId == event.event)[0]
-                            .name
-                        }
-                      </p>
-                    ))
-                  ) : (
-                    <p>No events yet</p>
-                  )}
-                  <button className="pb">Participate in events</button>
-                </div>
-              </div>
-              <div className="right">
-                <div className="rsec">
-                  <h1>Ethereal Access</h1>
-                  {user.ethereal !== null ? (
-                    <p className="code">Code: {user.ethereal}</p>
-                  ) : (
-                    <p className="buyP">Buy Ethereal tickets</p>
-                  )}
-                </div>
-                <div className="rsec">
-                  <h1>Concert Access</h1>
+                        Participate in events
+                      </button>
+                    </div>
+                  </div>
+                  <div className="right">
+                    <div className="rsec">
+                      <h1>Ethereal Access</h1>
+                      {user.ethereal !== null ? (
+                        <p className="code">Code: {user.ethereal}</p>
+                      ) : (
+                        <p className="buyP">Buy Ethereal tickets</p>
+                      )}
+                    </div>
+                    <div className="rsec">
+                      <h1>Concert Access</h1>
 
-                  <div className="qr">
-                    {qrCodeDataURL != "" ? (
-                      <>
-                        <img src={qrCodeDataURL} alt="qrCodeDataURL" />
-                        {/* <button
+                      <div className="qr">
+                        {qrCodeDataURL != "" ? (
+                          <>
+                            <img src={qrCodeDataURL} alt="qrCodeDataURL" />
+                            {/* <button
                           className="downloadQR"
                           onClick={() => {
                             downloadQRCode();
@@ -184,25 +208,27 @@ function Profile() {
                         >
                           Download
                         </button> */}
-                      </>
-                    ) : (
-                      <p className="buyP">
-                        Buy concert ticket <br />
-                        to get access
-                      </p>
-                    )}
+                          </>
+                        ) : (
+                          <p className="buyP">
+                            Buy concert ticket <br />
+                            to get access
+                          </p>
+                        )}
+                      </div>
+                      {user.concert_code !== null ? (
+                        <p className="code">CODE {user.concert_code}</p>
+                      ) : (
+                        <></>
+                      )}
+                    </div>
                   </div>
-                  {user.concert_code !== null ? (
-                    <p className="code">CODE {user.concert_code}</p>
-                  ) : (
-                    <></>
-                  )}
                 </div>
               </div>
-            </div>
+            )}
           </div>
-        )}
-      </div>
+        </>
+      )}
     </div>
   );
 }

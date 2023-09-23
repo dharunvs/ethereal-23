@@ -1,0 +1,6 @@
+ERROR:  duplicate key value violates unique constraint "users_email_key"
+DETAIL:  Key (email)=(22ad34@kcgcollege.com) already exists.
+ERROR:  duplicate key value violates unique constraint "users_email_key"
+DETAIL:  Key (email)=(21cs092@kcgcollege.com) already exists.
+ERROR:  duplicate key value violates unique constraint "users_email_key"
+DETAIL:  Key (email)=(20mc20@kcgcollege.com) already exists.

@@ -2,14 +2,15 @@ import React from "react";
 import { useState, useEffect } from "react";
 // import logo from "../../Assets/Images/logo.png";
 import vid from "../../Assets/Spline/gradient-waves.webm";
-import vid2 from "../../Assets/Spline/gradient-waves.mp4";
 import axios from "axios";
 import { baseURL, colleges } from "../../data";
 import { useNavigate } from "react-router-dom";
+import { icons } from "../../Assets/Icons";
 
 import "./Auth.css";
 
 function Auth() {
+  const [loading, setLoading] = useState(true);
   function scrollToId(id) {
     var element = document.getElementById(id);
     element.scrollIntoView({
@@ -63,13 +64,23 @@ function Auth() {
           navigate("/auth");
         }
       });
+    setLoading(false);
   }, []);
 
   const Form1 = () => {
     const [inEmail, setInEmail] = useState(email);
 
     return (
-      <form>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            e.preventDefault(); // Prevent the default Enter key behavior
+          }
+        }}
+      >
         <h1>Login</h1>
         <input
           type="text"
@@ -171,7 +182,16 @@ function Auth() {
     };
 
     return (
-      <form>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            e.preventDefault(); // Prevent the default Enter key behavior
+          }
+        }}
+      >
         <h1>Login</h1>
         <input
           type="text"
@@ -292,8 +312,18 @@ function Auth() {
 
   const OtpForm = () => {
     const [inOTP, setInOTP] = useState("");
+    const [otpMsg, setOtpMsg] = useState(`OTP has been sent to ${email}`);
     return (
-      <form>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            e.preventDefault(); // Prevent the default Enter key behavior
+          }
+        }}
+      >
         <h1>Login</h1>
         <div>
           {/* {otpSent == true ? (
@@ -303,7 +333,7 @@ function Auth() {
           ) : (
             <p className="colorWhite">Sending OTP to {email}</p>
           )} */}
-          <p className="colorGreen">OTP has been sent to {email} </p>
+          <p className="colorGreen">{otpMsg}</p>
 
           <input
             type="number"
@@ -315,22 +345,32 @@ function Auth() {
         </div>
         <button
           onClick={(e) => {
-            e.preventDefault();
-            axios
-              .post(baseURL + "/login", {
-                email: email,
-                otp: inOTP,
-              })
-              .then((res) => res["data"])
-              .then((res) => {
-                console.log(res);
-                localStorage.setItem("id", res["id"]);
-                localStorage.setItem("email", res["email"]);
-                localStorage.setItem("loggedIn", res["loggedIn"]);
-              })
-              .then(() => {
-                navigate("/home");
-              });
+            if (inOTP.trim() !== "") {
+              e.preventDefault();
+              axios
+                .post(baseURL + "/login", {
+                  email: email,
+                  otp: inOTP,
+                })
+                .then((res) => res["data"])
+                .then((res) => {
+                  console.log(res);
+                  localStorage.setItem("id", res["id"]);
+                  localStorage.setItem("email", res["email"]);
+                  localStorage.setItem("loggedIn", res["loggedIn"]);
+                })
+                .then(() => {
+                  navigate("/home");
+                })
+                .catch((err) => {
+                  setOtpMsg(err.response.data.message);
+                });
+            }
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault(); // Prevent the default Enter key behavior
+            }
           }}
         >
           Login
@@ -341,32 +381,43 @@ function Auth() {
 
   return (
     <div className="Auth">
-      <div className="authBg">
-        {/* <Spline
+      {loading ? (
+        <icons.Loading />
+      ) : (
+        <>
+          {" "}
+          <div className="authBg">
+            {/* <Spline
           id="spline"
           scene="https://prod.spline.design/1CXBumz9jWVu325v/scene.splinecode"
         /> */}
-        {/* <div className="logo">
+            {/* <div className="logo">
           <img src={logo} alt="logo" />
         </div> */}
-        <video className="AuthVid" autoPlay muted loop>
-          <source src={vid} type="video/webm" autoPlay muted loop></source>
-          <source src={vid2} type="video/mp4" autoPlay muted loop></source>
-        </video>
-      </div>
-      <div className="content">
-        <div className="AuthScreen">
-          {level == 1 ? (
-            <Form1 />
-          ) : level == 2 ? (
-            <NewUserForm />
-          ) : level == 3 ? (
-            <OtpForm />
-          ) : (
-            <Form1 />
-          )}
-        </div>
-      </div>
+            <video
+              className="AuthVid"
+              src={vid}
+              type="video/webm"
+              autoPlay
+              muted
+              loop
+            ></video>
+          </div>
+          <div className="content">
+            <div className="AuthScreen">
+              {level == 1 ? (
+                <Form1 />
+              ) : level == 2 ? (
+                <NewUserForm />
+              ) : level == 3 ? (
+                <OtpForm />
+              ) : (
+                <Form1 />
+              )}
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }

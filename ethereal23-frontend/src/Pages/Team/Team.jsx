@@ -3,6 +3,8 @@ import { useEffect } from "react";
 import "./Team.css";
 import teamBg from "../../Assets/Images/teamBG.webp";
 import { teams } from "../../data";
+import insta from "../../Assets/Icons/insta.png";
+import kcg25 from "../../Assets/Images/kcg25.webp";
 
 function Team() {
   function scrollToId(id) {
@@ -16,21 +18,53 @@ function Team() {
     scrollToId("root");
   }, []);
 
-  const data = {
-    name: "Dharun V S",
-    dept: "Artificial Intelligence and Data Science",
-    year: "Final",
-  };
-
-  const Card = ({ data }) => {
+  const Card = ({ data, i }) => {
     return (
       <div className="Card">
         <div className="imgContainer">
           <img src={data.img} alt="profilePic" />
         </div>
-        <div className="content">
+        <div
+          className="content"
+          onClick={() => {
+            if (i) {
+              const a = document.createElement("a");
+              a.target = "_blank";
+              a.href = data.insta;
+              a.click();
+            }
+          }}
+        >
+          {/* {i && <img src={insta} className="insta" />} */}
+
           <h1>{data.name}</h1>
           <p>{data.dept}</p>
+        </div>
+      </div>
+    );
+  };
+
+  const CardM = ({ data, i }) => {
+    return (
+      <div className="CardM">
+        <div className="imgContainer">
+          <img src={data.img} alt="profilePic" />
+        </div>
+        <div
+          className="content"
+          onClick={() => {
+            if (i) {
+              const a = document.createElement("a");
+              a.target = "_blank";
+              a.href = data.insta;
+              a.click();
+            }
+          }}
+        >
+          {/* {i && <img src={insta} className="insta" />} */}
+
+          <h1>{data.name}</h1>
+          <p>{data.desc}</p>
         </div>
       </div>
     );
@@ -42,13 +76,28 @@ function Team() {
         <h1>{team.name}</h1>
         <div className="teamMembers">
           {team.members.map((member, key) => (
-            <Card data={member} key={key} />
+            <Card
+              data={member}
+              key={key}
+              i={team == teams.core ? true : false}
+            />
           ))}
-          {/* <Card data={data} />
-      <Card data={data} />
-      <Card data={data} />
-      <Card data={data} />
-      <Card data={data} /> */}
+        </div>
+      </div>
+    );
+  };
+  const TeamsM = ({ team }) => {
+    return (
+      <div className="teamGroup">
+        <h1>{team.name}</h1>
+        <div className="teamMembers">
+          {team.members.map((member, key) => (
+            <CardM
+              data={member}
+              key={key}
+              i={team == teams.core ? true : false}
+            />
+          ))}
         </div>
       </div>
     );
@@ -56,6 +105,8 @@ function Team() {
 
   return (
     <div className="TeamPage">
+      <img src={kcg25} className="AllKcg25" alt="kcg25" />
+
       <div className="teambg">
         <img src={teamBg} alt="teamBg" />
         <img
@@ -65,7 +116,8 @@ function Team() {
         />
         <img src={teamBg} alt="teamBg" />
       </div>
-
+      <TeamsM team={teams.management} />
+      <TeamsM team={teams.pc} />
       <Teams team={teams.core} />
       <Teams team={teams.tech} />
       <Teams team={teams.media} />

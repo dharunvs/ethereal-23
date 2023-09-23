@@ -245,7 +245,7 @@ function Checkout() {
           <>
             <h1>Thank you</h1>
             <p>
-              You will recieve your tickets once the transaction is verified,{" "}
+              Verification under process, Check back after 6hrs,
               <br />
               Thank you !
             </p>

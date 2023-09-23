@@ -1,6 +1,7 @@
 import React from "react";
 import logo from "../../Assets/Images/logo.png";
 import { useNavigate } from "react-router-dom";
+import kcg25 from "../../Assets/Images/kcg25.webp";
 import "./Footer.css";
 
 function Footer() {
@@ -12,7 +13,7 @@ function Footer() {
         <div className="logo">
           <img src={logo} alt="" />
         </div>
-        <h1>Ethereal 23'</h1>
+        <h1>Ethereal '23</h1>
         <p className="goldGlow">"Be all that you can be"</p>
         <p className="clgName">KCG College of Technology</p>
         <p className="clgLoc">Karapakkam, Chennai 600 097</p>
@@ -32,6 +33,7 @@ function Footer() {
         </div>
         <div className="fbRight">
           <div className="fbButtons">
+            <img src={kcg25} alt="kvg25" className="fkcg25" />
             <button
               onClick={() => {
                 navigate("/contact");

@@ -2,6 +2,8 @@ import React from "react";
 import { useEffect } from "react";
 import "./Contact.css";
 import { teams } from "../../data";
+import kcg25 from "../../Assets/Images/kcg25.webp";
+
 function Contact() {
   function scrollToId(id) {
     var element = document.getElementById(id);
@@ -51,6 +53,8 @@ function Contact() {
 
   return (
     <div className="Contact">
+      <img src={kcg25} className="AllKcg25" alt="kcg25" />
+
       <Teams team={teams.contact} />
     </div>
   );

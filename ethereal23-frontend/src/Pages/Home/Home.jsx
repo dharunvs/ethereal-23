@@ -10,6 +10,11 @@ import chipsVidRight from "../../Assets/Spline/chips-right.webm";
 // import { galleryImgArr } from "../../Assets/Images/gallery";
 import overlay from "../../Assets/Images/homeBG.webp";
 import homePradeep from "../../Assets/Images/Pradeep.png";
+// import kcg25 from "../../Assets/Images/kcg25.webp";
+import kcg25 from "../../Assets/Images/kcg25b.png";
+import cb1 from "../../Assets/Images/cb1.webp";
+import cb2 from "../../Assets/Images/cb2.webp";
+import cb3 from "../../Assets/Images/cb3.webp";
 
 function Home({ data }) {
   const galleryImgArr = data.galleryImgs;
@@ -131,24 +136,24 @@ function Home({ data }) {
           muted={true}
           loop={true}
         ></video>
+        <img src={kcg25} alt="kcg25" className="kcg25" />
       </div>
       <div className="content">
         <div className="HScreen1">
           <div className="logo">
             <img src={logo} alt="" />
-            <h1>
-              <p className="kcg">KCG's</p>ETHEREAL
-            </h1>
+            <h1>ETHEREAL</h1>
             <p>"Be all that you can be"</p>
-            <button
-              className="customButton"
-              onClick={() => {
-                navigate("/auth");
-              }}
-            >
-              Buy Tickets
-            </button>
+            <h2>Oct 13 - Oct 14</h2>
           </div>
+          <button
+            className="customButton"
+            onClick={() => {
+              navigate("/auth");
+            }}
+          >
+            Buy Tickets
+          </button>
         </div>
         {/* <div className="HScreen4">
           <div className="imgContainer">
@@ -163,8 +168,26 @@ function Home({ data }) {
               </div>
 
               <div className="text text2">
-                <h1>Celebrities onboard</h1>
-                <p></p>
+                <h1>
+                  Celebrities onboard <h2 className="mtc">More yet to come!</h2>
+                </h1>
+                <div className="cbs">
+                  <div className="cbCB">
+                    <img src={cb3} alt="" />
+                    <h1>
+                      Pradeep <h3 className="ps">Pro Show</h3>
+                    </h1>
+                  </div>
+                  <div className="cbC1">
+                    <img src={cb1} alt="" />
+                    <h2>Mirnaa</h2>
+                  </div>
+
+                  <div className="cbC2">
+                    <img src={cb2} alt="" />
+                    <h2>Jaffer</h2>
+                  </div>
+                </div>
               </div>
               <div className="text">
                 <h1>About Ethereal</h1>
@@ -206,7 +229,7 @@ function Home({ data }) {
             // ref={galleryContainerRef}
           >
             {galleryImgArr.map((val, key) => (
-              <div className={"item item-" + key} key={key}>
+              <div className={"item"} key={key}>
                 <img src={val} alt={`Gallery ${key}`} />
               </div>
             ))}

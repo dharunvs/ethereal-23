@@ -4,6 +4,21 @@
   color: white;
   font-family: "Akira";
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.schkcg {
+  width: 200px;
+  transform: translateY(5vh);
+}
+
+.Schedule p {
+  color: white;
+  font-family: "Akira";
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }

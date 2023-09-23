@@ -8,6 +8,18 @@
   width: 100%;
   overflow-x: hidden;
 }
+
+.kcg25 {
+  width: 300px;
+  position: absolute;
+  /* left: 0; */
+  bottom: -6vh;
+  opacity: 0.8;
+  /* border: 2px solid white; */
+  /* filter: drop-shadow(0 0 2rem rgb(255, 255, 255)); */
+  /* -webkit-filter: drop-shadow(1px 1px 0 white) drop-shadow(-1px -1px 0 white); */
+  /* filter: drop-shadow(1px 1px 0 white) drop-shadow(-1px -1px 0 white); */
+}
 /* 
 .HomeVid {
   width: 100%;
@@ -48,6 +60,7 @@
   width: 100%;
   min-height: 100vh;
 }
+
 .HScreen1 {
   width: 100%;
   height: 100vh;
@@ -68,6 +81,7 @@
   left: 50%;
   transform: translate(-50%, -80%);
   z-index: 1;
+  user-select: none;
 }
 
 .HScreen1 .logo > h1 {
@@ -111,6 +125,96 @@
   letter-spacing: 3px;
 }
 
+.HScreen1 .logo > h2 {
+  font-family: "Akira";
+  font-size: 1.6rem;
+  color: white;
+  position: absolute;
+  top: 100%;
+  left: 0%;
+  transform: translate(-50%, 400%);
+  width: max-content;
+  z-index: 3;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.4);
+  letter-spacing: 3px;
+}
+
+.cbs {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* position: relative; */
+}
+
+.cbs {
+  /* position: relative; */
+}
+
+.cbs .cbC1,
+.cbs .cbC1,
+.cbs .cbCB {
+  position: relative;
+  /* height: 500x; */
+}
+
+.cbs .cbC1,
+.cbs .cbC1 img {
+  width: 500px;
+  position: absolute;
+  top: 50%;
+  left: 25%;
+  transform: translate(calc(-50%), -50%);
+}
+
+.cbs .cbC2,
+.cbs .cbC2 img {
+  width: 500px;
+  position: absolute;
+  top: 50%;
+  right: 25%;
+  transform: translate(calc(50% - 10%), -50%);
+}
+
+.cbs .cbCB,
+.cbs .cbCB img {
+  width: 800px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(calc(-50% - 5%), -50%);
+}
+
+.cbs h1,
+.cbs h2 {
+  color: white;
+  font-family: "Akira";
+  position: absolute;
+  top: 10vh;
+  left: 50%;
+  transform: translate(-45%, -50%);
+  scale: 1.6;
+  text-shadow: 0 0 5px rgb(255, 146, 255);
+}
+.cbCB h1 {
+  transform: translate(-30%, -50%);
+  text-shadow: 0 0 5px rgb(255, 228, 110);
+}
+.cbC1 h2 {
+  transform: translate(-160%, -50%);
+  text-shadow: 0 0 5px rgb(255, 146, 255);
+}
+
+.ps {
+  position: absolute;
+  font-size: 1.7rem;
+  font-family: "Fasthand";
+  text-shadow: 0 0 5px rgba(255, 244, 194, 0.459);
+  left: 50%;
+  width: max-content;
+  transform: translateX(-50%);
+}
+
 /* .HScreen1 .logo > .customButton {
   width: max-content;
   color: white;
@@ -138,7 +242,7 @@
   transform: translate(-50%, 20vh);
 } */
 
-.HScreen1 .logo > .customButton {
+.HScreen1 > .customButton {
   background-image: linear-gradient(
     100deg,
     #b36903 0%,
@@ -157,12 +261,15 @@
   font-size: 1rem;
 
   position: absolute;
-  top: 0;
+  /* top: 0; */
+  /* left: 50%; */
+  /* transform: translate(-50%, 20vh); */
+  bottom: 10vh;
   left: 50%;
-  transform: translate(-50%, 20vh);
+  transform: translateX(-50%);
 }
 
-.HScreen1 .logo > .customButton:hover {
+.HScreen1 > .customButton:hover {
   background-position: right center; /* change the direction of the change here */
   color: #fff;
   text-decoration: none;
@@ -206,16 +313,17 @@
 }
 .HScreen2 .aboutDiv .adBottom {
   width: 100%;
-  height: 60vh;
+  min-height: 60vh;
   position: relative;
   padding: 5%;
   padding-top: 5vh;
+  overflow: hidden;
 }
 
 .HScreen2 .aboutDiv .adTop .img {
   width: 100%;
   height: 100%;
-  background-color: #474747;
+  /* background-color: #474747; */
   opacity: 0.5;
   position: absolute;
   top: 0;
@@ -234,7 +342,7 @@
 
 .HScreen2 .aboutDiv .adBottom .img {
   /* background-color: lightskyblue; */
-  width: 100%;
+  width: max-content;
   height: 100%;
   background-color: #474747;
   opacity: 0.7;
@@ -250,14 +358,17 @@
 
 .HScreen2 .aboutDiv .adBottom .img img {
   /* width: 100%; */
-  height: 100%;
-  width: 100%;
+  /* height: 100%; */
+  /* width: 100%; */
 }
 
 .HScreen2 .aboutDiv .adBottom .img img {
-  width: 100%;
+  /* width: 100%; */
   /* height: 100%; */
   /* width: auto; */
+  object-fit: cover;
+  width: 100%;
+  object-position: center;
 }
 
 .HScreen2 .aboutDiv .adTop .text,
@@ -267,7 +378,10 @@
   color: white;
 }
 .text2 {
-  padding-bottom: 50vh;
+  /* padding-bottom: 50vh; */
+  height: 80vh;
+  /* backdrop-filter: blur(10px); */
+  width: 100%;
   /* border: 2px solid red; */
 }
 
@@ -281,7 +395,10 @@
 .HScreen2 .aboutDiv .adBottom .text p {
   font-family: "Jura";
   font-size: 1.6rem;
-  font-weight: 400;
+  font-weight: 600;
+  word-spacing: 5px;
+  line-height: 1.6rem;
+  /* text-align: justify; */
 }
 
 .HScreen2 .aboutDiv .adTop .text {
@@ -302,6 +419,23 @@
 
 .HScreen2 .aboutDiv .adBottom .text p {
   width: 85%;
+}
+
+.text > h1 {
+  position: relative;
+}
+
+.text > h1 > .mtc {
+  position: absolute;
+  color: white;
+  top: 100%;
+  /* left: 50%; */
+  transform: translateX(20px);
+  font-size: 0.8rem;
+  /* font-family: "Akira"; */
+  font-family: "Fasthand";
+  font-size: 1.8rem;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.568);
 }
 
 /* ----------------------------------------------------------- */
@@ -382,6 +516,81 @@
 /* ----------------------------------------------------------- */
 /* ----------------------------------------------------------- */
 /* ----------------------------------------------------------- */
+@media screen and (max-width: 1500px) {
+  .text2 {
+    height: max-content;
+  }
+  .cbs {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cbs .cbC1,
+  .cbs .cbC1 img {
+    width: 500px;
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: translate(0);
+  }
+
+  .cbs .cbC2,
+  .cbs .cbC2 img {
+    width: 500px;
+    position: relative;
+    top: auto;
+    right: auto;
+    transform: translate(0);
+  }
+
+  .cbs .cbCB,
+  .cbs .cbCB img {
+    width: 800px;
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: translate(0);
+  }
+
+  .cbs h1,
+  .cbs h2 {
+    color: white;
+    font-family: "Akira";
+    position: absolute;
+    top: auto;
+    left: auto;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -100%);
+    scale: 1.6;
+    text-shadow: 0 0 5px rgb(255, 146, 255);
+  }
+  .cbCB h1 {
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -100%);
+    text-shadow: 0 0 5px rgb(255, 228, 110);
+  }
+  .cbC1 h2 {
+    /* top: 70%; */
+    left: 50%;
+    transform: translate(-50%, -100%);
+    text-shadow: 0 0 5px rgb(255, 146, 255);
+  }
+
+  .ps {
+    position: absolute;
+    font-size: 1.7rem;
+    font-family: "Fasthand";
+    text-shadow: 0 0 5px rgba(255, 244, 194, 0.459);
+    left: 50%;
+    width: max-content;
+    transform: translateX(-50%);
+  }
+}
 
 @media screen and (max-width: 1200px) {
   .HScreen2 .aboutDiv .adTop .text h1,
@@ -392,6 +601,9 @@
   .HScreen2 .aboutDiv .adTop .text p,
   .HScreen2 .aboutDiv .adBottom .text p {
     font-size: 1.4rem;
+  }
+  .HScreen1 .logo {
+    transform: scale(0.9);
   }
   .HScreen1 .logo > img {
     width: 280px;
@@ -455,7 +667,10 @@
   } */
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1100px) {
+  .kcg25 {
+    width: 200px;
+  }
   .HScreen2 .aboutDiv .adTop .text h1,
   .HScreen2 .aboutDiv .adBottom .text h1 {
     font-size: 1.7rem;
@@ -545,6 +760,10 @@
 }
 
 @media screen and (max-width: 600px) {
+  .kcg25 {
+    width: 150px;
+    top: 0;
+  }
   .HScreen2 .aboutDiv .adBottom .text {
     gap: 0;
   }
@@ -619,7 +838,68 @@
   .HScreen1 .logo > .customButton {
     padding: 10px 35px;
     font-size: 0.8rem;
-    transform: translate(-50%, 15vh);
+    transform: trans late(-50%, 15vh);
+  }
+  .HScreen1 .logo > h2 {
+    font-family: "Akira";
+    font-size: 1.4rem;
+    color: white;
+    position: absolute;
+    top: 100%;
+    left: 0%;
+    transform: translate(-50%, 310%);
+    width: max-content;
+    z-index: 3;
+    text-shadow: 0 0 5px white;
+    letter-spacing: 3px;
+  }
+  .cbs .cbC1,
+  .cbs .cbC1 img {
+    width: 400px;
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: translate(0);
+  }
+
+  .cbs .cbC2,
+  .cbs .cbC2 img {
+    width: 400px;
+    position: relative;
+    top: auto;
+    right: auto;
+    transform: translate(0);
+  }
+
+  .cbs .cbCB,
+  .cbs .cbCB img {
+    width: 600px;
+    position: relative;
+    top: auto;
+    left: auto;
+    /* transform: translateX(20px); */
+  }
+
+  .cbs {
+    padding-bottom: 10vh;
+  }
+
+  .cbCxB h1 {
+    transform: translate(-30%, -50%);
+    text-shadow: 0 0 5px rgb(255, 228, 110);
+  }
+
+  .cbs .cbC2,
+  .cbs .cbC1 {
+    height: 450px;
+  }
+  .cbs .cbC2,
+  .cbs .cbC2 img {
+    width: 600px;
+  }
+  .cbs .cbC1,
+  .cbs .cbC1 img {
+    width: 600px;
   }
 }
 
@@ -638,9 +918,29 @@
   .HScreen1 .logo > .customButton {
     padding: 10px 35px;
     font-size: 0.8rem;
-    transform: translate(-50%, 10vh);
+    transform: translate(-50%, 12 vh);
+  }
+  .HScreen1 .logo > h2 {
+    font-family: "Akira";
+    font-size: 1rem;
+    color: white;
+    position: absolute;
+    top: 100%;
+    left: 0%;
+    transform: translate(-50%, 400%);
+    width: max-content;
+    z-index: 3;
+    text-shadow: 0 0 5px white;
+    letter-spacing: 3px;
   }
   .HScreen3 > h1 {
     font-size: 2rem;
   }
+
+  /* .cbs h1,
+  .cbs h2 {
+  }
+  .text2 .cbs .cbCB h1 {
+    transform: translateX(2000px);
+  } */
 }

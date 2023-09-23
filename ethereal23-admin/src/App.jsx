@@ -125,6 +125,19 @@ function App() {
           <FileUpload />
         </div>
       </div>
+      <div className="controlBox">
+        <h2>Get db</h2>
+        <div className="CBContent">
+          {/* <FileUpload /> */}
+          <button
+            onClick={() => {
+              axios.get(BASE_URL + "/export-csv");
+            }}
+          >
+            Get DB
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

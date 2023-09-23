@@ -338,14 +338,14 @@ app.post("/send-otp", async (req, res) => {
       to: EMAIL,
       subject: "OTP Verification",
       // text: `Your OTP for login is: ${OTP}`,
-      html: `<p>Your OTP for login is: ${OTP}</p><br /><img src="cid:unique_cid" alt="Profile Picture">`,
-      attachments: [
-        {
-          filename: "profile.webp", // The name of the attached file
-          path: "./qr/ETHEREAL.webp", // The path to your profile picture file
-          cid: "unique_cid", // Content-ID (cid) for referencing in the HTML body
-        },
-      ],
+      html: `<p>Your OTP for login is: ${OTP}</p>`,
+      // attachments: [
+      //   {
+      //     filename: "profile.webp", // The name of the attached file
+      //     path: "./qr/ETHEREAL.webp", // The path to your profile picture file
+      //     cid: "unique_cid", // Content-ID (cid) for referencing in the HTML body
+      //   },
+      // ],
     };
 
     emailTransporter.sendMail(mailOptions, (err, info) => {
@@ -864,6 +864,18 @@ function parseEmail(email) {
 // --------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------
 
+app.get("/config", async (req, res) => {
+  try {
+    const query = await client.query(
+      "SELECT * FROM config WHERE role = 'admin'"
+    );
+    console.log(query.rows[0]);
+    res.json(query.rows[0]);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 const xl = require("xlsx");
 const multer = require("multer");
 
@@ -1032,6 +1044,25 @@ function createCode() {
   const code = uniqueId.replace(/-/g, "").slice(0, 6);
   return code;
 }
+
+app.get("/export-csv", async (req, res) => {
+  try {
+    // Query to select data from a table (replace 'your_table' with the actual table name)
+    const query = "SELECT * FROM users";
+    const result = await client.query(query);
+
+    // Convert the result to CSV format
+    const csvData = result.rows.map((row) => Object.values(row).join(","));
+
+    // Save the CSV data to a file
+    fs.writeFileSync("output.csv", csvData.join("\n"));
+
+    res.send("CSV file exported successfully.");
+  } catch (error) {
+    console.error("Error exporting CSV:", error);
+    res.status(500).send("Error exporting CSV");
+  }
+});
 
 // --------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------
