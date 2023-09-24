@@ -10,28 +10,28 @@ import Components from "./Components";
 import { posterImgArr } from "./Assets/Images/posters";
 import { galleryImgArr } from "./Assets/Images/gallery";
 import "./App.css";
-import loaderVid from "./Assets/Videos/Loader.mp4";
+// import loaderVid from "./Assets/Videos/Loader.mp4";
 
 function App() {
   const [loading, setLoading] = useState(true);
 
-  const Loader = () => {
-    return (
-      <div className={loading ? "MainLoader" : "MainLoaderAnim"}>
-        <video
-          id="loader"
-          src={loaderVid}
-          muted
-          loop
-          autoPlay
-          onLoadedData={(e) => {
-            console.log(e);
-          }}
-        ></video>
-        {/* <script>{"document.getElementById('loader').play();"}</script> */}
-      </div>
-    );
-  };
+  // const Loader = () => {
+  //   return (
+  //     <div className={loading ? "MainLoader" : "MainLoaderAnim"}>
+  //       <video
+  //         id="loader"
+  //         src={loaderVid}
+  //         muted
+  //         loop
+  //         autoPlay
+  //         onLoadedData={(e) => {
+  //           console.log(e);
+  //         }}
+  //       ></video>
+  //       {/* <script>{"document.getElementById('loader').play();"}</script> */}
+  //     </div>
+  //   );
+  // };
 
   useEffect(() => {
     let assetsToPreload = [];

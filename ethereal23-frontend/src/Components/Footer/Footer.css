@@ -25,7 +25,7 @@ footer .fTop {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  grid-area: 10px;
+  /* grid-area: 10px; */
   padding: 10vh 0;
 }
 
@@ -36,11 +36,11 @@ footer .fTop .logo img {
 footer .fTop h1 {
   font-family: "Akira";
   color: white;
-  font-size: 3.2rem;
+  font-size: 3rem;
 }
 footer .fTop .goldGlow {
   font-family: "Fasthand";
-  font-size: 1.6em;
+  font-size: 1.4em;
   color: white;
   text-shadow: 0 0 10px white;
   letter-spacing: 3px;
@@ -54,12 +54,13 @@ footer .fTop .clgLoc {
 }
 
 footer .fTop .clgName {
-  font-size: 1.6rem;
+  font-size: 1rem;
   padding-top: 20px;
   font-weight: 800;
 }
 
 footer .fTop .clgLoc {
+  font-size: 0.8rem;
   padding-top: 10px;
   font-weight: 800;
   color: gray;
@@ -69,7 +70,7 @@ footer .fBottom {
   width: 90%;
   padding: 30px;
   display: grid;
-  grid-template-columns: 1fr 3fr;
+  grid-template-columns: 3fr;
   margin: 0 auto;
   gap: 20px;
 }
@@ -95,7 +96,7 @@ footer .fBottom {
   width: 300px;
   height: 150px;
   /* height: 200px; */
-  transform: scale(1.2);
+  transform: scale(1);
 }
 
 .fbButtons {
@@ -109,15 +110,16 @@ footer .fBottom {
 }
 
 .fbButtons button {
-  padding: 10px 20px;
+  padding: 10px 16px;
   background-color: white;
   font-family: "Akira";
   width: max-content;
-  font-size: 1.4rem;
+  font-size: 0.8rem;
   border-radius: 20px;
   outline: none;
   border: none;
 }
+
 .fkcg25 {
   width: 150px;
   transform: translateY(20px);
@@ -127,7 +129,7 @@ footer .fBottom {
   color: white;
   font-family: "Jura";
   font-weight: 600;
-  font-size: 1.2rem;
+  font-size: 1rem;
   padding-top: 10px;
 }
 
@@ -159,7 +161,7 @@ footer .fBottom {
   footer .fBottom {
     width: 90%;
     gap: 20px;
-    grid-template-columns: 3fr 5fr;
+    grid-template-columns: 1fr;
   }
   .fbButtons button {
     padding: 6px 14px;
@@ -186,7 +188,7 @@ footer .fBottom {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    grid-area: 10px;
+    /* grid-area: 10px; */
     padding: 5vh 0;
   }
 

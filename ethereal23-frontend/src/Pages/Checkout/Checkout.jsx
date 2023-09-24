@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Checkout.css";
 // import logo from "../../Assets/Images/logo.png";
 import vid from "../../Assets/Spline/gradient-waves.webm";
-import img from "../../Assets/Images/Pradeep.png";
+// import img from "../../Assets/Images/Pradeep.png";
 import axios from "axios";
 import { baseURL, events } from "../../data";
 import { useNavigate } from "react-router-dom";
@@ -202,14 +202,14 @@ function Checkout() {
     );
   };
 
-  const ConItem = () => {
-    return (
-      <div className="ConItem">
-        <h1>Concert</h1>
-        <img src={img} alt="" />
-      </div>
-    );
-  };
+  // const ConItem = () => {
+  //   return (
+  //     <div className="ConItem">
+  //       <h1>Concert</h1>
+  //       <img src={img} alt="" />
+  //     </div>
+  //   );
+  // };
 
   const EthItem = () => {
     return (

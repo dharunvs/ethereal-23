@@ -7,6 +7,7 @@ import "./EventPage.css";
 import { posterImg } from "../../Assets/Images/posters";
 import { icons } from "../../Assets/Icons";
 import axios from "axios";
+import { posterRules } from "../../Assets/Images/rules";
 
 function EventPage() {
   function scrollToId(id) {
@@ -35,6 +36,9 @@ function EventPage() {
   const [oldTeam, setOldTeam] = useState(false);
   const [oldTeamVal, setOldTeamVal] = useState({});
 
+  const [rules, setRules] = useState({ page: 1, img: posterRules[id] });
+  const [rulesShow, setRulesShow] = useState(false);
+
   const [mes, setMes] = useState("");
 
   const [oText, setOText] = useState("");
@@ -53,7 +57,7 @@ function EventPage() {
       });
 
     const selEvent = events.find((event) => event.eventId === id);
-    console(event);
+    console.log(selEvent);
     setEvent(selEvent);
 
     if (selEvent.min == 1 && selEvent.max == 1) {
@@ -287,37 +291,39 @@ function EventPage() {
 
   function handleRegister() {
     console.log(baseURL + "/events/" + id + "/register");
-    axios
-      .post(baseURL + "/events/" + id + "/register", {
-        userId: localStorage.getItem("id"),
-        teamName: oText,
-      })
-      .then((res) => res["data"])
-      .then((res) => {
-        console.log(res);
-        if (res["message"] == "Hello") {
-          axios
-            .post(baseURL + "/events", {
-              userId: localStorage.getItem("id"),
-              eventId: id,
-            })
-            .then((res) => res["data"])
-            .then((res) => {
-              console.log(res);
-              if (res.found) {
-                setRegistered(true);
-                setTeam(res.team);
-              } else {
-                setRegistered(false);
-              }
-            });
-        } else {
-          if (res["message"] == "Team already exists with same name") {
-            console.log(res["message"]);
-            setMes(res["message"]);
+    if (oText.trim() !== "") {
+      axios
+        .post(baseURL + "/events/" + id + "/register", {
+          userId: localStorage.getItem("id"),
+          teamName: oText,
+        })
+        .then((res) => res["data"])
+        .then((res) => {
+          console.log(res);
+          if (res["message"] == "Hello") {
+            axios
+              .post(baseURL + "/events", {
+                userId: localStorage.getItem("id"),
+                eventId: id,
+              })
+              .then((res) => res["data"])
+              .then((res) => {
+                console.log(res);
+                if (res.found) {
+                  setRegistered(true);
+                  setTeam(res.team);
+                } else {
+                  setRegistered(false);
+                }
+              });
+          } else {
+            if (res["message"] == "Team already exists with same name") {
+              console.log(res["message"]);
+              setMes(res["message"]);
+            }
           }
-        }
-      });
+        });
+    }
   }
 
   function handleJoin() {
@@ -350,7 +356,39 @@ function EventPage() {
   return (
     <div className="EventPage">
       <div className="left">
-        <img src={posterImg[id]} alt="eventImg" />
+        <img src={posterImg[id]} className="epPoster" alt="eventImg" />
+        {rulesShow ? (
+          <div className="rules">
+            <img src={rules.img} alt="posterRules" />
+            {event.rules > 1 && (
+              <>
+                <button
+                  className="rulesButton1"
+                  onClick={() => {
+                    setRules({ page: 1, img: posterRules[id.toString()] });
+                  }}
+                >
+                  Page 1
+                </button>
+
+                <button
+                  className="rulesButton2"
+                  onClick={() => {
+                    setRules({
+                      page: 2,
+                      img: posterRules[id.toString() + "_2"],
+                    });
+                    console.log(id.toString() + "_2");
+                  }}
+                >
+                  Page 2
+                </button>
+              </>
+            )}
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
       <div className="eventForm">
         <video src={vid} muted autoPlay loop></video>
@@ -390,6 +428,7 @@ function EventPage() {
                         onClick={() => {
                           handleJoin();
                         }}
+                        className="loginBtn"
                       >
                         Join Team
                       </button>
@@ -398,6 +437,7 @@ function EventPage() {
                         onClick={() => {
                           handleRegister();
                         }}
+                        className="loginBtn"
                       >
                         Participate
                       </button>
@@ -433,6 +473,7 @@ function EventPage() {
                   e.preventDefault();
                   navigate("/auth");
                 }}
+                className="loginBtn"
               >
                 Login
               </button>
@@ -444,6 +485,14 @@ function EventPage() {
               Note: Participants of a team must be of same college.
             </p>
           )}
+          <button
+            onClick={(e) => {
+              setRulesShow(!rulesShow);
+            }}
+            className="rulesBtn"
+          >
+            Rules
+          </button>
         </form>
       </div>
     </div>

@@ -12,7 +12,7 @@ def create_code():
     code = unique_id.replace('-', '')[:6]
     return code
 
-with open("/home/DharunVS/__Github__/Ethereal/ethereal-private/transactions/y2.csv", 'r') as f:
+with open("/home/DharunVS/__Github__/Ethereal/ethereal-private/transactions/350data.csv", 'r') as f:
     data = f.readlines()
 
 print(data)

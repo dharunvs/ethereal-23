@@ -658,7 +658,7 @@ export const teams = {
     ],
   },
   tech: {
-    name: "Tech Team",
+    name: "Tech",
     members: [{ name: "Dharun V S", img: dharun, dept: depts.ad }],
   },
   media: {
@@ -716,5 +716,5 @@ export const teams = {
   },
 };
 
-export const baseURL = "http://localhost:8000";
-// export const baseURL = "https://laksh-358718.el.r.appspot.com";
+// export const baseURL = "http://localhost:8000";
+export const baseURL = "https://laksh-358718.el.r.appspot.com";

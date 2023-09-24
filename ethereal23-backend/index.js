@@ -19,7 +19,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const PORT = process.env.PORT || 8000;
 
 const allowedOrigins = [
-  "http://localhost:5173",
+  // "http://localhost:5173",
   "https://ethereal-test-2023.web.app",
 ];
 
@@ -81,17 +81,17 @@ app.use("/qr", express.static("./qr"));
 
 // Live stripe
 
-// app.use((req, res, next) => {
-//   res.header(
-//     "Access-Control-Allow-Origin",
-//     "https://ethereal-test-2023.web.app"
-//   );
-//   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-//   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-//   res.header("Access-Control-Allow-Credentials", "true");
-//   res.header("Access-Control-Max-Age", "86400"); // 24 hours
-//   next();
-// });
+app.use((req, res, next) => {
+  res.header(
+    "Access-Control-Allow-Origin",
+    "https://ethereal-test-2023.web.app"
+  );
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.header("Access-Control-Allow-Credentials", "true");
+  res.header("Access-Control-Max-Age", "86400"); // 24 hours
+  next();
+});
 
 const price = {
   ETHEREAL: process.env.PRICE_ETHEREAL,
@@ -99,6 +99,7 @@ const price = {
   OC_CONCERT: process.env.PRICE_OC_CONCERT,
   IC_COMBO_CONCERT: process.env.PRICE_IC_COMBO_CONCERT,
   OC_COMBO_CONCERT: process.env.PRICE_OC_COMBO_CONCERT,
+  // IC_BOTH: process.env.PRICE_IC_COMBO_CONCERT
 };
 
 const quantity = 1;
@@ -336,7 +337,7 @@ app.post("/send-otp", async (req, res) => {
     const mailOptions = {
       from: { name: "KCG Ethereal", address: fromEmail },
       to: EMAIL,
-      subject: "OTP Verification",
+      subject: `OTP Verification ${OTP}`,
       // text: `Your OTP for login is: ${OTP}`,
       html: `<p>Your OTP for login is: ${OTP}</p>`,
       // attachments: [
@@ -396,7 +397,11 @@ app.post("/events", async (req, res) => {
       [userId]
     );
     // console.log("-- 101 --> ", );
-    college = college.rows[0].college;
+    if (college.rows[0] != undefined) {
+      college = college.rows[0].college;
+    } else {
+      college = "";
+    }
 
     const query = await client.query(
       "SELECT * FROM teams WHERE event = $1 AND college = $2",
@@ -470,31 +475,33 @@ app.post("/events/:id/register", async (req, res) => {
   console.log(userId, teamName);
 
   try {
-    const teams = await client.query(
-      "SELECT name FROM teams where event = $1",
-      [eventId]
-    );
+    if (teamName.trim() !== "") {
+      const teams = await client.query(
+        "SELECT name FROM teams where event = $1",
+        [eventId]
+      );
 
-    if (teams.rows.some((team) => team.name === teamName)) {
-      res.json({ message: "Team already exists with same name" });
-      return;
+      if (teams.rows.some((team) => team.name === teamName)) {
+        res.json({ message: "Team already exists with same name" });
+        return;
+      }
+
+      // let college = getCollegeById(userId);
+      let college = await client.query(
+        "SELECT college FROM users WHERE id = $1",
+        [userId]
+      );
+      // console.log("-- 101 --> ", );
+      college = college.rows[0].college;
+      console.log("-- 102 --> ", college);
+
+      const teamId = "team_" + uuidv4().toString();
+      console.log(teamId);
+      await client.query(
+        "INSERT INTO teams (id, name, college, event, lead) VALUES ($1, $2, $3, $4, $5)",
+        [teamId, teamName, college, eventId, userId]
+      );
     }
-
-    // let college = getCollegeById(userId);
-    let college = await client.query(
-      "SELECT college FROM users WHERE id = $1",
-      [userId]
-    );
-    // console.log("-- 101 --> ", );
-    college = college.rows[0].college;
-    console.log("-- 102 --> ", college);
-
-    const teamId = "team_" + uuidv4().toString();
-    console.log(teamId);
-    await client.query(
-      "INSERT INTO teams (id, name, college, event, lead) VALUES ($1, $2, $3, $4, $5)",
-      [teamId, teamName, college, eventId, userId]
-    );
     res.json({ message: "Hello" });
   } catch (error) {
     console.log(error);

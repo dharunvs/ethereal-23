@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { baseURL } from "../../data";
-import logo from "../../Assets/Images/logo.png";
+// import logo from "../../Assets/Images/logo.png";
 import vid from "../../Assets/Spline/gradient-waves.webm";
-import vid2 from "../../Assets/Spline/gradient-waves.mp4";
+// import vid2 from "../../Assets/Spline/gradient-waves.mp4";
 import { icons } from "../../Assets/Icons";
 import kcg25 from "../../Assets/Images/kcg25.webp";
 import QRCode from "qrcode";
@@ -50,7 +50,6 @@ function Profile() {
   // };
 
   useEffect(() => {
-    let state = 0;
     console.log("Hi");
     axios
       .post(baseURL + "/check-loggedin", {
@@ -71,8 +70,6 @@ function Profile() {
         } else {
           navigate("/auth");
         }
-        state += 1;
-        console.log(state);
       });
 
     axios
@@ -83,10 +80,6 @@ function Profile() {
       .then((res) => {
         console.log(res);
         setUserEvents(res.events);
-        state += 1;
-        console.log(state);
-        if (state >= 2) {
-        }
       });
     setLoading(false);
   }, []);
@@ -109,8 +102,8 @@ function Profile() {
         </div> */}
             {/* <video className="ProfileVid" src={vid} autoPlay muted loop></video> */}
             <video className="ProfileVid" autoPlay muted loop>
-              {/* <source src={vid} type="video/webm" autoPlay muted loop></source> */}
-              <source src={vid2} type="video/mp4" autoPlay muted loop></source>
+              <source src={vid} type="video/webm" autoPlay muted loop></source>
+              {/* <source src={vid2} type="video/mp4" autoPlay muted loop></source> */}
             </video>
           </div>
           <div className="content">
@@ -217,7 +210,7 @@ function Profile() {
                         )}
                       </div>
                       {user.concert_code !== null ? (
-                        <p className="code">CODE {user.concert_code}</p>
+                        <p className="code">Code: {user.concert_code}</p>
                       ) : (
                         <></>
                       )}

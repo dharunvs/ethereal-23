@@ -71,7 +71,7 @@
   /* padding-left: 20px; */
 }
 
-.EventPage .eventForm form button {
+.EventPage .eventForm form .loginBtn {
   font-size: 1rem;
   font-family: "Akira";
   width: max-content;
@@ -95,7 +95,7 @@
   z-index: 1;
 }
 
-.EventPage .eventForm form button::before {
+.EventPage .eventForm form .loginBtn::before {
   content: "";
   position: absolute;
   top: 0;
@@ -111,11 +111,11 @@
   transition: 600ms ease-in-out;
 }
 
-.EventPage .eventForm form button:hover::before {
+.EventPage .eventForm form .loginBtn:hover::before {
   left: -150%;
 }
 
-.EventPage .eventForm form button:hover {
+.EventPage .eventForm form .loginBtn:hover {
   background-position: right center; /* change the direction of the change here */
   text-decoration: none;
 }
@@ -195,24 +195,28 @@
 }
 
 .EventPage .eventForm form .customButton {
+  font-size: 1rem;
+  font-family: "Akira";
+  width: max-content;
+  width: 300px;
+  overflow: hidden;
+  padding: 10px 30px;
+  border-radius: 20px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+
   background-image: linear-gradient(
     100deg,
     #b36903 0%,
     #ffca2d 51%,
     #b86d05 100%
   );
-  width: max-content;
-  padding: 15px 45px;
-  transition: 0.5s;
-  background-size: 200% auto;
   color: white;
-  border-radius: 20px;
-  font-family: "Akira";
-  border: none;
-  outline: none;
-  font-size: 1rem;
-  /* width: fit-content; */
-  transform: translateY(5vh);
+  background-size: 200% auto;
+  transition: 0.5s;
+  position: relative;
+  z-index: 1;
 }
 .EventPage .eventForm form .customButton:hover {
   background-position: right center; /* change the direction of the change here */
@@ -267,6 +271,107 @@
   color: lightgreen;
 }
 
+.EventPage .left .rules {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* display: none; */
+  position: absolute;
+  z-index: 10;
+}
+
+.EventPage .left {
+  position: relative;
+}
+
+/* .EventPage .left > img {
+  position: absolute;
+  z-index: 5;
+  display: none;
+  top: 0;
+  left: 0;
+} */
+
+.EventPage .left .rules {
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  width: 100%;
+  height: 100vh;
+  backdrop-filter: blur(15px);
+  animation: showRules 300ms ease-in forwards;
+}
+
+@keyframes showRules {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.EventPage .left .rules img {
+  width: fit-content;
+  width: 500px;
+  height: auto;
+  /* transform: translate(-50%, -40%); */
+  clip-path: polygon(0 0, 100% 0, 100% 86%, 0 86%);
+}
+
+.EventPage .left .rules button {
+  font-size: 1rem;
+  font-family: "Akira";
+  width: max-content;
+  overflow: hidden;
+  padding: 10px 30px;
+  border-radius: 20px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1;
+  background: white;
+}
+
+.EventPage .left .rules .rulesButton1 {
+  position: absolute;
+  bottom: 50px;
+  left: 50px;
+}
+
+.EventPage .left .rules .rulesButton2 {
+  position: absolute;
+  bottom: 50px;
+  right: 50px;
+}
+
+.rulesBtn {
+  font-size: 1rem;
+  font-family: "Akira";
+  width: max-content;
+  width: 300px;
+  overflow: hidden;
+  padding: 10px 30px;
+  border-radius: 20px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+
+  background-size: 200% auto;
+  transition: 0.5s;
+  position: relative;
+  z-index: 1;
+  background: white;
+}
+
 @media screen and (max-width: 1000px) {
   .EventPage {
     width: 100%;
@@ -279,6 +384,49 @@
     height: fit-content;
     overflow: hidden;
     position: relative;
+  }
+  .EventPage .left .rules {
+    width: 100%;
+    height: fit-content;
+    backdrop-filter: blur(15px);
+    animation: showRules 300ms ease-in forwards;
+  }
+
+  .EventPage .left .rules img {
+    width: fit-content;
+    width: 100%;
+    height: auto;
+    z-index: -1;
+  }
+
+  .EventPage .left .rules button {
+    font-size: 1rem;
+    font-family: "Akira";
+    width: max-content;
+    overflow: hidden;
+    padding: 8px 20px;
+    border-radius: 20px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    z-index: 1;
+    background: white;
+    position: relative;
+    font-size: 0.6rem;
+  }
+
+  .EventPage .left .rules .rulesButton1 {
+    position: absolute;
+    bottom: auto;
+    bottom: 15px;
+    left: 20px;
+    z-index: 10;
+  }
+
+  .EventPage .left .rules .rulesButton2 {
+    position: absolute;
+    bottom: 15px;
+    right: 20px;
   }
 
   .EventPage .left img {

@@ -9,9 +9,9 @@ import chipsVidLeft from "../../Assets/Spline/chips-left-bkp.webm";
 import chipsVidRight from "../../Assets/Spline/chips-right.webm";
 // import { galleryImgArr } from "../../Assets/Images/gallery";
 import overlay from "../../Assets/Images/homeBG.webp";
-import homePradeep from "../../Assets/Images/Pradeep.png";
-// import kcg25 from "../../Assets/Images/kcg25.webp";
-import kcg25 from "../../Assets/Images/kcg25b.png";
+// import homePradeep from "../../Assets/Images/Pradeep.png";
+import kcg25 from "../../Assets/Images/kcg25.webp";
+// import kcg25 from "../../Assets/Images/kcg25b.png";
 import cb1 from "../../Assets/Images/cb1.webp";
 import cb2 from "../../Assets/Images/cb2.webp";
 import cb3 from "../../Assets/Images/cb3.webp";
@@ -144,7 +144,7 @@ function Home({ data }) {
             <img src={logo} alt="" />
             <h1>ETHEREAL</h1>
             <p>"Be all that you can be"</p>
-            <h2>Oct 13 - Oct 14</h2>
+            <h2 style={{ textShadow: "none" }}>Oct 13 - Oct 14</h2>
           </div>
           <button
             className="customButton"
@@ -175,17 +175,22 @@ function Home({ data }) {
                   <div className="cbCB">
                     <img src={cb3} alt="" />
                     <h1>
-                      Pradeep <h3 className="ps">Pro Show</h3>
+                      Pradeep <h4 className="celebInfo">Singer</h4>
+                      <h3 className="ps">Pro Show</h3>
                     </h1>
                   </div>
                   <div className="cbC1">
                     <img src={cb1} alt="" />
-                    <h2>Mirnaa</h2>
+                    <h2>
+                      Mirnaa <h4 className="celebInfo">Actress</h4>{" "}
+                    </h2>
                   </div>
 
                   <div className="cbC2">
                     <img src={cb2} alt="" />
-                    <h2>Jaffer</h2>
+                    <h2>
+                      Jaffer <h4 className="celebInfo">Actor & Dancer</h4>{" "}
+                    </h2>
                   </div>
                 </div>
               </div>
@@ -206,7 +211,7 @@ function Home({ data }) {
                 <img src={collegeImg} alt="collegeImg" />
               </div>
               <div className="text">
-                <h1>About KCG</h1>
+                <h1>About KCG Tech</h1>
                 <p>
                   KCG College of Technology was founded in 1998 to fulfill the
                   Founder-Chairman, Dr. KCG Verghese's vision of <br /> "To Make
@@ -220,7 +225,7 @@ function Home({ data }) {
           </div>
         </div>
         <div className="HScreen3">
-          <h1>Gallery</h1>
+          <h1>Ethereal 2022</h1>
 
           {/* <HorizontalGallery /> */}
           <div

@@ -8,7 +8,7 @@ nav .contentMob {
   align-items: center;
   justify-content: center;
   left: 50%;
-  transform: translate(-50%, 10vh);
+  transform: translate(-50%, 8vh);
   /* top: 8vh;
   left: 50%;
   transform: translateX(-50%); */
@@ -53,7 +53,7 @@ nav .contentMob > ul > li > .navLinkActive {
   font-family: "Akira";
   text-decoration: none;
   color: black;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   user-select: none;
   transition: all 200ms ease-in-out;
 }
@@ -91,7 +91,7 @@ nav .contentMob > ul > li > * {
   }
   nav .content > ul > li > *,
   nav .contentMob > ul > li > * {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
   }
 }
 

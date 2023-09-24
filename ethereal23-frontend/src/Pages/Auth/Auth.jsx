@@ -85,7 +85,7 @@ function Auth() {
         <input
           type="text"
           value={inEmail}
-          onChange={(e) => setInEmail(e.target.value)}
+          onChange={(e) => setInEmail(e.target.value.toLocaleLowerCase())}
           required
           placeholder="Email"
         />
