@@ -473,7 +473,7 @@ function Checkout() {
                     })
                     .then((res) => res.data)
                     .then((res) => {
-                      console.log(res);
+                      // console.log(res);
                       if (res.message == undefined) {
                         setMessage({ message: "Failure" });
                       } else {

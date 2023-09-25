@@ -149,7 +149,7 @@ function Home({ data }) {
           <button
             className="customButton"
             onClick={() => {
-              navigate("/auth");
+              navigate("/home");
             }}
           >
             Buy Tickets

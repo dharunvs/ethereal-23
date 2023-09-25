@@ -4,11 +4,16 @@ import vid from "../../Assets/Spline/gradient-waves.webm";
 import axios from "axios";
 import { baseURL } from "../../data";
 import { useNavigate } from "react-router-dom";
+import { icons } from "../../Assets/Icons";
+
 import "./LoggedIn.css";
 // import ethPoster from "../../Assets/Images/ethPoster.png";
 // import conPoster from "../../Assets/Images/Pradeep2.png";
 
 function LoggedIn() {
+  const [loading, setLoading] = useState(true);
+  const Loader = () => <icons.Loading />;
+
   function scrollToId(id) {
     var element = document.getElementById(id);
     element.scrollIntoView({
@@ -20,12 +25,12 @@ function LoggedIn() {
     scrollToId("root");
   }, []);
 
-  const [paused, setPaused] = useState(true);
   const navigate = useNavigate();
+
+  const [paused, setPaused] = useState(true);
   const [loggedIn, setLoggedIn] = useState(false);
   const [CBannerActive, setCBannerActive] = useState(false);
   const [EBannerActive, setEBannerActive] = useState(false);
-
   const [conSelected, setConSelected] = useState(false);
   const [ethSelected, setEthSelected] = useState(false);
   const [comboSelected, setComboSelected] = useState(false);
@@ -39,23 +44,25 @@ function LoggedIn() {
     axios(baseURL + "/config")
       .then((res) => res.data)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setPaused(res.pause_payments);
       });
+
     axios
       .get(baseURL + "/get-fees")
       .then((res) => res.data)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setFees(res);
       });
+
     axios
       .post(baseURL + "/check-loggedin", {
         id: localStorage.getItem("id"),
       })
       .then((res) => res["data"])
       .then((res) => {
-        // console.log(res);
+        // // console.log(res);
         if (res["logged_in"]) {
           setLoggedIn(true);
           setInnerClg(res["isInnerCollege"]);
@@ -76,7 +83,11 @@ function LoggedIn() {
         } else {
           navigate("/auth");
         }
+        setLoading(false);
       });
+
+    // setTimeout(() => {
+    // }, 1000);
   }, []);
 
   return (
@@ -91,8 +102,11 @@ function LoggedIn() {
         </div> */}
         <video className="LoggedInVid" src={vid} autoPlay muted loop></video>
       </div>
-      <div className="content">
-        {/* <div
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className="content">
+          {/* <div
           className={
             CBannerActive && EBannerActive
               ? "CBannerActiveHalf"
@@ -118,174 +132,175 @@ function LoggedIn() {
             <img src={ethPoster} alt="ethPoster" />
           </div>
         </div> */}
-        {loggedIn &&
-          (!paused ? (
-            <div className="AuthScreen">
-              <div className="box">
-                <h1>Welcome {innerClg ? "KCGian" : ""}</h1>
-                <div>
-                  <button
-                    onMouseEnter={() => {
-                      setEBannerActive(true);
-                    }}
-                    onMouseLeave={() => {
-                      setEBannerActive(false);
-                    }}
-                    disabled={comboEligible}
-                    className={ethSelected ? "sel" : "sel2"}
-                    onClick={(e) => {
-                      // console.log(e.target.disabled);
-                      if (!innerClg) {
-                        setEthSelected(!ethSelected);
-                        if (eth) {
-                          setEthSelected(false);
-                        }
-                        if (conSelected) {
-                          setEthSelected(false);
-                          setConSelected(false);
-                          setComboSelected(true);
-                        }
-
-                        if (comboSelected) {
-                          setComboSelected(false);
-                        }
-                      } else {
-                        setEthSelected(!ethSelected);
-                        if (eth) {
-                          setEthSelected(false);
-                        }
-                      }
-                    }}
-                  >
-                    {eth && <p>Bought!</p>}
-                    <h2 className={eth ? "bought" : ""}>
-                      Ethereal <br />
-                      {fees.ethereal}/-
-                    </h2>
-                  </button>
-                  {!eth && !con && !innerClg && (
+          {loggedIn &&
+            (!paused ? (
+              <div className="AuthScreen">
+                <div className="box">
+                  <h1>Welcome {innerClg ? "KCGian" : ""}</h1>
+                  <div>
                     <button
                       onMouseEnter={() => {
                         setEBannerActive(true);
+                      }}
+                      onMouseLeave={() => {
+                        setEBannerActive(false);
+                      }}
+                      disabled={comboEligible}
+                      className={ethSelected ? "sel" : "sel2"}
+                      onClick={(e) => {
+                        // // console.log(e.target.disabled);
+                        if (!innerClg) {
+                          setEthSelected(!ethSelected);
+                          if (eth) {
+                            setEthSelected(false);
+                          }
+                          if (conSelected) {
+                            setEthSelected(false);
+                            setConSelected(false);
+                            setComboSelected(true);
+                          }
+
+                          if (comboSelected) {
+                            setComboSelected(false);
+                          }
+                        } else {
+                          setEthSelected(!ethSelected);
+                          if (eth) {
+                            setEthSelected(false);
+                          }
+                        }
+                      }}
+                    >
+                      {eth && <p>Bought!</p>}
+                      <h2 className={eth ? "bought" : ""}>
+                        Ethereal <br />
+                        {fees.ethereal}/-
+                      </h2>
+                    </button>
+                    {!eth && !con && !innerClg && (
+                      <button
+                        onMouseEnter={() => {
+                          setEBannerActive(true);
+                          setCBannerActive(true);
+                        }}
+                        onMouseLeave={() => {
+                          setCBannerActive(false);
+                          setEBannerActive(false);
+                        }}
+                        className={comboSelected ? "sel" : "sel2"}
+                        onClick={() => {
+                          // setComboSelected(!comboSelected);
+                          if (comboSelected) {
+                            setComboSelected(false);
+                          } else {
+                            setComboSelected(true);
+                            setEthSelected(false);
+                            setConSelected(false);
+                          }
+                        }}
+                      >
+                        {con && eth && <p>Bought!</p>}
+                        <h2 className={con ? "bought" : ""}>
+                          Ethereal + Concert <br />
+                          {fees.oc_combo}/-
+                        </h2>
+                      </button>
+                    )}
+                    <button
+                      onMouseEnter={() => {
                         setCBannerActive(true);
                       }}
                       onMouseLeave={() => {
                         setCBannerActive(false);
-                        setEBannerActive(false);
                       }}
-                      className={comboSelected ? "sel" : "sel2"}
+                      className={conSelected ? "sel" : "sel2"}
                       onClick={() => {
-                        // setComboSelected(!comboSelected);
-                        if (comboSelected) {
-                          setComboSelected(false);
+                        if (!innerClg) {
+                          setConSelected(!conSelected);
+                          if (con) {
+                            setConSelected(false);
+                          }
+
+                          if (ethSelected) {
+                            setEthSelected(false);
+                            setConSelected(false);
+                            setComboSelected(true);
+                          }
+
+                          if (comboSelected) {
+                            setComboSelected(false);
+                          }
                         } else {
-                          setComboSelected(true);
-                          setEthSelected(false);
-                          setConSelected(false);
+                          setConSelected(!conSelected);
+                          if (con) {
+                            setConSelected(false);
+                          }
                         }
                       }}
                     >
-                      {con && eth && <p>Bought!</p>}
+                      {con && <p>Bought!</p>}
                       <h2 className={con ? "bought" : ""}>
-                        Combo <br />
-                        {fees.oc_combo}/-
+                        Concert <br />
+                        {innerClg
+                          ? comboEligible
+                            ? fees.ic_concert - fees.ethereal
+                            : fees.ic_concert
+                          : fees.oc_concert}
+                        /-
                       </h2>
                     </button>
-                  )}
+                  </div>
+                  <p className="cInf">
+                    Concert only for college students <br /> ID proof compulsory
+                  </p>
+
                   <button
-                    onMouseEnter={() => {
-                      setCBannerActive(true);
-                    }}
-                    onMouseLeave={() => {
-                      setCBannerActive(false);
-                    }}
-                    className={conSelected ? "sel" : "sel2"}
+                    className="btButton"
                     onClick={() => {
-                      if (!innerClg) {
-                        setConSelected(!conSelected);
-                        if (con) {
-                          setConSelected(false);
-                        }
-
-                        if (ethSelected) {
-                          setEthSelected(false);
-                          setConSelected(false);
-                          setComboSelected(true);
-                        }
-
-                        if (comboSelected) {
-                          setComboSelected(false);
-                        }
-                      } else {
-                        setConSelected(!conSelected);
-                        if (con) {
-                          setConSelected(false);
-                        }
+                      localStorage.setItem(
+                        "payment",
+                        // conSelected & ethSelected
+                        //   ? 3
+                        //   : ethSelected
+                        //   ? 1
+                        //   : conSelected
+                        //   ? 2
+                        //   : 0
+                        ethSelected && conSelected
+                          ? innerClg
+                            ? "IC_BOTH"
+                            : "OC_BOTH"
+                          : ethSelected
+                          ? "ETHEREAL"
+                          : conSelected
+                          ? innerClg
+                            ? comboEligible
+                              ? "IC_COMBO_CONCERT"
+                              : "IC_CONCERT"
+                            : "OC_CONCERT"
+                          : comboSelected
+                          ? innerClg
+                            ? ""
+                            : "OC_COMBO"
+                          : ""
+                      );
+                      if (conSelected | ethSelected | comboSelected) {
+                        navigate("/checkout");
                       }
                     }}
                   >
-                    {con && <p>Bought!</p>}
-                    <h2 className={con ? "bought" : ""}>
-                      Concert <br />
-                      {innerClg
-                        ? comboEligible
-                          ? fees.ic_concert - fees.ethereal
-                          : fees.ic_concert
-                        : fees.oc_concert}
-                      /-
-                    </h2>
+                    Buy Tickets
                   </button>
                 </div>
-                <p className="cInf">
-                  Concert only for college students <br /> ID proof compulsory
-                </p>
-
-                <button
-                  className="btButton"
-                  onClick={() => {
-                    localStorage.setItem(
-                      "payment",
-                      // conSelected & ethSelected
-                      //   ? 3
-                      //   : ethSelected
-                      //   ? 1
-                      //   : conSelected
-                      //   ? 2
-                      //   : 0
-                      ethSelected && conSelected
-                        ? innerClg
-                          ? "IC_BOTH"
-                          : "OC_BOTH"
-                        : ethSelected
-                        ? "ETHEREAL"
-                        : conSelected
-                        ? innerClg
-                          ? comboEligible
-                            ? "IC_COMBO_CONCERT"
-                            : "IC_CONCERT"
-                          : "OC_CONCERT"
-                        : comboSelected
-                        ? innerClg
-                          ? ""
-                          : "OC_COMBO"
-                        : ""
-                    );
-                    if (conSelected | ethSelected | comboSelected) {
-                      navigate("/checkout");
-                    }
-                  }}
-                >
-                  Buy Tickets
-                </button>
               </div>
-            </div>
-          ) : (
-            <h1 className="paused">
-              Bookings paused temporarily <br />
-              Stay tuned
-            </h1>
-          ))}
-      </div>
+            ) : (
+              <h1 className="paused">
+                Bookings paused temporarily <br />
+                Stay tuned
+              </h1>
+            ))}
+        </div>
+      )}
     </div>
   );
 }

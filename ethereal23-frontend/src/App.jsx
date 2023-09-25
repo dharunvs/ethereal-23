@@ -84,7 +84,6 @@ function App() {
               path="/"
               element={<Pages.Home data={{ galleryImgs: galleryImgArr }} />}
             />
-            <Route path="/auth" element={<Pages.Auth />} />
             <Route path="/home" element={<Pages.LoggedIn />} />
             <Route path="/checkout" element={<Pages.Checkout />} />
             {/* <Route path="/checkout" element={<Pages.CheckoutPage />} /> */}
@@ -94,6 +93,8 @@ function App() {
             <Route path="/schedule" element={<Pages.Schedule />} />
             <Route path="/team" element={<Pages.Team />} />
             <Route path="/contact" element={<Pages.Contact />} />
+            <Route path="/auth" element={<Pages.Auth />} />
+
             {/* <Route
               path="/paymentResult/:success"
               element={<Pages.PaymentResult />}

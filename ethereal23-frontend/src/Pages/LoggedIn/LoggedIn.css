@@ -1,6 +1,6 @@
 .LoggedIn {
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   overflow: hidden;
   position: absolute;
   top: 0;
@@ -107,6 +107,7 @@
   transition: all 200ms ease-in-out;
   position: relative;
   width: 280px;
+  height: 120px;
 }
 
 .AuthScreen .box > div button:disabled {
@@ -437,6 +438,9 @@
 }
 
 @media screen and (max-width: 800px) {
+  .LoggedIn {
+    padding-bottom: 10vh;
+  }
   .paused {
     font-size: 1.8rem;
   }
@@ -505,7 +509,7 @@
     font-size: 1rem;
   }
   .AuthScreen .box > div button .bought {
-    font-size: 1.6rem;
+    font-size: 1rem;
   }
 
   .sel p,

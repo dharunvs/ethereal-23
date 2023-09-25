@@ -57,7 +57,7 @@ function EventPage() {
       });
 
     const selEvent = events.find((event) => event.eventId === id);
-    console.log(selEvent);
+    // console.log(selEvent);
     setEvent(selEvent);
 
     if (selEvent.min == 1 && selEvent.max == 1) {
@@ -71,7 +71,7 @@ function EventPage() {
       })
       .then((res) => res["data"])
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         if (res.found) {
           setRegistered(true);
           setTeam(res.team);
@@ -86,9 +86,9 @@ function EventPage() {
     const [lead, setLead] = useState("");
 
     useEffect(() => {
-      console.log(team.members);
+      // console.log(team.members);
 
-      console.log(team);
+      // console.log(team);
 
       if (team.members != null) {
         axios
@@ -96,7 +96,7 @@ function EventPage() {
           .then((res) => res.data)
           .then((res) => {
             setMembers(res.userIds);
-            console.log(res.userIds);
+            // console.log(res.userIds);
           });
       }
       if (team.lead != null) {
@@ -105,7 +105,7 @@ function EventPage() {
           .then((res) => res.data)
           .then((res) => {
             setLead(res.userIds[0]);
-            console.log(res.userIds[0]);
+            // console.log(res.userIds[0]);
           });
       }
     }, []);
@@ -152,7 +152,7 @@ function EventPage() {
     const [lead, setLead] = useState("");
 
     useEffect(() => {
-      console.log(team);
+      // console.log(team);
 
       if (team.members != null) {
         axios
@@ -160,7 +160,7 @@ function EventPage() {
           .then((res) => res.data)
           .then((res) => {
             setMembers(res.userIds);
-            console.log(res.userIds);
+            // console.log(res.userIds);
           });
       }
       if (team.lead != null) {
@@ -169,7 +169,7 @@ function EventPage() {
           .then((res) => res.data)
           .then((res) => {
             setLead(res.userIds[0]);
-            console.log(res.userIds[0]);
+            // console.log(res.userIds[0]);
           });
       }
     }, []);
@@ -290,7 +290,7 @@ function EventPage() {
   };
 
   function handleRegister() {
-    console.log(baseURL + "/events/" + id + "/register");
+    // console.log(baseURL + "/events/" + id + "/register");
     if (oText.trim() !== "") {
       axios
         .post(baseURL + "/events/" + id + "/register", {
@@ -299,7 +299,7 @@ function EventPage() {
         })
         .then((res) => res["data"])
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           if (res["message"] == "Hello") {
             axios
               .post(baseURL + "/events", {
@@ -308,7 +308,7 @@ function EventPage() {
               })
               .then((res) => res["data"])
               .then((res) => {
-                console.log(res);
+                // console.log(res);
                 if (res.found) {
                   setRegistered(true);
                   setTeam(res.team);
@@ -318,7 +318,7 @@ function EventPage() {
               });
           } else {
             if (res["message"] == "Team already exists with same name") {
-              console.log(res["message"]);
+              // console.log(res["message"]);
               setMes(res["message"]);
             }
           }
@@ -334,7 +334,7 @@ function EventPage() {
       })
       .then((res) => res.data)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         axios
           .post(baseURL + "/events", {
             userId: localStorage.getItem("id"),
@@ -342,7 +342,7 @@ function EventPage() {
           })
           .then((res) => res["data"])
           .then((res) => {
-            console.log(res);
+            // console.log(res);
             if (res.found) {
               setRegistered(true);
               setTeam(res.team);
@@ -378,7 +378,7 @@ function EventPage() {
                       page: 2,
                       img: posterRules[id.toString() + "_2"],
                     });
-                    console.log(id.toString() + "_2");
+                    // console.log(id.toString() + "_2");
                   }}
                 >
                   Page 2

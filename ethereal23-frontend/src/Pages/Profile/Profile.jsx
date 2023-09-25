@@ -35,7 +35,7 @@ function Profile() {
   const generateQRCode = async (text) => {
     try {
       const dataURL = await QRCode.toDataURL(text);
-      console.log(dataURL);
+      // console.log(dataURL);
       setQRCodeDataURL(dataURL);
     } catch (error) {
       console.error("Error generating QR code:", error);
@@ -50,17 +50,17 @@ function Profile() {
   // };
 
   useEffect(() => {
-    console.log("Hi");
+    // console.log("Hi");
     axios
       .post(baseURL + "/check-loggedin", {
         id: localStorage.getItem("id"),
       })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         return res["data"];
       })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
 
         if (res["logged_in"]) {
           setUser(res);
@@ -78,7 +78,7 @@ function Profile() {
       })
       .then((res) => res["data"])
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setUserEvents(res.events);
       });
     setLoading(false);

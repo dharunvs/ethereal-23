@@ -19,8 +19,9 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const PORT = process.env.PORT || 8000;
 
 const allowedOrigins = [
+  "https://kcgethereal.com",
   // "http://localhost:5173",
-  "https://ethereal-test-2023.web.app",
+  // "https://ethereal-test-2023.web.app",
 ];
 
 const corsOptions = {
@@ -84,7 +85,8 @@ app.use("/qr", express.static("./qr"));
 app.use((req, res, next) => {
   res.header(
     "Access-Control-Allow-Origin",
-    "https://ethereal-test-2023.web.app"
+    // "https://ethereal-test-2023.web.app"
+    "https://kcgethereal.com"
   );
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");

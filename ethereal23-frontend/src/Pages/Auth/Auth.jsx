@@ -49,14 +49,14 @@ function Auth() {
   }
 
   useEffect(() => {
-    console.log(localStorage.getItem("id"));
+    // console.log(localStorage.getItem("id"));
     axios
       .post(baseURL + "/check-loggedin", {
         id: localStorage.getItem("id"),
       })
       .then((res) => res["data"])
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         if (res["logged_in"]) {
           // setLoggedIn(true);
           navigate("/home");
@@ -111,7 +111,7 @@ function Auth() {
                       })
                       .then((res) => res["data"])
                       .then((res) => {
-                        console.log(res["ok"]);
+                        // console.log(res["ok"]);
                         if (res["ok"]) {
                           setLevel(3);
                         }
@@ -291,7 +291,7 @@ function Auth() {
                       })
                       .then((res) => res["data"])
                       .then((res) => {
-                        console.log(res["ok"]);
+                        // console.log(res["ok"]);
                         if (res["ok"]) {
                           setOtpSent(false);
                           setLevel(3);
@@ -354,7 +354,7 @@ function Auth() {
                 })
                 .then((res) => res["data"])
                 .then((res) => {
-                  console.log(res);
+                  // console.log(res);
                   localStorage.setItem("id", res["id"]);
                   localStorage.setItem("email", res["email"]);
                   localStorage.setItem("loggedIn", res["loggedIn"]);
