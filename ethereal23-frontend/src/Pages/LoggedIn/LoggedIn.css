@@ -7,6 +7,8 @@
   left: 0;
   z-index: 0;
   position: relative;
+  /* padding-bottom: 20vh; */
+  padding-top: 10vh;
 }
 
 .LIbg {
@@ -17,6 +19,7 @@
   justify-content: center;
   filter: blur(5px);
   position: relative;
+  position: absolute;
 }
 
 .LIbg .LoggedInVid {
@@ -48,7 +51,7 @@
 .LoggedIn .content {
   width: 100%;
   height: 100vh;
-  position: absolute;
+  position: relative;
   top: 0;
   left: 0;
   z-index: 0;
@@ -99,7 +102,7 @@
 .AuthScreen .box > div button {
   color: black;
   background-color: white;
-  padding: 30px 70px;
+  padding: 30px 50px;
   font-size: 1.4rem;
   border: none;
   outline: none;
@@ -108,6 +111,9 @@
   position: relative;
   width: 280px;
   height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .AuthScreen .box > div button:disabled {
@@ -128,6 +134,7 @@
 
 .AuthScreen .box > div button h2 {
   font-size: 1.4rem;
+  font-size: 1rem;
 }
 
 .AuthScreen .box > div button .bought {
@@ -354,13 +361,62 @@
 }
 
 @media screen and (max-width: 1000px) {
+  .LoggedIn {
+    /* padding-bottom: 10vh; */
+    padding-top: 1vh;
+  }
+  .AuthScreen .box {
+    padding: 20px;
+    gap: 5px;
+    width: 100%;
+    /* gap: 10vh; */
+    transform: translateY(0);
+    padding-bottom: 10vh;
+  }
   .paused {
     font-size: 2rem;
+  }
+  .btButton {
+    background-image: linear-gradient(
+      100deg,
+      #b36903 0%,
+      #ffca2d 51%,
+      #b86d05 100%
+    );
+    width: max-content;
+    padding: 10px 30px;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    border-radius: 20px;
+    font-family: "Akira";
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    position: relative;
+    overflow: hidden;
+    font-size: 1rem;
+    width: max-content;
+  }
+  .cInf {
+    padding: 20px 0;
+  }
+  .LoggedIn .content {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    display: flex;
+    align-items: normal;
+    justify-content: left;
   }
   .AuthScreen .box h1 {
     width: fit-content;
     text-align: center;
     font-size: 1.6rem;
+    padding-bottom: 5vh;
   }
   .LIbg .logo,
   .LIbg .logo > img {
@@ -439,6 +495,15 @@
 
 @media screen and (max-width: 800px) {
   .LoggedIn {
+    /* padding-bottom: 10vh; */
+    padding-top: 1vh;
+  }
+  .AuthScreen .box {
+    padding: 20px;
+    gap: 5px;
+    width: 100%;
+    /* gap: 10vh; */
+    transform: translateY(0);
     padding-bottom: 10vh;
   }
   .paused {
@@ -475,6 +540,7 @@
 
   .AuthScreen .box > div button h2 {
     font-size: 1.2rem;
+    font-size: 1rem;
   }
 }
 
@@ -482,11 +548,24 @@
   .paused {
     font-size: 1.4rem;
   }
+  /* .AuthScreen {
+    width: 100%;
+  }
+  .AuthScreen .box {
+    width: 100%;
+  }
+  .AuthScreen .box > div {
+    width: 100%;
+    align-items: unset;
+    align-items: unset;
+  } */
   .AuthScreen .box > div button {
-    padding: 20px 70px;
+    padding: 0px 30px;
     font-size: 1.4rem;
     border-radius: 20px;
-    width: 240px;
+    height: 100px;
+    /* width: 240px; */
+    /* width: 100%; */
   }
 
   .AuthScreen .box > div button:disabled {
@@ -507,6 +586,7 @@
 
   .AuthScreen .box > div button h2 {
     font-size: 1rem;
+    width: 100%;
   }
   .AuthScreen .box > div button .bought {
     font-size: 1rem;

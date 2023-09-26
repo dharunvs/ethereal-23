@@ -173,7 +173,13 @@ function LoggedIn() {
                     >
                       {eth && <p>Bought!</p>}
                       <h2 className={eth ? "bought" : ""}>
-                        Ethereal <br />
+                        Ethereal <br /> + DJ <br />
+                        <div
+                          style={{
+                            width: "100%",
+                            height: "10px",
+                          }}
+                        ></div>
                         {fees.ethereal}/-
                       </h2>
                     </button>
@@ -201,7 +207,13 @@ function LoggedIn() {
                       >
                         {con && eth && <p>Bought!</p>}
                         <h2 className={con ? "bought" : ""}>
-                          Ethereal + Concert <br />
+                          Ethereal + DJ <br /> + Concert
+                          <div
+                            style={{
+                              width: "100%",
+                              height: "10px",
+                            }}
+                          ></div>
                           {fees.oc_combo}/-
                         </h2>
                       </button>
@@ -241,6 +253,12 @@ function LoggedIn() {
                       {con && <p>Bought!</p>}
                       <h2 className={con ? "bought" : ""}>
                         Concert <br />
+                        <div
+                          style={{
+                            width: "100%",
+                            height: "10px",
+                          }}
+                        ></div>
                         {innerClg
                           ? comboEligible
                             ? fees.ic_concert - fees.ethereal

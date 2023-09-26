@@ -82,6 +82,13 @@ function Auth() {
         }}
       >
         <h1>Login</h1>
+        <p className="fNote">
+          KCGians, use college email to avail offers! <br />
+          First years please visit registration desk for Registration
+          <br />
+          <br />
+          Other college students can use any email id!
+        </p>
         <input
           type="text"
           value={inEmail}
@@ -325,6 +332,7 @@ function Auth() {
         }}
       >
         <h1>Login</h1>
+
         <div>
           {/* {otpSent == true ? (
             <p className="colorGreen">OTP has been sent to {email} </p>
