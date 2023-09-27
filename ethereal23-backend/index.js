@@ -706,6 +706,8 @@ app.post("/transaction", async (req, res) => {
 
   transactionId = transactionId.trim();
 
+  // console.log("-- 1 -->", transactionId, userId, type);
+
   if (transactionId !== "") {
     try {
       const transactions = await client.query("SELECT * from transactions");
@@ -715,6 +717,12 @@ app.post("/transaction", async (req, res) => {
       if (transactions.rowCount > 0) {
         transactions.rows.forEach((row) => {
           if (row.transaction_id == transactionId) {
+            // console.log("-- 2 -->", row.transaction_id, row.user_id, row.type);
+            if (row.user_id == userId && row.type == type) {
+              sameTypeSameUser = true;
+              tid = row.transaction_id;
+              return;
+            }
             found = true;
             return;
           } else if (row.user_id == userId && row.type == type) {
@@ -727,11 +735,14 @@ app.post("/transaction", async (req, res) => {
         found = false;
       }
 
-      if (found) {
+      // console.log("-- 3 --> sameTypeSameUser:", sameTypeSameUser);
+
+      if (sameTypeSameUser) {
+        res.json({ message: "Already Submitted", tid: tid });
+        return;
+      } else if (found) {
         res.json({ message: "Invalid transaction id" });
         return;
-      } else if (sameTypeSameUser) {
-        res.json({ message: "Already Submitted", tid: tid });
       } else {
         client.query(
           "INSERT INTO transactions (transaction_id, user_id, type) VALUES ($1, $2, $3)",
@@ -929,7 +940,7 @@ app.post("/upload", upload.single("file"), async (req, res) => {
     DbTransactions.rows.forEach((dt) => {
       const ft = arr.find((t) => t.tid == dt.transaction_id);
       console.log("-- 99 -->", ft);
-      if (ft.tid != undefined) {
+      if (ft != undefined) {
         console.log(
           ft.amount,
           fees[dt.type.toLowerCase()],
@@ -1084,6 +1095,378 @@ app.get("/export-csv", async (req, res) => {
 // --------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------
 
+app.post("/upload-test", upload.single("file"), async (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ message: "No file received" });
+  }
+
+  let arr = [];
+  let verifiedUsers = [];
+  let notVerifiedUsers = [];
+  let doneUsers = [];
+  let notDoneUsers = [];
+  let DBarr = [];
+
+  // Process the uploaded file here
+  let transactions = loadFile(req.file.buffer);
+  console.log(transactions);
+  transactions = transactions.slice(13);
+
+  transactions.forEach((t) => {
+    console.log("-- 97 -->", t);
+
+    const tid = t["__EMPTY_2"].split("/")[1];
+    const refname = t["__EMPTY_2"].split("/")[3];
+    arr.push({
+      tid: tid,
+      amount: t["__EMPTY_7"],
+      time: t["Statement of Account"],
+      refname: refname,
+    });
+  });
+  console.log("-- 98 -->", arr);
+
+  try {
+    const fees = await client.query("SELECT * FROM FEES");
+    console.log(fees.rows[0]);
+
+    const DbTransactions = await client.query("SELECT * FROM transactions");
+    DBarr = DbTransactions.rows;
+    console.log(DbTransactions.rows);
+
+    DbTransactions.rows.forEach((dt) => {
+      const ft = arr.find((t) => t.tid == dt.transaction_id);
+      console.log("-- 99 -->", ft);
+      if (ft != undefined) {
+        console.log(
+          ft.amount,
+          // fees[dt.type.toLowerCase()],
+          dt.type,
+          dt.type.toLowerCase(),
+          fees.rows[0]["oc_concert"],
+          fees.rows[0][dt.type.toLowerCase()]
+        );
+        if (ft.amount == fees.rows[0][dt.type.toLowerCase()] + 10) {
+          verifiedUsers.push({
+            userId: dt.user_id,
+            type: dt.type,
+            transactionId: ft.tid,
+          });
+        } else {
+          notVerifiedUsers.push({
+            userId: dt.user_id,
+            type: dt.type,
+            transactionId: ft.tid,
+          });
+          console.log("User not verified");
+        }
+      } else {
+        notVerifiedUsers.push({
+          userId: dt.user_id,
+          type: dt.type,
+          transactionId: dt.transaction_id,
+        });
+        console.log("User not verified");
+      }
+    });
+
+    // console.log(verifiedUsers);
+  } catch (error) {
+    console.log(error);
+  }
+
+  verifiedUsers.forEach(async (user) => {
+    if (user.type == "ETHEREAL") {
+      const ethCode = createCode();
+
+      try {
+        await client.query("UPDATE users SET ethereal= $1 WHERE id = $2", [
+          ethCode,
+          user.userId,
+        ]);
+        doneUsers.push({
+          user: user,
+          tickets: {
+            user: user,
+            tickets: {
+              eth_code: ethCode,
+              transactionId: user.transactionId,
+            },
+          },
+        });
+      } catch (err) {
+        notDoneUsers.push({
+          user: user,
+          tickets: {
+            user: user,
+            tickets: {
+              eth_code: ethCode,
+              transactionId: user.transactionId,
+            },
+          },
+        });
+        console.log(err);
+      }
+
+      console.log(ethCode);
+    } else if (
+      user.type == "IC_CONCERT" ||
+      user.type == "OC_CONCERT" ||
+      user.type == "IC_COMBO_CONCERT"
+    ) {
+      const conCode = createCode();
+      const conTicket = createConcert();
+
+      try {
+        await client.query("UPDATE users SET concert_code= $1 WHERE id = $2", [
+          conCode,
+          user.userId,
+        ]);
+        await client.query("UPDATE users SET concert= $1 WHERE id = $2", [
+          conTicket,
+          user.userId,
+        ]);
+
+        doneUsers.push({
+          user: user,
+          codes: {
+            concert_code: conCode,
+            concert: conTicket,
+            transactionId: user.transactionId,
+          },
+        });
+      } catch (err) {
+        notDoneUsers.push({
+          user: user,
+          codes: {
+            concert_code: conCode,
+            concert: conTicket,
+            transactionId: user.transactionId,
+          },
+        });
+        console.log(err);
+      }
+
+      console.log(conCode);
+      console.log(conTicket);
+    } else if (user.type == "IC_BOTH" || user.type == "OC_COMBO") {
+      const ethCode = createCode();
+      const conCode = createCode();
+      const conTicket = createConcert();
+
+      try {
+        await client.query("UPDATE users SET ethereal= $1 WHERE id = $2", [
+          ethCode,
+          user.userId,
+        ]);
+        await client.query("UPDATE users SET concert_code= $1 WHERE id = $2", [
+          conCode,
+          user.userId,
+        ]);
+        await client.query("UPDATE users SET concert= $1 WHERE id = $2", [
+          conTicket,
+          user.userId,
+        ]);
+
+        doneUsers.push({
+          user: user,
+          tickets: {
+            ethereal: ethCode,
+            concert_code: conCode,
+            concert: conTicket,
+            transactionId: user.transactionId,
+          },
+        });
+      } catch (err) {
+        notDoneUsers.push({
+          user: user,
+          tickets: {
+            ethereal: ethCode,
+            concert_code: conCode,
+            concert: conTicket,
+            transactionId: user.transactionId,
+          },
+        });
+        console.log(err);
+      }
+
+      console.log(ethCode);
+      console.log(conCode);
+      console.log(conTicket);
+    }
+  });
+
+  // Save arr as a JSON file
+  saveToJsonFile(
+    {
+      DBarr: DBarr,
+      arr: arr,
+      verifiedUsers: verifiedUsers,
+      notVerifiedUsers: notVerifiedUsers,
+      doneUsers: doneUsers,
+      notDoneUsers: notDoneUsers,
+    },
+    "transaction_data_00001.json"
+  );
+
+  sendEmail_tickets(doneUsers);
+
+  // console.log(arr);
+  // You can do whatever you need with the file data here
+  // For example, save it to disk or database
+
+  return res.status(200).json({ message: "File uploaded successfully" });
+});
+
+const sendEmail_tickets = async (toSendUsers) => {
+  let arr = [];
+
+  const users = await client.query("SELECT * FROM users", []);
+  toSendUsers.forEach((tsUser) => {
+    const filtered = users.rows.filter((user) => user.id == tsUser.user.userId);
+    arr.push({ user: filtered[0], tid: tsUser.user.transactionId });
+  });
+
+  // arr = [
+  //   {
+  //     user: {
+  //       id: "bbe53b47-9523-4941-b30a-e9d98eb37caf",
+  //       name: "Dharun",
+  //       email: "20ad09@kcgcollege.com",
+  //       phone: "6382298084",
+  //       ethereal: null,
+  //       concert: "concert_dsfasfads_ASDfsdf_ASdfasfs_SDFadf",
+  //       combo_eligible: null,
+  //       logged_in: true,
+  //       otp: null,
+  //       college: "KCG College Of Technology",
+  //       concert_code: 12345,
+  //     },
+  //     tid: "326911260001",
+  //   },
+  //   {
+  //     user: {
+  //       id: "7632f4f6-9c9c-4948-8fc3-5f0e59c13c80",
+  //       name: "Sricharan",
+  //       email: "onlysricharan@gmail.com",
+  //       phone: "6380688350",
+  //       ethereal: null,
+  //       concert: null,
+  //       combo_eligible: null,
+  //       logged_in: true,
+  //       otp: null,
+  //       college: "K.C.G. College of Technology, Chennai",
+  //       concert_code: null,
+  //     },
+  //     tid: "326911260002",
+  //   },
+  //   {
+  //     user: {
+  //       id: "7632f4f6-9c9c-4948-8fc3-5f0e59c13c80",
+  //       name: "Sricharan",
+  //       email: "dharunsivakumar@gmail.com",
+  //       phone: "6380688350",
+  //       ethereal: null,
+  //       concert: null,
+  //       combo_eligible: null,
+  //       logged_in: true,
+  //       otp: null,
+  //       college: "K.C.G. College of Technology, Chennai",
+  //       concert_code: null,
+  //     },
+  //     tid: "326911260002",
+  //   },
+  // ];
+
+  arr.forEach((user) => {
+    let htmlContent = fs.readFileSync("./email/sendTickets/index.html", "utf8");
+    console.log("HTML content:", htmlContent);
+    htmlContent = htmlContent.replace("${email_name}", user.user.name);
+    htmlContent = htmlContent.replace("${email_ecode}", user.user.ethereal);
+    htmlContent = htmlContent.replace("${email_ccode}", user.user.concert_code);
+
+    const mailOptions = {
+      from: { name: "KCG Ethereal", address: fromEmail },
+      to: user.user.email,
+      subject: `Ticket Status ${user.tid}`,
+      // text: `Your OTP for login is: ${OTP}`,
+      html: htmlContent,
+      // attachments: [
+      //   {
+      //     filename: "profile.webp", // The name of the attached file
+      //     path: "./qr/ETHEREAL.webp", // The path to your profile picture file
+      //     cid: "unique_cid", // Content-ID (cid) for referencing in the HTML body
+    };
+
+    emailTransporter.sendMail(mailOptions, (err, info) => {
+      if (err) {
+        console.error(err);
+        res.json({ message: "Failed to send OTP via email", sent: false });
+      } else {
+        console.log(info);
+        res.json({ message: "OTP sent to email", sent: true });
+      }
+    });
+  });
+
+  console.log("///////////////////////////////////////////");
+  console.log("///////////////////////////////////////////");
+  console.log("///////////////////////////////////////////");
+  console.log("///////////////////////////////////////////");
+  console.log(arr);
+  console.log(arr.length);
+};
+
+async function sendMail_tickets(EMAIL, OTP) {
+  const mailOptions = {
+    from: { name: "KCG Ethereal", address: fromEmail },
+    to: EMAIL,
+    subject: `OTP Verification ${OTP}`,
+    // text: `Your OTP for login is: ${OTP}`,
+    html: `<p>Your OTP for login is: ${OTP}</p>`,
+    // attachments: [
+    //   {
+    //     filename: "profile.webp", // The name of the attached file
+    //     path: "./qr/ETHEREAL.webp", // The path to your profile picture file
+    //     cid: "unique_cid", // Content-ID (cid) for referencing in the HTML body
+    //   },
+    // ],
+  };
+
+  emailTransporter.sendMail(mailOptions, (err, info) => {
+    if (err) {
+      console.error(err);
+      res.json({ message: "Failed to send OTP via email", sent: false });
+    } else {
+      console.log(info);
+      res.json({ message: "OTP sent to email", sent: true });
+    }
+  });
+}
+
+// Function to update the JSON file with user data
+function updateUserJsonFile(userId, dataToUpdate) {
+  const jsonFileName = `${userId}.json`; // Assuming you want a separate JSON file for each user
+  let userData = {};
+
+  try {
+    // Read the existing JSON file
+    userData = JSON.parse(fs.readFileSync(jsonFileName));
+  } catch (err) {
+    // If the file doesn't exist, userData will be an empty object
+  }
+
+  // Merge the new data into the existing user data
+  userData = { ...userData, ...dataToUpdate };
+
+  // Write the updated data back to the JSON file
+  fs.writeFileSync(jsonFileName, JSON.stringify(userData));
+}
+
+// Function to save an array as a JSON file
+function saveToJsonFile(data, fileName) {
+  fs.writeFileSync(fileName, JSON.stringify(data));
+}
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

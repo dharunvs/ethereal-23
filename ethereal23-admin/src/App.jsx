@@ -46,7 +46,11 @@ function App() {
       const formData = new FormData();
       formData.append("file", selectedFile);
 
-      fetch(BASE_URL + "/upload", {
+      const url = BASE_URL + "/upload-test";
+
+      console.log(selectedFile, url);
+
+      fetch(url, {
         method: "POST",
         body: formData,
       })
