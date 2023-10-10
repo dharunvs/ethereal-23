@@ -1425,7 +1425,7 @@ app.post("/upload-test", upload.single("file"), async (req, res) => {
     console.log(error);
   }
 
-  const outFilename = "transaction_data_00011.json";
+  const outFilename = "transaction_data_00012.json";
 
   verifiedUsers.forEach(async (user) => {
     if (user.type == "ETHEREAL") {
@@ -1776,7 +1776,38 @@ app.listen(PORT, () => {
 
 app.post("/qr-scanner", async (req, res) => {
   try {
-    res.send({ data: "Hii vroo" });
+    const { code } = req.body;
+
+    const now = new Date();
+    const currentTime = `${now.getFullYear()}-${
+      now.getMonth() + 1
+    }-${now.getDate()} ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
+
+    const dbRes = await client.query("SELECT * FROM qr WHERE code = $1", [
+      code,
+    ]);
+
+    if (dbRes.rowCount == 0) {
+      res.send({ valid: false });
+      return;
+    } else {
+      const row = dbRes.rows[0];
+      const lastScanned = row.last_scanned == undefined ? [] : row.last_scanned;
+      console.log(lastScanned);
+      const sendData = {
+        valid: true,
+        name: row.name,
+        college: row.college,
+        lastScanned: lastScanned,
+      };
+      res.send(sendData);
+
+      lastScanned.push(currentTime);
+      await client.query("UPDATE qr SET last_scanned = $1 WHERE code = $2", [
+        lastScanned,
+        code,
+      ]);
+    }
   } catch (error) {
     res.send({ error: "Error aayi pocheyy " + error });
   }

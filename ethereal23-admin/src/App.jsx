@@ -9,6 +9,8 @@ function App() {
 
   const [payPaused, setPayPaused] = useState(false);
 
+  const [qrTestingCode, setQrTestingCode] = useState("");
+
   const [ydWise, setYdwise] = useState({});
 
   const [tcount, setTcount] = useState({
@@ -117,6 +119,31 @@ function App() {
         Ethereal Admin{" "}
         <span className="warning">If unclear, please contact Dharun VS.</span>
       </h1>
+
+      <div className="controlBox">
+        <h2>QR Scanner Testing</h2>
+        <div className="CBContent">
+          <input
+            type="text"
+            value={qrTestingCode}
+            onChange={(e) => {
+              setQrTestingCode(e.target.value);
+            }}
+          />
+          <button
+            onClick={() => {
+              axios
+                .post(BASE_URL + "/qr-scanner", { code: qrTestingCode })
+                .then((res) => res.data)
+                .then((res) => {
+                  console.log(res);
+                });
+            }}
+          >
+            Test QR
+          </button>
+        </div>
+      </div>
 
       <div className="controlBox">
         <h2>Tickets Count</h2>
