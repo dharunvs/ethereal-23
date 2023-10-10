@@ -73,6 +73,46 @@
 // }
 // parseEmail("24as09@kcgcollege.com");
 
+// -----------------------------------------------------
+// -----------------------------------------------------
+// -----------------------------------------------------
+// -----------------------------------------------------
+// -----------------------------------------------------
+// -----------------------------------------------------
+// -----------------------------------------------------
+// -----------------------------------------------------
+// -----------------------------------------------------
+
+// const depts = {
+//   it: "Information Technology",
+//   ad: "Artificial Intelligence and Data Science",
+//   cs: "Computer Science and Engineering",
+//   ft: "Fashion Technology",
+//   ae: "Aeronautical",
+//   at: "Automobile",
+//   ce: "Civil",
+//   ec: "Electronics and Communication Engineering",
+//   ee: "Electrical and Electronic Engineering",
+//   ei: "Electronics and Instrumentation Engineering",
+//   mc: "Mechatronics",
+//   ao: "Aerospace",
+//   me: "Mechanical",
+//   sh: "Science and Humanities",
+// };
+
+// Object.keys(depts).map((code, key) => {
+//   console.log(depts[code]);
+// });
+
+// -----------------------------------------------------
+// -----------------------------------------------------
+// -----------------------------------------------------
+// -----------------------------------------------------
+// -----------------------------------------------------
+// -----------------------------------------------------
+// -----------------------------------------------------
+// -----------------------------------------------------
+// -----------------------------------------------------
 const { v4: uuidv4 } = require("uuid");
 
 function createCode() {
@@ -81,4 +121,12 @@ function createCode() {
   return code;
 }
 
+const createConcert = () => {
+  const uuid = uuidv4().toString();
+  const ticket = "concert_" + uuid;
+  return ticket;
+};
+
 console.log(createCode());
+console.log(createCode());
+console.log(createConcert());

@@ -22,6 +22,10 @@ import galleryImg20 from "./gallery_20.webp";
 // import galleryImg22 from "./gallery_22.webp";
 // import galleryImg23 from "./gallery_23.webp";
 
+import galleryNewImg1 from "./newGal/gallery_new_1.webp";
+import galleryNewImg2 from "./newGal/gallery_new_2.webp";
+import galleryNewImg3 from "./newGal/gallery_new_3.webp";
+
 // export const galleryImgArr = [
 //   //   galleryImg1,
 //   galleryImg2,
@@ -59,7 +63,10 @@ export const galleryImgArr = [
   galleryImg18,
   galleryImg13,
   galleryImg16,
-  galleryImg19,
-  galleryImg20,
+  galleryNewImg1,
+  galleryNewImg2,
+  galleryNewImg3,
+  // galleryImg19,
+  // galleryImg20,
   //   galleryImg22,
 ];

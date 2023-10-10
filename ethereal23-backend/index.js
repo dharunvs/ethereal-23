@@ -10,11 +10,7 @@ const path = require("path");
 const fs = require("fs");
 
 dotenv.config();
-// const stripe = require("stripe")(process.env.STRIPE_TEST_SECRET_KEY);
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-// const paymentMethodDomain = await stripe.paymentMethodDomains.create({
-//   domain_name: 'example.com',
-// });
 
 const PORT = process.env.PORT || 8000;
 
@@ -22,6 +18,7 @@ const allowedOrigins = [
   // "https://kcgethereal.com",
   "http://localhost:5173",
   // "https://ethereal-test-2023.web.app",
+  // "https://ethereal-81f2e.web.app",
 ];
 
 const corsOptions = {
@@ -34,14 +31,6 @@ const corsOptions = {
   },
 };
 
-// const db = new sqlite3.Database("./tmp/db.sqlite3", (err) => {
-//   if (err) {
-//     console.error("Error opening database:", err.message);
-//   } else {
-//     connErr = true;
-//     console.log("Connected to the database");
-//   }
-// });
 const pgURL = process.env.PG_EXTERNAL_DATABASE_URL;
 const dbConfig = {
   connectionString: pgURL,
@@ -55,14 +44,16 @@ client.connect().then((res) => {
 const fromEmail = process.env.EMAIL_USER;
 const emailTransporter = nodemailer.createTransport({
   // secure: true,
-  // port: process.env.EMAIL_PORT,
-  // host: process.env.EMAIL_HOST,
-  service: process.env.EMAIL_SERVICE,
+  port: process.env.EMAIL_PORT,
+  host: process.env.EMAIL_HOST,
+  // service: process.env.EMAIL_SERVICE,
   auth: {
     user: fromEmail,
     pass: process.env.EMAIL_PASS,
   },
 });
+
+console.log("Email host:", process.env.EMAIL_HOST);
 
 const app = express();
 app.set("trust proxy", true);
@@ -70,30 +61,6 @@ app.use(express.json());
 app.use(express.static("public"));
 app.use(cors(corsOptions));
 app.use("/qr", express.static("./qr"));
-
-// Test stripe
-// const price = {
-//   ETHEREAL: "price_1NpaRqSFg7MvYkkafGjXJhGS",
-//   IC_CONCERT: "price_1NpaTUSFg7MvYkka0z6QOT0Z",
-//   OC_CONCERT: "price_1NpaU6SFg7MvYkkaMN8l1yJ8",
-//   IC_COMBO_CONCERT: "price_1NpaSWSFg7MvYkkaZfn2L9bh",
-//   OC_COMBO_CONCERT: "price_1NpaT4SFg7MvYkkaGb9PYWba",
-// };
-
-// Live stripe
-
-// app.use((req, res, next) => {
-//   res.header(
-//     "Access-Control-Allow-Origin",
-//     // "https://ethereal-test-2023.web.app"
-//     "https://kcgethereal.com"
-//   );
-//   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-//   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-//   res.header("Access-Control-Allow-Credentials", "true");
-//   res.header("Access-Control-Max-Age", "86400"); // 24 hours
-//   next();
-// });
 
 const price = {
   ETHEREAL: process.env.PRICE_ETHEREAL,
@@ -106,195 +73,19 @@ const price = {
 
 const quantity = 1;
 
-//PayTm
-app.post("/initiateTransaction", async (req, res) => {
-  const { email, type, events, comboEligible } = req.body;
-  let innerClg = isInnerCollege(email);
-  let items = [];
-  let amount = 0;
-  if (type == 1) {
-    amount += price.ETHEREAL;
-    items.push({ price: price.ETHEREAL, quantity: quantity });
-  } else if (type == 2) {
-    if (comboEligible) {
-      if (innerClg) {
-        amount += price.IC_COMBO_CONCERT;
-        items.push({ price: price.IC_COMBO_CONCERT, quantity: quantity });
-      } else {
-        amount += price.OC_COMBO_CONCERT;
-        items.push({ price: price.OC_COMBO_CONCERT, quantity: quantity });
-      }
-    } else {
-      if (innerClg) {
-        amount += price.IC_CONCERT;
-        items.push({ price: price.IC_CONCERT, quantity: quantity });
-      } else {
-        amount += price.OC_CONCERT;
-        items.push({ price: price.OC_CONCERT, quantity: quantity });
-      }
-    }
-  } else if (type == 3) {
-    items.push({ price: price.ETHEREAL, quantity: quantity });
-    if (innerClg) {
-      items.push({ price: price.IC_CONCERT, quantity: quantity });
-    } else {
-      items.push({ price: price.OC_CONCERT, quantity: quantity });
-    }
-  }
+// app.use((req, res, next) => {
+//   const origin = req.headers.origin;
 
-  // console.log("----> ", amount);
+//   if (allowedOrigins.includes(origin)) {
+//     res.header("Access-Control-Allow-Origin", origin);
+//   }
 
-  // Live test product
-  items = [{ price: "price_1NpdMMSFg7MvYkka8i7GiEmW", quantity: 1 }];
-
-  try {
-    // const paymentMethodDomain = await stripe.paymentMethodDomains.validate(
-    //   "pmd_1NpefrSFg7MvYkkaADJjYTKC"
-    // );
-    // console.log(await paymentMethodDomain);
-
-    const session = await stripe.checkout.sessions.create({
-      line_items: items,
-      mode: "payment",
-      // payment_method_types: ["card","],
-      // automatic_payment_methods: {
-      //   enabled: true,
-      // },
-      success_url: `${allowedOrigins[0]}/success`,
-      cancel_url: `${allowedOrigins[0]}/failed`,
-    });
-
-    // const paymentIntent = await stripe.paymentIntents.create({
-    //   amount: amount,
-    //   currency: "inr",
-    //   automatic_payment_methods: {
-    //     enabled: true,
-    //   },
-    //   // payment_method_configuration: 'pmc_123',
-    // });
-
-    // res.json({ client_secret: paymentIntent.client_secret });
-    console.log(session.url);
-    res.send({ url: session.url });
-  } catch {
-    res.json({ message: "Stripe fail" });
-  }
-
-  // res.redirect(303, session.url);
-
-  // db.get("SELECT * FROM users WHERE id=?", [id], (err, row) => {
-  //   if (err) {
-  //     res.status(500).json({ message: "Error fetching user" });
-  //   } else {
-  //     user = row;
-  //     console.log(user);
-
-  // db.get("SELECT * FROM fees", [], (err, row) => {
-  //   let amount = 0;
-  //   if (err) {
-  //     console.log(err);
-  //   } else {
-  //     // -----------------------------
-  //     // -----------------------------
-
-  //     let items = [];
-
-  //     price = row;
-  //     console.log(price);
-  // if (type == 1) {
-  //   amount += price.ETHEREAL;
-  // } else if (type == 2) {
-  //   if (innerClg) {
-  //     amount += price.IC_CONCERT;
-  //   } else {
-  //     amount += price.OC_CONCERT;
-  //   }
-  // } else if (type == 3) {
-  //   amount += price.ETHEREAL;
-  //   if (innerClg) {
-  //     amount += price.IC_CONCERT;
-  //   } else {
-  //     amount += price.OC_CONCERT;
-  //   }
-  // }
-
-  //     console.log(amount);
-
-  //     // -----------------------------
-  //     // -----------------------------
-  //   }
-  // });
-  // }
-
-  // -----------------------------------------------------
-  // -----------------------------------------------------
-
-  // });
-
-  // const paytmParams = {
-  //   body: {
-  //     requestType: "Payment",
-  //     mid: "YOUR_MID_HERE",
-  //     websiteName: "YOUR_WEBSITE_NAME",
-  //     orderId: "ORDERID_98765",
-  //     callbackUrl: "https://<callback URL to be used by merchant>",
-  //     txnAmount: {
-  //       value: "1.00",
-  //       currency: "INR",
-  //     },
-  //     userInfo: {
-  //       custId: "CUST_001",
-  //     },
-  //   },
-  // };
-
-  // try {
-  //   const checksum = await PaytmChecksum.generateSignature(
-  //     JSON.stringify(paytmParams.body),
-  //     "YOUR_MERCHANT_KEY"
-  //   );
-
-  //   paytmParams.head = {
-  //     signature: checksum,
-  //   };
-
-  //   const post_data = JSON.stringify(paytmParams);
-
-  // const options = {
-  //   /* for Staging */
-  //   // hostname: "securegw-stage.paytm.in",
-
-  //   /* for Production */
-  //   // hostname: 'securegw.paytm.in',
-
-  //   port: 443,
-  //   path: "/theia/api/v1/initiateTransaction?mid=YOUR_MID_HERE&orderId=ORDERID_98765",
-  //   method: "POST",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //     "Content-Length": post_data.length,
-  //   },
-  // };
-
-  // let response = "";
-  // const post_req = https.request(options, (post_res) => {
-  //   post_res.on("data", (chunk) => {
-  //     response += chunk;
-  //   });
-
-  //   post_res.on("end", () => {
-  //     console.log("Response: ", response);
-  //     res.status(200).json({ response });
-  //   });
-  // });
-
-  // post_req.write(post_data);
-  // post_req.end();
-  // } catch (error) {
-  //   console.error("Error:", error);
-  //   res.status(500).json({ error: "Internal Server Error" });
-  // }
-});
+//   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+//   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+//   res.header("Access-Control-Allow-Credentials", "true");
+//   res.header("Access-Control-Max-Age", "86400"); // 24 hours
+//   next();
+// });
 
 // Send Login otp
 app.post("/send-otp", async (req, res) => {
@@ -472,19 +263,25 @@ app.post("/events/:id", async (req, res) => {
 
 app.post("/events/:id/register", async (req, res) => {
   const eventId = req.params.id;
-  const { userId, teamName } = req.body;
+  const { userId, solo } = req.body;
+  let { teamName } = req.body;
 
-  console.log(userId, teamName);
+  console.log(userId, teamName, solo);
+  if (solo) {
+    teamName = userId + "-" + eventId;
+  }
 
   try {
-    if (teamName.trim() !== "") {
+    if (teamName.trim() !== "" || true) {
       const teams = await client.query(
         "SELECT name FROM teams where event = $1",
         [eventId]
       );
 
       if (teams.rows.some((team) => team.name === teamName)) {
-        res.json({ message: "Team already exists with same name" });
+        res.json({
+          message: "Team already exists with same name" + teamName + "<>",
+        });
         return;
       }
 
@@ -546,20 +343,48 @@ app.post("/events/:id/join", async (req, res) => {
   res.json({ message: "jon" });
 });
 
+app.post("/events/:id/remove", async (req, res) => {
+  try {
+    const { teamId, memberId } = req.body;
+
+    const resp = await client.query("SELECT * FROM teams WHERE id = $1", [
+      teamId,
+    ]);
+    const team = resp.rows[0];
+    console.log(team.members);
+    const members = team.members.filter((member) => member !== memberId);
+    console.log(members);
+
+    await client.query("UPDATE teams SET members = $1 WHERE id = $2", [
+      members,
+      teamId,
+    ]);
+
+    res.send({ data: team });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 app.post("/users", async (req, res) => {
   const { ids } = req.body;
   let arr = [];
 
-  const users = await client.query("SELECT name, id FROM users", []);
+  const users = await client.query("SELECT name, id, ethereal FROM users", []);
   ids.forEach((id) => {
     const filtered = users.rows.filter((user) => user.id == id);
-    arr.push(filtered[0]);
+    const sendData = {
+      name: filtered[0].name,
+      id: filtered[0].id,
+      verified: filtered[0].ethereal == null ? false : true,
+    };
+    arr.push(sendData);
   });
 
   res.json({ userIds: arr });
 });
 
-app.post("/removeTeamate", async (req, res) => {});
+// app.post("/removeTeamate", async (req, res) => {});
 
 // app.post("/team", async (req, res) => {
 //   const {teamId} = req.body;
@@ -902,147 +727,147 @@ const multer = require("multer");
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-app.post("/upload", upload.single("file"), async (req, res) => {
-  if (!req.file) {
-    return res.status(400).json({ message: "No file received" });
-  }
+// app.post("/upload", upload.single("file"), async (req, res) => {
+//   if (!req.file) {
+//     return res.status(400).json({ message: "No file received" });
+//   }
 
-  let arr = [];
-  let verifiedUsers = [];
-  let doneUsers = [];
-  let notDoneUsers = [];
+//   let arr = [];
+//   let verifiedUsers = [];
+//   let doneUsers = [];
+//   let notDoneUsers = [];
 
-  // Process the uploaded file here
-  let transactions = loadFile(req.file.buffer);
-  transactions = transactions.slice(5);
+//   // Process the uploaded file here
+//   let transactions = loadFile(req.file.buffer);
+//   transactions = transactions.slice(5);
 
-  transactions.forEach((t) => {
-    console.log("-- 97 -->", t);
+//   transactions.forEach((t) => {
+//     console.log("-- 97 -->", t);
 
-    const tid = t["__EMPTY_2"].split("/")[1];
-    const refname = t["__EMPTY_2"].split("/")[3];
-    arr.push({
-      tid: tid,
-      amount: t["__EMPTY_7"],
-      time: t["Statement of Account"],
-      refname: refname,
-    });
-  });
-  console.log("-- 98 -->", arr);
+//     const tid = t["__EMPTY_2"].split("/")[1];
+//     const refname = t["__EMPTY_2"].split("/")[3];
+//     arr.push({
+//       tid: tid,
+//       amount: t["__EMPTY_7"],
+//       time: t["Statement of Account"],
+//       refname: refname,
+//     });
+//   });
+//   console.log("-- 98 -->", arr);
 
-  try {
-    const fees = await client.query("SELECT * FROM FEES");
-    console.log(fees.rows[0]);
+//   try {
+//     const fees = await client.query("SELECT * FROM FEES");
+//     console.log(fees.rows[0]);
 
-    const DbTransactions = await client.query("SELECT * FROM transactions");
-    console.log(DbTransactions.rows);
+//     const DbTransactions = await client.query("SELECT * FROM transactions");
+//     console.log(DbTransactions.rows);
 
-    DbTransactions.rows.forEach((dt) => {
-      const ft = arr.find((t) => t.tid == dt.transaction_id);
-      console.log("-- 99 -->", ft);
-      if (ft != undefined) {
-        console.log(
-          ft.amount,
-          fees[dt.type.toLowerCase()],
-          dt.type,
-          dt.type.toLowerCase(),
-          fees.rows[0]["oc_concert"],
-          fees.rows[0][dt.type.toLowerCase()]
-        );
-        if (ft.amount == fees.rows[0][dt.type.toLowerCase()] + 10) {
-          verifiedUsers.push({
-            userId: dt.user_id,
-            type: dt.type,
-            transactionId: ft.tid,
-          });
-        } else {
-          console.log("User not verified");
-        }
-      }
-    });
+//     DbTransactions.rows.forEach((dt) => {
+//       const ft = arr.find((t) => t.tid == dt.transaction_id);
+//       console.log("-- 99 -->", ft);
+//       if (ft != undefined) {
+//         console.log(
+//           ft.amount,
+//           fees[dt.type.toLowerCase()],
+//           dt.type,
+//           dt.type.toLowerCase(),
+//           fees.rows[0]["oc_concert"],
+//           fees.rows[0][dt.type.toLowerCase()]
+//         );
+//         if (ft.amount == fees.rows[0][dt.type.toLowerCase()] + 10) {
+//           verifiedUsers.push({
+//             userId: dt.user_id,
+//             type: dt.type,
+//             transactionId: ft.tid,
+//           });
+//         } else {
+//           console.log("User not verified");
+//         }
+//       }
+//     });
 
-    console.log(verifiedUsers);
-  } catch (error) {
-    console.log(error);
-  }
+//     console.log(verifiedUsers);
+//   } catch (error) {
+//     console.log(error);
+//   }
 
-  verifiedUsers.forEach(async (user) => {
-    if (user.type == "ETHEREAL") {
-      const ethCode = createCode();
+//   verifiedUsers.forEach(async (user) => {
+//     if (user.type == "ETHEREAL") {
+//       const ethCode = createCode();
 
-      try {
-        await client.query("UPDATE users SET ethereal= $1 WHERE id = $2", [
-          ethCode,
-          user.userId,
-        ]);
-        doneUsers.push(user);
-      } catch (err) {
-        notDoneUsers.push(user);
-        console.log(err);
-      }
+//       try {
+//         await client.query("UPDATE users SET ethereal= $1 WHERE id = $2", [
+//           ethCode,
+//           user.userId,
+//         ]);
+//         doneUsers.push(user);
+//       } catch (err) {
+//         notDoneUsers.push(user);
+//         console.log(err);
+//       }
 
-      console.log(ethCode);
-    } else if (
-      user.type == "IC_CONCERT" ||
-      user.type == "OC_CONCERT" ||
-      user.type == "IC_COMBO_CONCERT"
-    ) {
-      const conCode = createCode();
-      const conTicket = createConcert();
+//       console.log(ethCode);
+//     } else if (
+//       user.type == "IC_CONCERT" ||
+//       user.type == "OC_CONCERT" ||
+//       user.type == "IC_COMBO_CONCERT"
+//     ) {
+//       const conCode = createCode();
+//       const conTicket = createConcert();
 
-      try {
-        await client.query("UPDATE users SET concert_code= $1 WHERE id = $2", [
-          conCode,
-          user.userId,
-        ]);
-        await client.query("UPDATE users SET concert= $1 WHERE id = $2", [
-          conTicket,
-          user.userId,
-        ]);
-        doneUsers.push(user);
-      } catch (err) {
-        notDoneUsers.push(user);
-        console.log(err);
-      }
+//       try {
+//         await client.query("UPDATE users SET concert_code= $1 WHERE id = $2", [
+//           conCode,
+//           user.userId,
+//         ]);
+//         await client.query("UPDATE users SET concert= $1 WHERE id = $2", [
+//           conTicket,
+//           user.userId,
+//         ]);
+//         doneUsers.push(user);
+//       } catch (err) {
+//         notDoneUsers.push(user);
+//         console.log(err);
+//       }
 
-      console.log(conCode);
-      console.log(conTicket);
-    } else if (user.type == "IC_BOTH" || user.type == "OC_COMBO") {
-      const ethCode = createCode();
-      const conCode = createCode();
-      const conTicket = createConcert();
+//       console.log(conCode);
+//       console.log(conTicket);
+//     } else if (user.type == "IC_BOTH" || user.type == "OC_COMBO") {
+//       const ethCode = createCode();
+//       const conCode = createCode();
+//       const conTicket = createConcert();
 
-      try {
-        await client.query("UPDATE users SET ethereal= $1 WHERE id = $2", [
-          ethCode,
-          user.userId,
-        ]);
-        await client.query("UPDATE users SET concert_code= $1 WHERE id = $2", [
-          conCode,
-          user.userId,
-        ]);
-        await client.query("UPDATE users SET concert= $1 WHERE id = $2", [
-          conTicket,
-          user.userId,
-        ]);
-        doneUsers.push(user);
-      } catch (err) {
-        notDoneUsers.push(user);
-        console.log(err);
-      }
+//       try {
+//         await client.query("UPDATE users SET ethereal= $1 WHERE id = $2", [
+//           ethCode,
+//           user.userId,
+//         ]);
+//         await client.query("UPDATE users SET concert_code= $1 WHERE id = $2", [
+//           conCode,
+//           user.userId,
+//         ]);
+//         await client.query("UPDATE users SET concert= $1 WHERE id = $2", [
+//           conTicket,
+//           user.userId,
+//         ]);
+//         doneUsers.push(user);
+//       } catch (err) {
+//         notDoneUsers.push(user);
+//         console.log(err);
+//       }
 
-      console.log(ethCode);
-      console.log(conCode);
-      console.log(conTicket);
-    }
-  });
+//       console.log(ethCode);
+//       console.log(conCode);
+//       console.log(conTicket);
+//     }
+//   });
 
-  // console.log(arr);
-  // You can do whatever you need with the file data here
-  // For example, save it to disk or database
+//   // console.log(arr);
+//   // You can do whatever you need with the file data here
+//   // For example, save it to disk or database
 
-  return res.status(200).json({ message: "File uploaded successfully" });
-});
+//   return res.status(200).json({ message: "File uploaded successfully" });
+// });
 
 const loadFile = (file) => {
   const book = xl.read(file);
@@ -1065,22 +890,222 @@ function createCode() {
   return code;
 }
 
-app.get("/export-csv", async (req, res) => {
+app.get("/export-csv-users", async (req, res) => {
   try {
-    // Query to select data from a table (replace 'your_table' with the actual table name)
-    const query = "SELECT * FROM users";
+    const query =
+      "SELECT id, name, email, phone, college from users where logged_in = true";
     const result = await client.query(query);
 
-    // Convert the result to CSV format
     const csvData = result.rows.map((row) => Object.values(row).join(","));
 
-    // Save the CSV data to a file
-    fs.writeFileSync("output.csv", csvData.join("\n"));
+    // fs.writeFileSync(
+    //   __dirname + "/adminOut/TotalUsers.csv",
+    //   csvData.join("\n")
+    // );
 
-    res.send("CSV file exported successfully.");
+    res.send(csvData.join("\n"));
   } catch (error) {
     console.error("Error exporting CSV:", error);
     res.status(500).send("Error exporting CSV");
+  }
+});
+
+app.get("/admin-events", async (rew, res) => {
+  try {
+    const query = "SELECT * from events";
+    const result = await client.query(query);
+    res.send({ data: result.rows });
+  } catch {
+    res.status(500).send("Error");
+  }
+});
+
+app.post("/admin-events-participants", async (req, res) => {
+  try {
+    const { eventId, eventName } = req.body;
+    const users = await client.query(
+      "SELECT name, email, phone, id, ethereal FROM users",
+      []
+    );
+
+    const query = "SELECT * from teams where event = $1";
+    const result = await client.query(query, [eventId]);
+
+    let rawData = result.rows;
+    let data = [];
+
+    rawData.forEach((team) => {
+      const leadId = team.lead;
+      const membersId = team.members;
+
+      if (leadId != null) {
+        const user = users.rows.filter((user) => user.id == leadId)[0];
+        const leadPaid = user.ethereal != null ? "" : " (unpaid)";
+
+        const leadName = user.name + leadPaid;
+        const leadEmail = user.email;
+        const leadPhone = user.phone;
+        let members = [];
+        if (membersId != null) {
+          membersId.forEach((id) => {
+            const filtered = users.rows.filter((user) => user.id == id);
+            const paid = filtered[0].ethereal != null ? "" : " (unpaid)";
+            members.push(filtered[0].name + paid);
+          });
+        }
+
+        const teamData = {
+          name: team.name,
+          college: team.college,
+          leadName: leadName,
+          leadEmail: leadEmail,
+          leadPhone: leadPhone,
+          members: members,
+        };
+        console.log(teamData);
+        data.push(teamData);
+      }
+    });
+
+    const csvData = data.map((row) => Object.values(row).join(","));
+
+    // fs.writeFileSync(
+    //   __dirname + "/adminOut/" + eventName + ".csv",
+    //   csvData.join("\n")
+    // );
+
+    res.send(csvData.join("\n"));
+  } catch (error) {
+    console.error("Error exporting CSV:", error);
+    res.status(500).send("Error exporting CSV");
+  }
+});
+
+app.get("/admin-config", async (req, res) => {
+  try {
+    const config = (await client.query("SELECT * from config", [])).rows[0];
+    res.send({ data: config });
+  } catch {
+    res.status(500).send("Error /admin-payments");
+  }
+});
+
+app.post("/admin-pause-payments", async (req, res) => {
+  try {
+    const { state } = req.body;
+
+    await client.query("UPDATE config SET pause_payments= $1", [state]);
+    res.send({ message: "Done" });
+  } catch {
+    res.status(500).send("Error /admin-pause-payments");
+  }
+});
+
+app.get("/admin-tcount", async (req, res) => {
+  try {
+    const ie = await client.query(
+      "SELECT count(*) FROM users WHERE ethereal <> '' AND email like '%@kcgcollege.com'",
+      []
+    );
+    const oe = await client.query(
+      "SELECT count(*) FROM users WHERE ethereal <> '' AND email not like '%@kcgcollege.com'",
+      []
+    );
+    const ic = await client.query(
+      "SELECT count(*) FROM users WHERE concert like 'concert_%' AND email like '%@kcgcollege.com'",
+      []
+    );
+    const oc = await client.query(
+      "SELECT count(*) FROM users WHERE concert like 'concert_%' AND email not like '%@kcgcollege.com'",
+      []
+    );
+    const usersLoggedIn = await client.query(
+      "SELECT count(*) FROM users WHERE logged_in = TRUE",
+      []
+    );
+    const tcount = {
+      ic_ethereal: ie.rows[0].count,
+      oc_ethereal: oe.rows[0].count,
+      ic_concert: ic.rows[0].count,
+      oc_concert: oc.rows[0].count,
+      usersLoggedIn: usersLoggedIn.rows[0].count,
+    };
+    res.send({ data: tcount });
+  } catch {
+    res.status(500).send("Error /admin-tcount");
+  }
+});
+
+app.get("/admin-deptwise-count", async (req, res) => {
+  try {
+    console.log("Hello");
+    const query = `SELECT * FROM users WHERE email like '%kcgcollege.com' AND (ethereal <> '' OR concert_code <> '');`;
+
+    const result = await client.query(query, []);
+
+    let rawData = result.rows;
+
+    const depts = {
+      it: "Information Technology",
+      ad: "Artificial Intelligence and Data Science",
+      cs: "Computer Science and Engineering",
+      ft: "Fashion Technology",
+      ae: "Aeronautical",
+      at: "Automobile",
+      ce: "Civil",
+      ec: "Electronics and Communication Engineering",
+      ee: "Electrical and Electronic Engineering",
+      ei: "Electronics and Instrumentation Engineering",
+      mc: "Mechatronics",
+      ao: "Aerospace",
+      me: "Mechanical",
+      // sh: "Science and Humanities",
+    };
+
+    const years = [22, 21, 20];
+    const yearName = ["1st Year", "2nd Year", "3rd Year"];
+    const deptKeys = Object.keys(depts);
+
+    const yearwise = [];
+    years.forEach((year) => {
+      const deptwise = [];
+      Object.keys(depts).map((code, key) => {
+        const filtered = rawData.filter(
+          (user) =>
+            user.email.slice(0, 2) == year && user.email.slice(2, 4) == code
+        );
+        deptwise.push(filtered);
+      });
+      yearwise.push(deptwise);
+    });
+
+    rows = [];
+    yearwise.forEach((year, key) => {
+      // console.log({ name: yearName[key] });
+      rows.push({ name: yearName[key] });
+      year.forEach((dept, key) => {
+        rows.push({ name: depts[deptKeys[key]] });
+        // console.log({ name: depts[deptKeys[key]] });
+
+        dept.forEach((user) => {
+          const userData = {
+            name: user.name,
+            email: user.email,
+            ethereal: user.ethereal == null ? "" : user.ethereal,
+            concert: user.concert_code == null ? "" : user.concert_code,
+          };
+          // console.log(userData);
+          rows.push(userData);
+        });
+        rows.push({ dept: "" });
+      });
+      rows.push({ year: "" });
+    });
+
+    const csvData = rows.map((row) => Object.values(row).join(","));
+    res.send(csvData.join("\n"));
+  } catch {
+    res.status(500).send("Error /admin-deptwise-count");
   }
 });
 
@@ -1095,7 +1120,7 @@ app.get("/export-csv", async (req, res) => {
 // --------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------
 
-app.post("/upload-test", upload.single("file"), async (req, res) => {
+app.post("/upload", upload.single("file"), async (req, res) => {
   if (!req.file) {
     return res.status(400).json({ message: "No file received" });
   }
@@ -1174,6 +1199,8 @@ app.post("/upload-test", upload.single("file"), async (req, res) => {
   } catch (error) {
     console.log(error);
   }
+
+  let count = 1;
 
   verifiedUsers.forEach(async (user) => {
     if (user.type == "ETHEREAL") {
@@ -1318,6 +1345,282 @@ app.post("/upload-test", upload.single("file"), async (req, res) => {
   return res.status(200).json({ message: "File uploaded successfully" });
 });
 
+app.post("/upload-test", upload.single("file"), async (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ message: "No file received" });
+  }
+
+  let arr = [];
+  let verifiedUsers = [];
+  let notVerifiedUsers = [];
+  let doneUsers = [];
+  let notDoneUsers = [];
+  let DBarr = [];
+
+  // Process the uploaded file here
+  let transactions = loadFile(req.file.buffer);
+  console.log(transactions);
+  transactions = transactions.slice(0);
+
+  transactions.forEach((t) => {
+    console.log("-- 97 -->", t);
+
+    const tid = t["Remarks"].split("/")[1];
+    const refname = t["Remarks"].split("/")[3];
+    arr.push({
+      tid: tid,
+      amount: t["Deposits"],
+      time: t["Date"],
+      refname: refname,
+    });
+  });
+  console.log("-- 98 -->", arr);
+
+  try {
+    const fees = await client.query("SELECT * FROM FEES");
+    console.log(fees.rows[0]);
+
+    const DbTransactions = await client.query("SELECT * FROM transactions");
+    DBarr = DbTransactions.rows;
+    console.log(DbTransactions.rows);
+
+    DbTransactions.rows.forEach((dt) => {
+      const ft = arr.find((t) => t.tid == dt.transaction_id);
+      console.log("-- 99 -->", ft, dt);
+      if (ft != undefined) {
+        console.log(
+          ft.amount,
+          // fees[dt.type.toLowerCase()],
+          dt.type,
+          dt.type.toLowerCase(),
+          fees.rows[0]["oc_concert"],
+          fees.rows[0][dt.type.toLowerCase()]
+        );
+        if (ft.amount == fees.rows[0][dt.type.toLowerCase()] + 10) {
+          verifiedUsers.push({
+            userId: dt.user_id,
+            type: dt.type,
+            transactionId: ft.tid,
+          });
+        } else {
+          notVerifiedUsers.push({
+            userId: dt.user_id,
+            type: dt.type,
+            transactionId: ft.tid,
+          });
+          console.log("User not verified");
+        }
+      } else {
+        notVerifiedUsers.push({
+          userId: dt.user_id,
+          type: dt.type,
+          transactionId: dt.transaction_id,
+        });
+        console.log("User not verified");
+      }
+    });
+
+    // console.log(verifiedUsers);
+  } catch (error) {
+    console.log(error);
+  }
+
+  const outFilename = "transaction_data_00011.json";
+
+  verifiedUsers.forEach(async (user) => {
+    if (user.type == "ETHEREAL") {
+      const ethCode = createCode();
+
+      try {
+        await client
+          .query("UPDATE users SET ethereal= $1 WHERE id = $2", [
+            ethCode,
+            user.userId,
+          ])
+          .then(() => {
+            doneUsers.push({
+              user: user,
+              tickets: {
+                user: user,
+                tickets: {
+                  eth_code: ethCode,
+                  transactionId: user.transactionId,
+                },
+              },
+            });
+            saveToJsonFile(
+              {
+                DBarr: DBarr,
+                arr: arr,
+                verifiedUsers: verifiedUsers,
+                notVerifiedUsers: notVerifiedUsers,
+                doneUsers: doneUsers,
+                notDoneUsers: notDoneUsers,
+              },
+              outFilename
+            );
+          });
+      } catch (err) {
+        notDoneUsers.push({
+          user: user,
+          tickets: {
+            user: user,
+            tickets: {
+              eth_code: ethCode,
+              transactionId: user.transactionId,
+            },
+          },
+        });
+        console.log(err);
+      }
+      console.log("\n");
+      console.log(user);
+      console.log(ethCode);
+    } else if (
+      user.type == "IC_CONCERT" ||
+      user.type == "OC_CONCERT" ||
+      user.type == "IC_COMBO_CONCERT"
+    ) {
+      const conCode = createCode();
+      const conTicket = createConcert();
+
+      try {
+        await client
+          .query("UPDATE users SET concert_code= $1 WHERE id = $2", [
+            conCode,
+            user.userId,
+          ])
+          .then(async () => {
+            await client.query("UPDATE users SET concert= $1 WHERE id = $2", [
+              conTicket,
+              user.userId,
+            ]);
+          })
+          .then(() => {
+            doneUsers.push({
+              user: user,
+              codes: {
+                concert_code: conCode,
+                concert: conTicket,
+                transactionId: user.transactionId,
+              },
+            });
+            saveToJsonFile(
+              {
+                DBarr: DBarr,
+                arr: arr,
+                verifiedUsers: verifiedUsers,
+                notVerifiedUsers: notVerifiedUsers,
+                doneUsers: doneUsers,
+                notDoneUsers: notDoneUsers,
+              },
+              outFilename
+            );
+          });
+      } catch (err) {
+        notDoneUsers.push({
+          user: user,
+          codes: {
+            concert_code: conCode,
+            concert: conTicket,
+            transactionId: user.transactionId,
+          },
+        });
+        console.log(err);
+      }
+      console.log("\n");
+      console.log(user);
+      console.log(conCode);
+      console.log(conTicket);
+    } else if (user.type == "IC_BOTH" || user.type == "OC_COMBO") {
+      const ethCode = createCode();
+      const conCode = createCode();
+      const conTicket = createConcert();
+
+      try {
+        await client
+          .query("UPDATE users SET ethereal= $1 WHERE id = $2", [
+            ethCode,
+            user.userId,
+          ])
+          .then(async () => {
+            await client.query(
+              "UPDATE users SET concert_code= $1 WHERE id = $2",
+              [conCode, user.userId]
+            );
+          })
+          .then(async () => {
+            await client.query("UPDATE users SET concert= $1 WHERE id = $2", [
+              conTicket,
+              user.userId,
+            ]);
+          })
+          .then(() => {
+            doneUsers.push({
+              user: user,
+              tickets: {
+                ethereal: ethCode,
+                concert_code: conCode,
+                concert: conTicket,
+                transactionId: user.transactionId,
+              },
+            });
+            saveToJsonFile(
+              {
+                DBarr: DBarr,
+                arr: arr,
+                verifiedUsers: verifiedUsers,
+                notVerifiedUsers: notVerifiedUsers,
+                doneUsers: doneUsers,
+                notDoneUsers: notDoneUsers,
+              },
+              outFilename
+            );
+          });
+      } catch (err) {
+        notDoneUsers.push({
+          user: user,
+          tickets: {
+            ethereal: ethCode,
+            concert_code: conCode,
+            concert: conTicket,
+            transactionId: user.transactionId,
+          },
+        });
+        console.log(err);
+      }
+      console.log("\n");
+      console.log(user);
+      console.log(ethCode);
+      console.log(conCode);
+      console.log(conTicket);
+    }
+  });
+
+  // Save arr as a JSON file
+  saveToJsonFile(
+    {
+      DBarr: DBarr,
+      arr: arr,
+      verifiedUsers: verifiedUsers,
+      notVerifiedUsers: notVerifiedUsers,
+      doneUsers: doneUsers,
+      notDoneUsers: notDoneUsers,
+    },
+    outFilename
+  );
+
+  // sendEmail_tickets(doneUsers);
+
+  console.log(doneUsers);
+
+  // console.log(arr);
+  // You can do whatever you need with the file data here
+  // For example, save it to disk or database
+
+  return res.status(200).json({ message: "File uploaded successfully" });
+});
+
 const sendEmail_tickets = async (toSendUsers) => {
   let arr = [];
 
@@ -1388,7 +1691,7 @@ const sendEmail_tickets = async (toSendUsers) => {
     const mailOptions = {
       from: { name: "KCG Ethereal", address: fromEmail },
       to: user.user.email,
-      subject: `Ticket Status ${user.tid}`,
+      subject: `Ticket Status (Updated) ${user.tid}`,
       // text: `Your OTP for login is: ${OTP}`,
       html: htmlContent,
       // attachments: [
@@ -1469,4 +1772,12 @@ function saveToJsonFile(data, fileName) {
 }
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
+});
+
+app.post("/qr-scanner", async (req, res) => {
+  try {
+    res.send({ data: "Hii vroo" });
+  } catch (error) {
+    res.send({ error: "Error aayi pocheyy " + error });
+  }
 });

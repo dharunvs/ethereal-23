@@ -5,14 +5,49 @@ import axios from "axios";
 
 function App() {
   const [fees, setFees] = useState({});
+  const [events, setEvents] = useState([]);
+
+  const [payPaused, setPayPaused] = useState(false);
+
+  const [ydWise, setYdwise] = useState({});
+
+  const [tcount, setTcount] = useState({
+    oc_ethereal: 0,
+    ic_ethereal: 0,
+    oc_concert: 0,
+    ic_concert: 0,
+    usersLoggedIn: 0,
+  });
 
   useEffect(() => {
     axios
       .get(GET_FEES)
       .then((res) => res.data)
       .then((res) => {
-        console.log(res);
         setFees(res);
+      });
+
+    axios
+      .get(BASE_URL + "/admin-events")
+      .then((res) => res.data)
+      .then((res) => {
+        setEvents(res.data);
+      });
+
+    axios
+      .get(BASE_URL + "/admin-config")
+      .then((res) => res.data)
+      .then((res) => {
+        console.log(res.data);
+        setPayPaused(res.data.pause_payments);
+      });
+
+    axios
+      .get(BASE_URL + "/admin-tcount")
+      .then((res) => res.data)
+      .then((res) => {
+        console.log(res);
+        setTcount(res.data);
       });
   }, []);
 
@@ -65,22 +100,145 @@ function App() {
 
     return (
       <div>
-        <input type="file" onChange={handleFileChange} />
-        <button onClick={handleUpload}>Update db</button>
+        <p>Transaction Excel</p>
+        <input
+          type="file"
+          onChange={handleFileChange}
+          placeholder="Transaction XL"
+        />
+        <button onClick={handleUpload}>Send Tickets</button>
       </div>
     );
   }
 
   return (
     <div className="App">
-      <h1>Ethereal Admin</h1>
+      <h1>
+        Ethereal Admin{" "}
+        <span className="warning">If unclear, please contact Dharun VS.</span>
+      </h1>
 
       <div className="controlBox">
-        <h2>Data Control</h2>
-        <div className="CBContent"></div>
+        <h2>Tickets Count</h2>
+        <div className="CBContent">
+          <div className="tcounts">
+            <div className="trow">
+              <p>OC Ethereal</p>
+              <p>{tcount.oc_ethereal}</p>
+            </div>
+            <div className="trow">
+              <p>IC Ethereal</p>
+              <p>{tcount.ic_ethereal}</p>
+            </div>
+            <div className="trow">
+              <p>OC Concert</p>
+              <p>{tcount.oc_concert}</p>
+            </div>
+            <div className="trow">
+              <p>IC Concert</p>
+              <p>{tcount.ic_concert}</p>
+            </div>
+            <div className="trow">
+              <p>Users LoggedIn</p>
+              <p>{tcount.usersLoggedIn}</p>
+            </div>
+          </div>
+          <button
+            onClick={() => {
+              axios
+                .get(BASE_URL + "/admin-tcount")
+                .then((res) => res.data)
+                .then((res) => {
+                  console.log(res.data);
+                  setTcount(res.data);
+                });
+            }}
+          >
+            Refresh
+          </button>
+        </div>
       </div>
 
       <div className="controlBox">
+        <h2>Year wise dept wise</h2>
+        <div className="CBContent">
+          <button
+            onClick={() => {
+              axios.get(BASE_URL + "/admin-deptwise-count").then((response) => {
+                // Create a link element to trigger the download
+                const url = window.URL.createObjectURL(
+                  new Blob([response.data])
+                );
+                const link = document.createElement("a");
+                link.href = url;
+                link.setAttribute("download", "Yearwise-Deptwise.csv"); // You can set the desired filename here
+                document.body.appendChild(link);
+                link.click();
+              });
+            }}
+          >
+            Get
+          </button>
+        </div>
+      </div>
+
+      <div className="controlBox">
+        <h2>Data Control</h2>
+        <div className="CBContent">
+          {/* <FileUpload /> */}
+          <button
+            onClick={() => {
+              axios.get(BASE_URL + "/export-csv-users").then((response) => {
+                // Create a link element to trigger the download
+                const url = window.URL.createObjectURL(
+                  new Blob([response.data])
+                );
+                const link = document.createElement("a");
+                link.href = url;
+                link.setAttribute("download", "users.csv"); // You can set the desired filename here
+                document.body.appendChild(link);
+                link.click();
+              });
+            }}
+          >
+            Get Users
+          </button>
+        </div>
+      </div>
+
+      <div className="controlBox">
+        <h2>Participants</h2>
+        <div className="CBContent">
+          {events.map((event, key) => (
+            <button
+              className="eventName"
+              key={key}
+              onClick={() => {
+                axios
+                  .post(BASE_URL + "/admin-events-participants", {
+                    eventId: event.event_id,
+                    eventName: event.name,
+                  })
+                  .then((response) => {
+                    // Create a link element to trigger the download
+                    const url = window.URL.createObjectURL(
+                      new Blob([response.data])
+                    );
+                    const link = document.createElement("a");
+                    link.href = url;
+                    link.setAttribute("download", event.name + ".csv"); // You can set the desired filename here
+                    document.body.appendChild(link);
+                    link.click();
+                  });
+              }}
+            >
+              {event.name}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* <div className="controlBox">
         <h2>Fees Control</h2>
         <div className="CBContent">
           <table>
@@ -114,25 +272,75 @@ function App() {
             <button>Save</button>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className="controlBox">
         <h2>Payments</h2>
         <div className="CBContent">
-          <button>Pause Payments</button>
+          <p>
+            Payments: {payPaused ? "Paused" : "Ongoing"}{" "}
+            <span style={{ width: "20px", padding: "20px" }}></span>{" "}
+            {payPaused ? (
+              <button
+                onClick={() => {
+                  axios
+                    .post(BASE_URL + "/admin-pause-payments", {
+                      state: false,
+                    })
+                    .then(() => {
+                      axios
+                        .get(BASE_URL + "/admin-config")
+                        .then((res) => res.data)
+                        .then((res) => {
+                          console.log(res.data);
+                          setPayPaused(res.data.pause_payments);
+                        });
+                    });
+                }}
+              >
+                Resume
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  axios
+                    .post(BASE_URL + "/admin-pause-payments", {
+                      state: true,
+                    })
+                    .then(() => {
+                      axios
+                        .get(BASE_URL + "/admin-config")
+                        .then((res) => res.data)
+                        .then((res) => {
+                          console.log(res.data);
+                          setPayPaused(res.data.pause_payments);
+                        });
+                    });
+                }}
+              >
+                Pause
+              </button>
+            )}
+          </p>
         </div>
       </div>
 
       <div className="controlBox">
-        <h2>Update db</h2>
+        <h2>
+          Update Tickets <span className="warning"> DO NOT USE</span>
+        </h2>
         <div className="CBContent">
           <FileUpload />
         </div>
       </div>
+
       <div className="controlBox">
-        <h2>Get db</h2>
+        <h2>
+          Get data <span className="warning"> DO NOT USE</span>
+        </h2>
         <div className="CBContent">
           {/* <FileUpload /> */}
+          <input type="text" placeholder="Query" />
           <button
             onClick={() => {
               axios.get(BASE_URL + "/export-csv");
