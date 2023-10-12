@@ -1,0 +1,6 @@
+INSERT INTO users(id, name, email, phone, ethereal, college) VALUES ('8c2d77e5-4950-49c9-96d7-fdd0cc2c2cef', 'vijiselvam s', 'vijiselvam200603@gmail.com', '9941630204', '564d0e', 'KCG College Of Technology');
+INSERT INTO users(id, name, email, phone, ethereal, college) VALUES ('b4b617b3-0da6-4f57-8ccb-cf7236643b5c', 'rekha r', 'rekhasakthi1205@gmail.com', '9840749755', '6bd74b', 'KCG College Of Technology');
+INSERT INTO users(id, name, email, phone, ethereal, college) VALUES ('56fef647-5653-4d4c-8360-37be446c20ca', 'irfan', '21it31@kcgcollege.com', '8939133051', '649113', 'KCG College Of Technology');
+INSERT INTO users(id, name, email, phone, ethereal, college) VALUES ('5316dfc6-c78c-4628-a589-56224b1f3fe7', 'silambarasan', '21ae44@kcgcollege.com', '9941041632', '0a7139', 'KCG College Of Technology');
+INSERT INTO users(id, name, email, phone, ethereal, college) VALUES ('7203e97c-fa53-496a-9c7c-a7a27a69bf0f', 'abinaya s', '21ec04@kcgcollege.com', '8778669618', '354aaa', 'KCG College Of Technology');
+INSERT INTO users(id, name, email, phone, ethereal, college) VALUES ('0595d32c-7773-4adc-b359-62a2cfc3bdf1', 'kamesh p', '22me11@kcgcollege.com', '9677280047', '089fa8', 'KCG College Of Technology');

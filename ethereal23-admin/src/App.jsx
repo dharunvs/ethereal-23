@@ -332,6 +332,9 @@ function App() {
     );
   }
 
+  const [qrNameWhite, setQrNameWhite] = useState("");
+  const [qrExEmail, setQrExEmail] = useState("");
+
   return (
     <div className="App">
       <h1>
@@ -339,6 +342,136 @@ function App() {
         <span className="warning">If unclear, please contact Dharun VS.</span>
       </h1>
 
+      <div className="controlBox">
+        <h2> QR 1</h2>
+        <div className="CBContent">
+          <input
+            type="text"
+            placeholder="Email"
+            value={qrExEmail}
+            onChange={(e) => {
+              setQrExEmail(e.target.value);
+            }}
+          />
+          <button
+            onClick={async () => {
+              // setDownloadLoading(true);
+              const response = await axios.post(
+                BASE_URL + "/admin-existing-qr",
+                {
+                  email: qrExEmail,
+                },
+                { responseType: "arraybuffer" }
+              );
+              console.log(response);
+              const blob = new Blob([response.data], {
+                type: "image/png",
+              });
+              const url = URL.createObjectURL(blob);
+              const link = document.createElement("a");
+              link.href = url;
+              link.download = qrExEmail + "-concert-ticket" + ".png";
+              link.click();
+              // setDownloadLoading(false);
+              setQrExEmail("");
+            }}
+          >
+            Download
+          </button>
+        </div>
+      </div>
+
+      <div className="controlBox">
+        <h2>QR</h2>
+        <div className="CBContent">
+          <input
+            type="text"
+            placeholder="Name"
+            value={qrNameWhite}
+            onChange={(e) => {
+              setQrNameWhite(e.target.value);
+            }}
+          />
+          <button
+            onClick={async () => {
+              // setDownloadLoading(true);
+              const response = await axios.post(
+                BASE_URL + "/admin-create-white",
+                {
+                  name: qrNameWhite,
+                },
+                { responseType: "arraybuffer" }
+              );
+              const blob = new Blob([response.data], {
+                type: "image/png",
+              });
+              const url = URL.createObjectURL(blob);
+              const link = document.createElement("a");
+              link.href = url;
+              link.download = qrNameWhite + "-concert-ticket" + ".png";
+              link.click();
+              // setDownloadLoading(false);
+              setQrNameWhite("");
+            }}
+          >
+            Download
+          </button>
+        </div>
+      </div>
+
+      <div className="controlBox">
+        <h2>Desk List</h2>
+        <div className="CBContent">
+          <button
+            onClick={() => {
+              axios.get(BASE_URL + "/admin-desklist-ic").then((response) => {
+                const url = window.URL.createObjectURL(
+                  new Blob([response.data])
+                );
+                const link = document.createElement("a");
+                link.href = url;
+                link.setAttribute("download", "desklist-ic.csv");
+                document.body.appendChild(link);
+                link.click();
+              });
+            }}
+          >
+            InnerClg
+          </button>
+          <button
+            onClick={() => {
+              axios.get(BASE_URL + "/admin-desklist-oc").then((response) => {
+                const url = window.URL.createObjectURL(
+                  new Blob([response.data])
+                );
+                const link = document.createElement("a");
+                link.href = url;
+                link.setAttribute("download", "desklist-oc.csv");
+                document.body.appendChild(link);
+                link.click();
+              });
+            }}
+          >
+            OuterClg
+          </button>
+          <button
+            onClick={() => {
+              axios.get(BASE_URL + "/admin-qr-db").then((response) => {
+                const url = window.URL.createObjectURL(
+                  new Blob([response.data])
+                );
+                const link = document.createElement("a");
+                link.href = url;
+                link.setAttribute("download", "qr-db.csv");
+                document.body.appendChild(link);
+                link.click();
+              });
+            }}
+          >
+            QRDB
+          </button>
+        </div>
+      </div>
       <div className="controlBox">
         <h2>Create user</h2>
         <div className="CBContent">

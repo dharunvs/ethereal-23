@@ -1,0 +1,2 @@
+INSERT INTO users(id, name, email, phone, ethereal, concert, concert_code, college) VALUES ('f5f05286-20aa-4019-bb98-939483169df4', 'hariharan', '20mc21@kcgcollege.com', '6381168400', '2a86b2', 'concert_4733bd5c-db6b-4a44-9bf6-161670070ee0', 'a97339', 'KCG College Of Technology');
+INSERT INTO users(id, name, email, phone, ethereal, concert, concert_code, college) VALUES ('fb37fa88-67ee-4582-aca4-6f8574c25e71', 'priyadharshini', 'pripriyasselvan.217@gmail.com', '6382589541', '9c96f8', 'concert_069f220d-4e21-41e2-9269-cf3abbb91e97', '75a138', 'KCG College Of Technology');

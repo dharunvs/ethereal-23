@@ -2,7 +2,7 @@ import uuid
 
 # college = "Sathyabama University (Sathyabama Engineering College), Chennai"
 college = "KCG College Of Technology"
-file = "1st years only ethereal - Sheet1 insert"
+file = "qr-db"
 
 def create_concert():
     t = "concert_"+str(uuid.uuid4())
@@ -36,8 +36,16 @@ for i in data:
     # b=f"delete from users where email = '{a[1].lower().strip()}';\n"
 
 
-    b=f"select ethereal, first_year, email from users where email = '{a[1].lower().strip()}';\n"
+    # b=f"UPDATE users SET concert = '{create_concert()}' , concert_code = '{create_code()}' WHERE email = '{a[2].lower().strip()}';\n"
+
+
+    # b=f"select ethereal, concert_code, email from users where email = '{a[2].lower().strip()}';\n"
+    # b = f"INSERT INTO users(id, name, email, phone, ethereal, concert, concert_code, college) VALUES ('{str(uuid.uuid4())}', '{a[0].strip()}', '{a[1].lower().strip()}', '{a[2].strip()}', '{create_code()}', '{create_concert()}', '{create_code()}', '{college}');\n"
+    # b = f"INSERT INTO users(id, name, email, phone, ethereal, college) VALUES ('{str(uuid.uuid4())}', '{a[0].strip()}', '{a[1].lower().strip()}', '{a[2].strip()}', '{create_code()}', '{college}');\n"
+
     # b = f"INSERT INTO users(id, name, email, college, ethereal, first_year) VALUES ('{str(uuid.uuid4())}', '{a[0].strip()}', '{a[1].lower().strip()}', '{college}', '{create_code()}', TRUE);\n"
+
+    b = f"INSERT INTO qr(code, name) VALUES ('{a[1].strip()}', '{a[0].strip()}');\n"
 
     s.append(b)
 

@@ -16,7 +16,7 @@ const PORT = process.env.PORT || 8000;
 
 const allowedOrigins = [
   "https://kcgethereal.com",
-  // "http://localhost:5173",
+  "http://localhost:5173",
   // "https://ethereal-test-2023.web.app",
   "https://ethereal-81f2e.web.app",
   undefined,
@@ -975,6 +975,72 @@ app.post("/admin-tcount-users-specific", async (req, res) => {
   } catch (error) {
     console.error("Error exporting CSV:", error);
     res.status(500).send("Error exporting CSV");
+  }
+});
+
+app.get("/admin-desklist-ic", async (req, res) => {
+  try {
+    const query =
+      "SELECT name, email, ethereal, concert_code FROM users WHERE (ethereal <> '' OR concert <> '') AND (email like '%@kcgcollege.com%' OR first_year = TRUE)";
+    const result = await client.query(query);
+
+    const csvData = result.rows.map((row) => {
+      row = {
+        name: row.name,
+        email: row.email,
+        ethereal: `'${row.ethereal}'`,
+        concert_code: `'${row.concert_code}'`,
+      };
+      return Object.values(row).join(",");
+    });
+
+    res.send(csvData.join("\n"));
+  } catch (error) {
+    console.error("/admin-desklist-ic:", error);
+    res.status(500).send("/admin-desklist-ic");
+  }
+});
+
+app.get("/admin-qr-db", async (req, res) => {
+  try {
+    const query = "SELECT name, concert FROM users WHERE concert <> ''";
+    const result = await client.query(query);
+
+    const csvData = result.rows.map((row) => {
+      row = {
+        name: row.name,
+        concert: row.concert,
+      };
+      return Object.values(row).join(",");
+    });
+
+    res.send(csvData.join("\n"));
+  } catch (error) {
+    console.error("/admin-qr-db:", error);
+    res.status(500).send("/admin-qr-db");
+  }
+});
+
+app.get("/admin-desklist-oc", async (req, res) => {
+  try {
+    const query =
+      "SELECT name, email, ethereal, concert_code FROM users WHERE (ethereal <> '' OR concert <> '') AND (email not like '%@kcgcollege.com%' AND first_year = FALSE)";
+    const result = await client.query(query);
+
+    const csvData = result.rows.map((row) => {
+      row = {
+        name: row.name,
+        email: row.email,
+        ethereal: `'${row.ethereal}'`,
+        concert_code: `'${row.concert_code}'`,
+      };
+      return Object.values(row).join(",");
+    });
+
+    res.send(csvData.join("\n"));
+  } catch (error) {
+    console.error("/admin-desklist-ic:", error);
+    res.status(500).send("/admin-desklist-ic");
   }
 });
 
@@ -2066,7 +2132,6 @@ app.post("/qr-scanner", async (req, res) => {
       const sendData = {
         valid: true,
         name: row.name,
-        college: row.college,
         lastScanned: lastScanned,
       };
       res.send(sendData);
@@ -2079,5 +2144,428 @@ app.post("/qr-scanner", async (req, res) => {
     }
   } catch (error) {
     res.send({ error: "Error in /qr-scanner " + error });
+  }
+});
+
+// -------------------------------------------------------------
+// -------------------------------------------------------------
+// -------------------------------------------------------------
+// -------------------------------------------------------------
+// -------------------------------------------------------------
+
+const QRCode = require("qrcode");
+const puppeteer = require("puppeteer");
+
+app.post("/downloadQRpdf", async (req, res) => {
+  try {
+    const { name, code } = req.body;
+    const qrData = await QRCode.toDataURL(code);
+    let html = `<div id="root">
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap");
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        font-family: "Orbitron", sans-serif;
+        color: white;
+      }
+      #root {
+        width: 500px;
+        height: 500px;
+        /* background-color: gray; */
+        overflow: hidden;
+      }
+      .bgImg {
+        width: 500px;
+        height: 500px;
+        overflow: hidden;
+        position: relative;
+        z-index: -1;
+        position: absolute;
+      }
+      .bgImg img {
+        width: 105%;
+        filter: blur(10px);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+  
+      .qrImg {
+        width: 250px;
+        height: 250px;
+        overflow: hidden;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+      }
+      .qrImg img {
+        width: 100%;
+        height: 100%;
+        scale: 1.15;
+      }
+      .content {
+        width: 500px;
+        height: 500px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        position: relative;
+      }
+      .concert {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+      }
+      h1 {
+        font-weight: 900;
+      }
+      .logo {
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        bigt: 20px;
+        right: 20px;
+      }
+      .logo img {
+        width: 100%;
+      }
+    </style>
+    <div class="bgImg">
+      <img
+        src="https://firebasestorage.googleapis.com/v0/b/ethereal-test-2023.appspot.com/o/Pradeep.png?alt=media&token=593a76ef-3881-46fe-92c8-9911ff4c8067"
+        alt="bgImg"
+      />
+    </div>
+    <div class="content">
+      <div class="text">
+        <h1>{name}</h1>
+        <p>Oct 13, 2023</p>
+      </div>
+  
+      <div class="qrImg">
+        <img src="{qr}" alt="qrImg" />
+      </div>
+  
+      <div class="logo">
+        <img
+          src="https://firebasestorage.googleapis.com/v0/b/ethereal-test-2023.appspot.com/o/favicon.png?alt=media&token=169a1dfc-3445-45de-a90c-9f7cc7085c5d"
+          alt="logo"
+        />
+      </div>
+  
+      <p class="concert">Concert Ticket</p>
+    </div>
+  </div>
+  `;
+    html = html.replace("{name}", name);
+    html = html.replace("{qr}", qrData);
+
+    const browser = await puppeteer.launch({ args: ["--no-sandbox"] });
+    const page = await browser.newPage();
+
+    await page.setContent(html);
+
+    // await page.pdf({
+    //   width: "500px",
+    //   height: "500px",
+    //   printBackground: true,
+    // });
+    await page.setViewport({ width: 500, height: 500 });
+    const screenshot = await page.screenshot();
+
+    await browser.close();
+    res.send(screenshot);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+app.post("/admin-create-white", async (req, res) => {
+  try {
+    const { name } = req.body;
+    const concert = createConcert();
+    const qrData = await QRCode.toDataURL(concert);
+    let html = `<div id="root">
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap");
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        font-family: "Orbitron", sans-serif;
+        color: white;
+      }
+      #root {
+        width: 500px;
+        height: 500px;
+        /* background-color: gray; */
+        overflow: hidden;
+      }
+      .bgImg {
+        width: 500px;
+        height: 500px;
+        overflow: hidden;
+        position: relative;
+        z-index: -1;
+        position: absolute;
+      }
+      .bgImg img {
+        width: 105%;
+        filter: blur(10px);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+  
+      .qrImg {
+        width: 250px;
+        height: 250px;
+        overflow: hidden;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+      }
+      .qrImg img {
+        width: 100%;
+        height: 100%;
+        scale: 1.15;
+      }
+      .content {
+        width: 500px;
+        height: 500px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        position: relative;
+      }
+      .concert {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+      }
+      h1 {
+        font-weight: 900;
+      }
+      .logo {
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        bigt: 20px;
+        right: 20px;
+      }
+      .logo img {
+        width: 100%;
+      }
+    </style>
+    <div class="bgImg">
+      <img
+        src="https://firebasestorage.googleapis.com/v0/b/ethereal-test-2023.appspot.com/o/Pradeep.png?alt=media&token=593a76ef-3881-46fe-92c8-9911ff4c8067"
+        alt="bgImg"
+      />
+    </div>
+    <div class="content">
+      <div class="text">
+        <h1>{name}</h1>
+        <p>Oct 13, 2023</p>
+      </div>
+  
+      <div class="qrImg">
+        <img src="{qr}" alt="qrImg" />
+      </div>
+  
+      <div class="logo">
+        <img
+          src="https://firebasestorage.googleapis.com/v0/b/ethereal-test-2023.appspot.com/o/favicon.png?alt=media&token=169a1dfc-3445-45de-a90c-9f7cc7085c5d"
+          alt="logo"
+        />
+      </div>
+  
+      <p class="concert">Concert Ticket</p>
+    </div>
+  </div>
+  `;
+    html = html.replace("{name}", name);
+    html = html.replace("{qr}", qrData);
+
+    await client.query("INSERT INTO qr(name, code) VALUES( $1, $2 )", [
+      name,
+      concert,
+    ]);
+
+    const browser = await puppeteer.launch({ args: ["--no-sandbox"] });
+    const page = await browser.newPage();
+
+    await page.setContent(html);
+
+    // await page.pdf({
+    //   width: "500px",
+    //   height: "500px",
+    //   printBackground: true,
+    // });
+    await page.setViewport({ width: 500, height: 500 });
+    const screenshot = await page.screenshot();
+
+    await browser.close();
+    res.send(screenshot);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+app.post("/admin-existing-qr", async (req, res) => {
+  try {
+    const { email } = req.body;
+    console.log(email);
+    const resp = await client.query(
+      "SELECT name, concert FROM users WHERE email = $1",
+      [email]
+    );
+    if (resp.rowCount == 0) {
+      res.send(false);
+      return;
+    }
+    console.log(resp.rows[0]);
+
+    const name = resp.rows[0].name;
+    const concert = resp.rows[0].concert;
+    const qrData = await QRCode.toDataURL(concert);
+    let html = `<div id="root">
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap");
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        font-family: "Orbitron", sans-serif;
+        color: white;
+      }
+      #root {
+        width: 500px;
+        height: 500px;
+        /* background-color: gray; */
+        overflow: hidden;
+      }
+      .bgImg {
+        width: 500px;
+        height: 500px;
+        overflow: hidden;
+        position: relative;
+        z-index: -1;
+        position: absolute;
+      }
+      .bgImg img {
+        width: 105%;
+        filter: blur(10px);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+  
+      .qrImg {
+        width: 250px;
+        height: 250px;
+        overflow: hidden;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+      }
+      .qrImg img {
+        width: 100%;
+        height: 100%;
+        scale: 1.15;
+      }
+      .content {
+        width: 500px;
+        height: 500px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        position: relative;
+      }
+      .concert {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+      }
+      h1 {
+        font-weight: 900;
+      }
+      .logo {
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        bigt: 20px;
+        right: 20px;
+      }
+      .logo img {
+        width: 100%;
+      }
+    </style>
+    <div class="bgImg">
+      <img
+        src="https://firebasestorage.googleapis.com/v0/b/ethereal-test-2023.appspot.com/o/Pradeep.png?alt=media&token=593a76ef-3881-46fe-92c8-9911ff4c8067"
+        alt="bgImg"
+      />
+    </div>
+    <div class="content">
+      <div class="text">
+        <h1>{name}</h1>
+        <p>Oct 13, 2023</p>
+      </div>
+  
+      <div class="qrImg">
+        <img src="{qr}" alt="qrImg" />
+      </div>
+  
+      <div class="logo">
+        <img
+          src="https://firebasestorage.googleapis.com/v0/b/ethereal-test-2023.appspot.com/o/favicon.png?alt=media&token=169a1dfc-3445-45de-a90c-9f7cc7085c5d"
+          alt="logo"
+        />
+      </div>
+  
+      <p class="concert">Concert Ticket</p>
+    </div>
+  </div>
+  `;
+    html = html.replace("{name}", name);
+    html = html.replace("{qr}", qrData);
+
+    await client.query("INSERT INTO qr(name, code) VALUES( $1, $2 )", [
+      name,
+      concert,
+    ]);
+
+    const browser = await puppeteer.launch({ args: ["--no-sandbox"] });
+    const page = await browser.newPage();
+
+    await page.setContent(html);
+
+    // await page.pdf({
+    //   width: "500px",
+    //   height: "500px",
+    //   printBackground: true,
+    // });
+    await page.setViewport({ width: 500, height: 500 });
+    const screenshot = await page.screenshot();
+
+    await browser.close();
+    res.send(screenshot);
+  } catch (error) {
+    console.log(error);
   }
 });
