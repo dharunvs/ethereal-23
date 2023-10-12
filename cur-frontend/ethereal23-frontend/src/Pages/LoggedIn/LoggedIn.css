@@ -1,0 +1,610 @@
+.LoggedIn {
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  position: relative;
+  /* padding-bottom: 20vh; */
+  padding-top: 10vh;
+}
+
+.LIbg {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: blur(5px);
+  position: relative;
+  position: absolute;
+}
+
+.LIbg .LoggedInVid {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: -4;
+}
+
+.LIbg .logo {
+  width: 330px;
+}
+
+.LIbg .logo {
+  position: relative;
+}
+
+.LIbg .logo > img {
+  color: white;
+  width: 330px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -80%);
+  z-index: -5;
+}
+
+.LoggedIn .content {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.AuthScreen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.AuthScreen .box {
+  /* background-color: hsla(0, 0%, 28%, 0.5); */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 100px;
+  gap: 30px;
+  border-radius: 20px;
+  width: 100%;
+  gap: 10vh;
+  transform: translateY(5vh);
+}
+
+.AuthScreen .box * {
+  font-family: "Akira";
+}
+
+.AuthScreen .box h1 {
+  width: max-content;
+  text-align: center;
+  color: white;
+}
+
+.AuthScreen .box > div {
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 10%;
+  display: flex;
+  /* border: 2px solid red; */
+}
+
+.AuthScreen .box > div button {
+  color: black;
+  background-color: white;
+  padding: 30px 50px;
+  font-size: 1.4rem;
+  border: none;
+  outline: none;
+  border-radius: 20px;
+  transition: all 200ms ease-in-out;
+  position: relative;
+  width: 280px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.AuthScreen .box > div button:disabled {
+  color: rgb(196, 196, 196);
+}
+
+.AuthScreen .box > div button p {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  color: black;
+  transform: translate(-50%, -50%);
+  font-size: 2.2rem;
+  color: black;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+  z-index: 2;
+}
+
+.AuthScreen .box > div button h2 {
+  font-size: 1.4rem;
+  font-size: 1rem;
+}
+
+.AuthScreen .box > div button .bought {
+  color: rgb(214, 214, 214);
+}
+
+/* .AuthScreen .box > div button p {
+} */
+
+.AuthScreen .box > div button.sel {
+  /* box-shadow: 0 0 20px 5px rgb(96, 255, 255); */
+  animation: sel 1000ms ease-in infinite;
+}
+
+@keyframes sel {
+  0% {
+    /* box-shadow: 2px 2px 0 2px rgb(3, 212, 13); */
+    box-shadow: 0 0px 6px 5px rgb(254, 255, 192);
+  }
+  50% {
+    box-shadow: 2px 2px 6px 4px rgba(0, 0, 0, 0);
+  }
+  100% {
+    /* box-shadow: 2px 2px 0 2px rgb(0, 153, 255); */
+    /* box-shadow: 2px 2px 0 2px rgb(255, 163, 24); */
+    box-shadow: 0 0px 6px 5px rgb(140, 255, 146);
+    box-shadow: 0 0px 6px 5px rgb(255, 234, 166);
+    box-shadow: 0 0px 6px 5px rgb(254, 255, 192);
+  }
+}
+
+.paused {
+  font-family: "Akira";
+  color: rgb(187, 177, 122);
+  text-align: center;
+  width: 90%;
+}
+
+.AuthScreen .box > div button.sel,
+.AuthScreen .box > div button.sel2 {
+  overflow: hidden;
+  cursor: pointer;
+  background-image: linear-gradient(
+    100deg,
+    rgb(250, 158, 255) 0%,
+    rgb(138, 216, 255) 51%,
+    rgb(249, 139, 255) 100%
+  );
+  background-size: 200% auto;
+  transition: 0.5s;
+  position: relative;
+  z-index: 1;
+}
+
+.AuthScreen .box > div button.sel2::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 150%;
+  height: 100%;
+  background: linear-gradient(
+    45deg,
+    rgba(239, 0, 255, 0) 40%,
+    rgba(255, 255, 255, 0.6) 50%,
+    rgba(0, 168, 255, 0) 60%
+  );
+  transition: 600ms ease-in-out;
+}
+
+.AuthScreen .box > div button.sel2:hover::before {
+  left: -150%;
+}
+
+.AuthScreen .box > div button.sel2:hover {
+  background-position: right center; /* change the direction of the change here */
+  text-decoration: none;
+}
+
+.AuthScreen .box .cInf {
+  top: 100%;
+  color: white;
+  font-family: "Jura";
+  font-weight: 800;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.507);
+  font-size: 1.3rem;
+  text-align: center;
+  width: max-content;
+}
+
+.btButton {
+  background-image: linear-gradient(
+    100deg,
+    #b36903 0%,
+    #ffca2d 51%,
+    #b86d05 100%
+  );
+  width: max-content;
+  padding: 15px 45px;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  border-radius: 20px;
+  font-family: "Akira";
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  position: relative;
+  overflow: hidden;
+  font-size: 1.2rem;
+  width: max-content;
+}
+
+.btButton:hover {
+  background-position: right center; /* change the direction of the change here */
+  color: #fff;
+  text-decoration: none;
+}
+
+/* .btButton::after {
+  content: "";
+} */
+
+.CBanner,
+.CBannerActive,
+.CBannerActiveHalf {
+  width: 50%;
+  transform: translateX(100%);
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transition: all 500ms ease-in-out;
+}
+.EBanner,
+.EBannerActive,
+.EBannerActiveHalf {
+  width: 50%;
+  transform: translateX(-100%);
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: all 500ms ease-in-out;
+  /* background-color: rgb(31, 31, 129); */
+  overflow: hidden;
+}
+
+/* .EBanner::after,
+.EBannerActive::after,
+.EBannerActiveHalf::after {
+  content: "";
+  position: absolute;
+  top: -550%;
+  left: -0%;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1000%;
+  background: linear-gradient(
+    90deg,
+    rgba(239, 0, 255, 0) 40%,
+    rgb(253, 255, 226) 50%,
+    rgba(1, 247, 255, 0) 60%
+  );
+  animation: rotateLight 4s infinite forwards;
+}
+
+@keyframes rotateLight {
+  0% {
+    transform: rotate(30deg);
+  } 
+
+  50% {
+    transform: rotate(390deg);
+  }
+
+  100% {
+    transform: rotate(30deg);
+  }
+}
+
+*/
+
+.CBanner .img,
+.CBannerActive .img,
+.CBannerActiveHalf .img,
+.EBanner .img,
+.EBannerActive .img,
+.EBannerActiveHalf .img {
+  width: 100%;
+  height: 100vh;
+  /* background-color: gray; */
+}
+.CBannerActive,
+.EBannerActive,
+.CBannerActiveHalf,
+.EBannerActiveHalf {
+  transform: translateX(0%);
+}
+
+.EBanner .img img,
+.EBannerActive .img img,
+.EBannerActiveHalf .img img {
+  width: 100%;
+  /* height: 100%; */
+}
+
+.CBanner .img,
+.CBannerActive .img,
+.CBannerActiveHalf .img {
+  position: relative;
+  /* background-color: #b86d05; */
+}
+.CBanner .img img,
+.CBannerActive .img img,
+.CBannerActiveHalf .img img {
+  /* width: 100%; */
+  position: absolute;
+  height: auto;
+  width: 150%;
+  left: 0;
+  bottom: 0;
+}
+
+@media screen and (max-width: 1000px) {
+  .LoggedIn {
+    /* padding-bottom: 10vh; */
+    padding-top: 1vh;
+  }
+  .AuthScreen .box {
+    padding: 20px;
+    gap: 5px;
+    width: 100%;
+    /* gap: 10vh; */
+    transform: translateY(0);
+    padding-bottom: 10vh;
+  }
+  .paused {
+    font-size: 2rem;
+  }
+  .btButton {
+    background-image: linear-gradient(
+      100deg,
+      #b36903 0%,
+      #ffca2d 51%,
+      #b86d05 100%
+    );
+    width: max-content;
+    padding: 10px 30px;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    border-radius: 20px;
+    font-family: "Akira";
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    position: relative;
+    overflow: hidden;
+    font-size: 1rem;
+    width: max-content;
+  }
+  .cInf {
+    padding: 20px 0;
+  }
+  .LoggedIn .content {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    display: flex;
+    align-items: normal;
+    justify-content: left;
+  }
+  .AuthScreen .box h1 {
+    width: fit-content;
+    text-align: center;
+    font-size: 1.6rem;
+    padding-bottom: 5vh;
+  }
+  .LIbg .logo,
+  .LIbg .logo > img {
+    width: 200px;
+  }
+  .AuthScreen .box > div {
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    gap: 5vh;
+  }
+  .CBanner,
+  .CBannerActive {
+    width: 100%;
+    transform: translateX(100%);
+    height: 50vh;
+    position: absolute;
+    top: 50vh;
+    left: 0;
+    transition: all 500ms cubic-bezier(0.15, 0.67, 0.67, 0.32);
+    animation: ban1 4s ease-in-out alternate-reverse infinite;
+    animation-delay: 2s;
+  }
+  .EBanner,
+  .EBannerActive {
+    width: 100%;
+    transform: translateX(-100%);
+    height: 50vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: all 500ms ease-in-out;
+    animation: ban2 4s ease-in-out alternate-reverse infinite;
+    animation-delay: 2s;
+  }
+  .CBanner .img,
+  .CBannerActive .img,
+  .EBanner .img,
+  .EBannerActive .img {
+    width: 100%;
+    height: 50vh;
+  }
+  @keyframes ban1 {
+    0%,
+    10% {
+      transform: translateX(-100%);
+    }
+    40%,
+    60% {
+      transform: translateX(0%);
+    }
+
+    90%,
+    100% {
+      transform: translateX(100%);
+    }
+  }
+  @keyframes ban2 {
+    0%,
+    10% {
+      transform: translateX(100%);
+    }
+    40%,
+    60% {
+      transform: translateX(0%);
+    }
+
+    90%,
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .LoggedIn {
+    /* padding-bottom: 10vh; */
+    padding-top: 1vh;
+  }
+  .AuthScreen .box {
+    padding: 20px;
+    gap: 5px;
+    width: 100%;
+    /* gap: 10vh; */
+    transform: translateY(0);
+    padding-bottom: 10vh;
+  }
+  .paused {
+    font-size: 1.8rem;
+  }
+  .AuthScreen .box > div button {
+    color: black;
+    background-color: white;
+    padding: 30px 70px;
+    font-size: 1.2rem;
+    border: none;
+    outline: none;
+    border-radius: 20px;
+    transition: all 200ms ease-in-out;
+    position: relative;
+    width: 280px;
+  }
+
+  .AuthScreen .box > div button:disabled {
+    color: rgb(196, 196, 196);
+  }
+
+  .AuthScreen .box > div button p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    color: black;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    color: black;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+    z-index: 2;
+  }
+
+  .AuthScreen .box > div button h2 {
+    font-size: 1.2rem;
+    font-size: 1rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .paused {
+    font-size: 1.4rem;
+  }
+  /* .AuthScreen {
+    width: 100%;
+  }
+  .AuthScreen .box {
+    width: 100%;
+  }
+  .AuthScreen .box > div {
+    width: 100%;
+    align-items: unset;
+    align-items: unset;
+  } */
+  .AuthScreen .box > div button {
+    padding: 0px 30px;
+    font-size: 1.4rem;
+    border-radius: 20px;
+    height: 100px;
+    /* width: 240px; */
+    /* width: 100%; */
+  }
+
+  .AuthScreen .box > div button:disabled {
+    color: rgb(196, 196, 196);
+  }
+
+  .AuthScreen .box > div button p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    color: black;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    color: black;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+    z-index: 2;
+  }
+
+  .AuthScreen .box > div button h2 {
+    font-size: 1rem;
+    width: 100%;
+  }
+  .AuthScreen .box > div button .bought {
+    font-size: 1rem;
+  }
+
+  .sel p,
+  .sel2 p {
+    font-size: 1.6rem;
+  }
+
+  .AuthScreen .box .cInf {
+    top: 100%;
+    color: white;
+    font-family: "Jura";
+    font-weight: 800;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.507);
+    font-size: 1rem;
+    text-align: center;
+    width: max-content;
+  }
+}

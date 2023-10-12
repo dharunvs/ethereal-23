@@ -1,0 +1,506 @@
+.EventPage {
+  width: 100%;
+  /* height: 100vh; */
+  /* background-color: red; */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.EventPage .left {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.EventPage .left img {
+  height: 100%;
+  width: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.EventPage .eventForm {
+  color: white;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding: 30px;
+}
+
+.EventPage .eventForm video {
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  filter: brightness(0.6) blur(10px);
+}
+
+.TeamLoadersvg {
+  width: 60px;
+}
+
+.fontJura {
+  font-family: "Jura";
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.coordinators {
+  font-family: "Jura";
+  font-weight: bolder;
+}
+
+.EventPage .eventForm form {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.EventPage .eventForm form h1 {
+  font-size: 3rem;
+  font-family: "Akira";
+  /* width: 100%; */
+  /* padding-left: 20px; */
+}
+
+.EventPage .eventForm form .loginBtn {
+  font-size: 1rem;
+  font-family: "Akira";
+  width: max-content;
+  width: 300px;
+  overflow: hidden;
+  padding: 10px 30px;
+  border-radius: 20px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+
+  background-image: linear-gradient(
+    100deg,
+    rgb(250, 158, 255) 0%,
+    rgb(138, 216, 255) 51%,
+    rgb(249, 139, 255) 100%
+  );
+  background-size: 200% auto;
+  transition: 0.5s;
+  position: relative;
+  z-index: 1;
+}
+
+.EventPage .eventForm form .loginBtn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 150%;
+  height: 100%;
+  background: linear-gradient(
+    30deg,
+    rgba(239, 0, 255, 0) 40%,
+    rgba(255, 255, 255, 0.6) 50%,
+    rgba(0, 168, 255, 0) 60%
+  );
+  transition: 600ms ease-in-out;
+}
+
+.EventPage .eventForm form .loginBtn:hover::before {
+  left: -150%;
+}
+
+.EventPage .eventForm form .loginBtn:hover {
+  background-position: right center; /* change the direction of the change here */
+  text-decoration: none;
+}
+
+.PostTeam {
+  position: relative;
+}
+.PostTeam input {
+  font-size: 1rem;
+  font-family: "Jura";
+  padding: 10px 30px;
+  border-radius: 20px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  width: 400px;
+  font-weight: 800;
+  font-size: 1rem;
+}
+
+.availTeams {
+  background-color: white;
+  border-radius: 20px;
+  width: 400px;
+  position: absolute;
+  top: calc(100% + 20px);
+  overflow: hidden;
+  z-index: 2;
+}
+
+.availTeams p {
+  font-size: 1rem;
+  font-family: "Jura";
+  padding: 10px 30px;
+  /* border-radius: 20px; */
+  outline: none;
+  border: none;
+  cursor: pointer;
+  width: 400px;
+  /* font-weight: 800;x  */
+  font-size: 1rem;
+  background-color: white;
+  color: black;
+}
+.availTeams p:hover {
+  background-color: rgb(233, 233, 233);
+}
+
+.availTeams .newTeamBT {
+  font-family: "Jura";
+  width: 100%;
+}
+
+.availTeams .newTeamBT span {
+  font-family: "Jura";
+  color: green;
+  font-weight: 800;
+}
+.newTeamMsg {
+  font-family: "Jura";
+}
+
+.newTeamMsg span {
+  font-family: "Jura";
+  color: lightgreen;
+  font-weight: 800;
+}
+
+.btText {
+  font-family: "Jura";
+  font-weight: bolder;
+  color: white;
+  font-size: 1rem;
+  /* text-align: left;   */
+  /* width: 100%; */
+  padding-left: 20px;
+}
+
+.EventPage .eventForm form .customButton {
+  font-size: 1rem;
+  font-family: "Akira";
+  width: max-content;
+  width: 300px;
+  overflow: hidden;
+  padding: 10px 30px;
+  border-radius: 20px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+
+  background-image: linear-gradient(
+    100deg,
+    #b36903 0%,
+    #ffca2d 51%,
+    #b86d05 100%
+  );
+  color: white;
+  background-size: 200% auto;
+  transition: 0.5s;
+  position: relative;
+  z-index: 1;
+}
+.EventPage .eventForm form .customButton:hover {
+  background-position: right center; /* change the direction of the change here */
+  color: #fff;
+  text-decoration: none;
+}
+.Team {
+  padding-top: 2vh;
+}
+
+.Team .members .memrow {
+  display: grid;
+  grid-template-columns: 0.3fr 3fr 0.5fr 1fr;
+  width: 100%;
+  /* border: 2px solid green; */
+  padding-top: 10px;
+  padding-right: 10px;
+}
+.Team .members .memrow .memName {
+  /* background-color: #ffca2d; */
+  font-family: "Jura";
+  font-weight: bolder;
+  font-size: 1.2rem;
+}
+
+.Team .members .memrow .verified {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  /* justify-content: left; */
+  justify-content: left;
+}
+.Team .members .memrow .verified .dotGreen,
+.Team .members .memrow .verified .dotRed {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: rgb(126, 252, 126);
+  place-self: left center;
+  transform: translateY(1px);
+}
+
+.Team .members .memrow .verified .dotRed {
+  background-color: rgb(253, 107, 107);
+}
+
+.Team h2 {
+  font-family: "Akira";
+}
+
+.rmbut,
+.leadbut {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bolder;
+  font-family: "Jura";
+  font-size: 1.2rem;
+  color: lightcoral;
+  user-select: none;
+}
+
+.rmbut {
+  cursor: pointer;
+  transition: 200ms ease-in;
+}
+
+.rmbut:hover {
+  color: red;
+}
+
+.leadbut {
+  color: lightgreen;
+}
+
+.EventPage .left .rules {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* display: none; */
+  position: absolute;
+  z-index: 10;
+}
+
+.EventPage .left {
+  position: relative;
+}
+
+/* .EventPage .left > img {
+  position: absolute;
+  z-index: 5;
+  display: none;
+  top: 0;
+  left: 0;
+} */
+
+.EventPage .left .rules {
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  width: 100%;
+  height: 100vh;
+  backdrop-filter: blur(15px);
+  animation: showRules 300ms ease-in forwards;
+}
+
+@keyframes showRules {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.EventPage .left .rules img {
+  width: fit-content;
+  width: 500px;
+  height: auto;
+  /* transform: translate(-50%, -40%); */
+  clip-path: polygon(0 0, 100% 0, 100% 86%, 0 86%);
+}
+
+.EventPage .left .rules button {
+  font-size: 1rem;
+  font-family: "Akira";
+  width: max-content;
+  overflow: hidden;
+  padding: 10px 30px;
+  border-radius: 20px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1;
+  background: white;
+}
+
+.EventPage .left .rules .rulesButton1 {
+  position: absolute;
+  bottom: 50px;
+  left: 50px;
+}
+
+.EventPage .left .rules .rulesButton2 {
+  position: absolute;
+  bottom: 50px;
+  right: 50px;
+}
+
+.rulesBtn {
+  font-size: 1rem;
+  font-family: "Akira";
+  width: max-content;
+  width: 300px;
+  overflow: hidden;
+  padding: 10px 30px;
+  border-radius: 20px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+
+  background-size: 200% auto;
+  transition: 0.5s;
+  position: relative;
+  z-index: 1;
+  background: white;
+}
+
+@media screen and (max-width: 1000px) {
+  .EventPage {
+    width: 100%;
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .EventPage .left {
+    width: 100%;
+    height: fit-content;
+    overflow: hidden;
+    position: relative;
+  }
+  .EventPage .left .rules {
+    width: 100%;
+    height: fit-content;
+    backdrop-filter: blur(15px);
+    animation: showRules 300ms ease-in forwards;
+  }
+
+  .EventPage .left .rules img {
+    width: fit-content;
+    width: 100%;
+    height: auto;
+    z-index: -1;
+  }
+
+  .EventPage .left .rules button {
+    font-size: 1rem;
+    font-family: "Akira";
+    width: max-content;
+    overflow: hidden;
+    padding: 8px 20px;
+    border-radius: 20px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    z-index: 1;
+    background: white;
+    position: relative;
+    font-size: 0.6rem;
+  }
+
+  .EventPage .left .rules .rulesButton1 {
+    position: absolute;
+    bottom: auto;
+    bottom: 15px;
+    left: 20px;
+    z-index: 10;
+  }
+
+  .EventPage .left .rules .rulesButton2 {
+    position: absolute;
+    bottom: 15px;
+    right: 20px;
+  }
+
+  .EventPage .left img {
+    width: 100%;
+    height: auto;
+    position: relative;
+    top: 0;
+    left: 0%;
+    transform: translate(0);
+  }
+
+  .EventPage .eventForm {
+    color: white;
+    min-height: 50vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 30px;
+    /* padding: 10vh 0; */
+  }
+  .EventPage .eventForm form h1 {
+    font-size: 2.5rem;
+    font-family: "Akira";
+    /* width: 100%; */
+    /* padding-left: 20px; */
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .EventPage .eventForm form h1 {
+    font-size: 2rem;
+    font-family: "Akira";
+    /* width: 100%; */
+    /* padding-left: 20px; */
+  }
+
+  .EventPage .eventForm form button,
+  .EventPage .eventForm form .customButton {
+    font-size: 0.8rem;
+    padding: 10px 20px;
+  }
+}

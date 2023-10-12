@@ -1,0 +1,959 @@
+.Home {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.homeBG {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.kcg25 {
+  width: 200px;
+  position: absolute;
+  /* left: 0; */
+  bottom: -6vh;
+  /* opacity: 0.8; */
+  /* border: 2px solid white; */
+  /* filter: drop-shadow(0 0 2rem rgb(255, 255, 255)); */
+  /* -webkit-filter: drop-shadow(1px 1px 0 white) drop-shadow(-1px -1px 0 white); */
+  /* filter: drop-shadow(1px 1px 0 white) drop-shadow(-1px -1px 0 white); */
+}
+/* 
+.HomeVid {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -2;
+} */
+
+.HomeVidLeft {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -2;
+  overflow: hidden;
+  clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
+  /* filter: blur(5px); */
+}
+
+.HomeVidRight {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: -2;
+}
+
+#spline {
+  z-index: -1;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.Home .content {
+  width: 100%;
+  min-height: 100vh;
+}
+
+.HScreen1 {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.HScreen1 .logo {
+  position: relative;
+}
+
+.HScreen1 .logo > img {
+  color: white;
+  width: 280px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -80%);
+  z-index: 1;
+  user-select: none;
+}
+
+.HScreen1 .logo > h1 {
+  font-family: "Akira";
+  color: white;
+  font-size: 4.8rem;
+  position: absolute;
+  width: fit-content;
+  height: fit-content;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -80%);
+  z-index: 2;
+  /* text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); */
+  user-select: none;
+  /* letter-spacing: 0px; */
+  /* font-weight: 1000; */
+}
+
+.kcg {
+  font-family: "Caveat", cursive;
+  font-size: 2.6rem;
+  position: absolute;
+  bottom: calc(100% - 1.4rem);
+  left: 0;
+  color: rgb(148, 148, 148);
+  text-shadow: 0 0 5px black;
+}
+
+.HScreen1 .logo > p {
+  font-family: "Fasthand";
+  font-size: 1.5rem;
+  color: white;
+  position: absolute;
+  top: 100%;
+  left: 0%;
+  transform: translate(-50%, 110%);
+  width: max-content;
+  z-index: 3;
+  text-shadow: 0 0 10px white;
+  letter-spacing: 3px;
+}
+
+.HScreen1 .logo > h2 {
+  font-family: "Akira";
+  font-size: 1.3rem;
+  color: white;
+  position: absolute;
+  top: 100%;
+  left: 0%;
+  transform: translate(-50%, 400%);
+  width: max-content;
+  z-index: 3;
+  /* text-shadow: 0 0 5px rgba(255, 255, 255, 0.918); */
+  letter-spacing: 3px;
+}
+
+.cbs {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* position: relative; */
+}
+
+/* .cbs {
+  position: relative;
+} */
+
+.cbs .cbC1,
+.cbs .cbC1,
+.cbs .cbCB {
+  position: relative;
+  /* height: 500x; */
+}
+
+.cbs .cbC1,
+.cbs .cbC1 img {
+  width: 400px;
+  position: absolute;
+  top: 50%;
+  left: 25%;
+  transform: translate(calc(-50%), -50%);
+}
+
+.cbs .cbC2,
+.cbs .cbC2 img {
+  width: 400px;
+  position: absolute;
+  top: 50%;
+  right: 25%;
+  transform: translate(calc(50% - 10%), -50%);
+}
+
+.cbs .cbCB,
+.cbs .cbCB img {
+  width: 600px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(calc(-50% - 5%), -50%);
+}
+
+.cbs h1,
+.cbs h2 {
+  color: white;
+  font-family: "Akira";
+  position: absolute;
+  top: 10vh;
+  left: 50%;
+  transform: translate(-45%, -50%);
+  scale: 1.3;
+  text-shadow: 0 0 5px rgb(255, 146, 255);
+}
+.cbCB h1 {
+  transform: translate(-35%, -50%);
+  text-shadow: 0 0 5px rgb(255, 228, 110);
+}
+.cbC1 h2 {
+  transform: translate(-160%, -50%);
+  text-shadow: 0 0 5px rgb(255, 146, 255);
+}
+
+.ps {
+  position: absolute;
+  font-size: 1.7rem;
+  font-family: "Fasthand";
+  text-shadow: 0 0 5px rgba(255, 244, 194, 0.459);
+  left: 50%;
+  width: max-content;
+  transform: translateX(-50%);
+}
+
+/* .HScreen1 .logo > .customButton {
+  width: max-content;
+  color: white;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+  font-size: 1rem;
+  border-radius: 20px;
+  padding: 10px 30px;
+  font-family: "Akira";
+  cursor: pointer;
+  box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 1),
+    0px 1px 3px rgba(0, 0, 0, 0.3);
+  outline: none;
+  border: 1px solid #ba6;
+  backface-visibility: hidden;
+  background: linear-gradient(
+    180deg,
+    #ffca5f 0%,
+    #ffcd68 49%,
+    #583701 51%,
+    #ffd47d 100%
+  );
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, 20vh);
+} */
+
+.HScreen1 > .customButton {
+  background-image: linear-gradient(
+    100deg,
+    #b36903 0%,
+    #ffca2d 51%,
+    #b86d05 100%
+  );
+  width: max-content;
+  padding: 10px 40px;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  border-radius: 20px;
+  font-family: "Akira";
+  border: none;
+  outline: none;
+  font-size: 0.95rem;
+
+  position: absolute;
+  /* top: 0; */
+  /* left: 50%; */
+  /* transform: translate(-50%, 20vh); */
+  bottom: 10vh;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.HScreen1 > .customButton:hover {
+  background-position: right center; /* change the direction of the change here */
+  color: #fff;
+  text-decoration: none;
+}
+
+/* ----------------------------------------------------------- */
+/* ----------------------------------------------------------- */
+/* ----------------------------------------------------------- */
+/* ----------------------------------------------------------- */
+
+.HScreen4 {
+  width: 100%;
+  height: 100vh;
+}
+
+.HScreen2 {
+  width: 100%;
+  /* min-height: 100vh; */
+}
+
+.HScreen2 .aboutDiv {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.HScreen2 .aboutDiv .bg {
+  width: 100%;
+  height: 100%;
+}
+
+.HScreen2 .aboutDiv .adTop {
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  padding: 5%;
+  padding-top: 5vh;
+}
+.HScreen2 .aboutDiv .adBottom {
+  width: 100%;
+  min-height: 60vh;
+  position: relative;
+  padding: 5%;
+  padding-top: 5vh;
+  overflow: hidden;
+}
+
+.HScreen2 .aboutDiv .adTop .img {
+  width: 100%;
+  height: 100%;
+  /* background-color: #474747; */
+  opacity: 0.5;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.HScreen2 .aboutDiv .adTop .img img {
+  width: 100%;
+  height: 100vh;
+}
+/* 
+.HScreen2 .aboutDiv .adTop .img img {
+} */
+
+.HScreen2 .aboutDiv .adBottom .img {
+  /* background-color: lightskyblue; */
+  width: max-content;
+  height: 100%;
+  background-color: #474747;
+  opacity: 0.7;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.HScreen2 .aboutDiv .adBottom .img img {
+  /* width: 100%; */
+  /* height: 100%; */
+  /* width: auto; */
+  object-fit: cover;
+  width: 100%;
+  object-position: center;
+}
+
+.HScreen2 .aboutDiv .adTop .text,
+.HScreen2 .aboutDiv .adBottom .text {
+  position: relative;
+  z-index: 2;
+  color: white;
+}
+.text2 {
+  /* padding-bottom: 50vh; */
+  height: 80vh;
+  /* backdrop-filter: blur(10px); */
+  width: 100%;
+  /* border: 2px solid red; */
+}
+
+.HScreen2 .aboutDiv .adTop .text h1,
+.HScreen2 .aboutDiv .adBottom .text h1 {
+  font-family: "Akira";
+  font-size: 2rem;
+}
+
+.HScreen2 .aboutDiv .adTop .text p,
+.HScreen2 .aboutDiv .adBottom .text p {
+  font-family: "Jura";
+  font-size: 1.3rem;
+  font-weight: 600;
+  word-spacing: 5px;
+  line-height: 1.6rem;
+  /* text-align: justify; */
+}
+
+.HScreen2 .aboutDiv .adTop .text {
+  display: flex;
+  flex-direction: column;
+  gap: 45px;
+}
+
+.HScreen2 .aboutDiv .adBottom .text {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 5%;
+}
+
+.HScreen2 .aboutDiv .adTop .text p {
+  width: 80%;
+}
+
+.HScreen2 .aboutDiv .adBottom .text p {
+  width: 85%;
+}
+
+.text > h1 {
+  position: relative;
+}
+
+.text > h1 > .mtc {
+  position: absolute;
+  color: white;
+  top: 100%;
+  /* left: 50%; */
+  transform: translateX(20px);
+  font-size: 0.7rem;
+  /* font-family: "Akira"; */
+  font-family: "Fasthand";
+  font-size: 1.8rem;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.568);
+}
+
+/* ----------------------------------------------------------- */
+/* ----------------------------------------------------------- */
+/* ----------------------------------------------------------- */
+/* ----------------------------------------------------------- */
+
+.HScreen3 {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.HScreen3 > h1 {
+  font-size: 3rem;
+  font-family: "Akira";
+  color: white;
+  text-align: center;
+  height: 10vh;
+  position: absolute;
+  top: 5vh;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.galleryContainer {
+  height: 70vh;
+  width: 100%;
+  display: flex;
+  /* align-items: center; */
+  /* justify-content: center; */
+  gap: 40px;
+  overflow-y: hidden;
+  overflow-x: scroll;
+}
+
+.galleryContainer img {
+  height: 70vh;
+  width: auto;
+  /* aspect-ratio: 1/2; */
+}
+
+.gallery-wrap {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100vh;
+  filter: brightness(1.1);
+  position: relative;
+  z-index: 1;
+}
+
+.item {
+  flex: 1;
+  height: 100vh;
+  width: 100px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: none;
+  transition: flex 0.8s ease;
+  overflow: hidden;
+}
+
+.item img {
+  height: 100vh;
+  width: auto;
+}
+
+.item:hover {
+  flex: 5;
+  width: 300px;
+}
+
+/* ----------------------------------------------------------- */
+/* ----------------------------------------------------------- */
+/* ----------------------------------------------------------- */
+/* ----------------------------------------------------------- */
+@media screen and (max-width: 1500px) {
+  .text2 {
+    height: max-content;
+  }
+  .cbs {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cbs .cbC1,
+  .cbs .cbC1 img {
+    width: 400px;
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: translate(0);
+  }
+
+  .cbs .cbC2,
+  .cbs .cbC2 img {
+    width: 400px;
+    position: relative;
+    top: auto;
+    right: auto;
+    transform: translate(0);
+  }
+
+  .cbs .cbCB,
+  .cbs .cbCB img {
+    width: 600px;
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: translate(0);
+  }
+
+  .cbs h1,
+  .cbs h2 {
+    color: white;
+    font-family: "Akira";
+    position: absolute;
+    top: auto;
+    left: auto;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -100%);
+    scale: 1.3;
+    text-shadow: 0 0 5px rgb(255, 146, 255);
+  }
+  .cbCB h1 {
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -100%);
+    text-shadow: 0 0 5px rgb(255, 228, 110);
+  }
+  .cbC1 h2 {
+    /* top: 70%; */
+    left: 50%;
+    transform: translate(-50%, -100%);
+    text-shadow: 0 0 5px rgb(255, 146, 255);
+  }
+
+  .ps {
+    position: absolute;
+    font-size: 1.5rem;
+    font-family: "Fasthand";
+    text-shadow: 0 0 5px rgba(255, 244, 194, 0.459);
+    left: 50%;
+    width: max-content;
+    transform: translateX(-50%);
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .HScreen2 .aboutDiv .adTop .text h1,
+  .HScreen2 .aboutDiv .adBottom .text h1 {
+    font-size: 1.8rem;
+  }
+
+  .HScreen2 .aboutDiv .adTop .text p,
+  .HScreen2 .aboutDiv .adBottom .text p {
+    font-size: 1.4rem;
+  }
+  .HScreen1 .logo {
+    transform: scale(0.8);
+  }
+  .HScreen1 .logo > img {
+    width: 280px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -80%);
+  }
+
+  .HScreen1 .logo > h1 {
+    font-size: 4rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -80%);
+  }
+
+  .HScreen1 .logo > p {
+    font-size: 1.6rem;
+    top: 100%;
+    left: 0%;
+    transform: translate(-50%, 110%);
+  }
+  .HScreen1 .logo > .customButton {
+    padding: 13px 40px;
+    font-size: 0.9rem;
+    transform: translate(-50%, 18vh);
+  }
+
+  .HomeVidRight {
+    width: 100%;
+    top: 20vh;
+    right: 0;
+    z-index: -2;
+  }
+  .HomeVidLeft {
+    width: 100%;
+    /* position: absolute; */
+    top: 0;
+    left: 0;
+    z-index: -2;
+  }
+
+  .galleryContainer {
+    height: 70vh;
+    width: 100%;
+    display: flex;
+    /* align-items: center; */
+    /* justify-content: center; */
+    gap: 40px;
+    overflow-y: hidden;
+    overflow-x: scroll;
+  }
+
+  .galleryContainer img {
+    height: 70vh;
+    width: auto;
+    /* aspect-ratio: 1/2; */
+  }
+
+  /* .HScreen3 {
+    height: 120vh;
+  } */
+}
+
+@media screen and (max-width: 1100px) {
+  .kcg25 {
+    width: 200px;
+  }
+  .HScreen2 .aboutDiv .adTop .text h1,
+  .HScreen2 .aboutDiv .adBottom .text h1 {
+    font-size: 1.7rem;
+  }
+
+  .HScreen2 .aboutDiv .adTop .text p,
+  .HScreen2 .aboutDiv .adBottom .text p {
+    font-size: 1.3rem;
+  }
+  .HomeVidLeft {
+    width: 100%;
+    /* position: absolute; */
+    top: 0;
+    left: 0;
+    z-index: -2;
+  }
+  .HomeVidRight {
+    width: 100%;
+    top: 25vh;
+    right: 0;
+    z-index: -2;
+  }
+  .item:hover {
+    flex: 12;
+  }
+  .HScreen3 > h1 {
+    font-size: 3rem;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .HScreen2 .aboutDiv .adTop .text h1,
+  .HScreen2 .aboutDiv .adBottom .text h1 {
+    font-size: 1.6rem;
+  }
+
+  .HScreen2 .aboutDiv .adTop .text p,
+  .HScreen2 .aboutDiv .adBottom .text p {
+    font-size: 1.2rem;
+  }
+  .HomeVidLeft {
+    /* width: 150%; */
+    /* scale: 2; */
+    /* transform: translate(20%, 20%); */
+    display: none;
+  }
+  .HomeVidRight {
+    display: none;
+  }
+  .galleryContainer {
+    height: 220vh;
+    width: 100%;
+    display: flex;
+    /* align-items: center; */
+    /* justify-content: center; */
+    gap: 40px;
+    overflow-y: hidden;
+    overflow-x: scroll;
+  }
+
+  .gallery-wrap {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    filter: brightness(1.1);
+    position: relative;
+    z-index: 1;
+  }
+
+  .item {
+    flex: 1;
+    height: 50vh;
+    width: 100%;
+    background-position: center;
+    background-size: cover;
+    background-repeat: none;
+    transition: flex 0.8s ease;
+    overflow: hidden;
+    box-shadow: -5px 0 10px black;
+  }
+
+  .item img {
+    height: 100%;
+    width: 100%;
+    height: auto;
+  }
+
+  .item:hover {
+    flex: 18;
+    width: 100%;
+    height: 100vh;
+  }
+  .HScreen3 > h1 {
+    font-size: 3rem;
+  }
+}
+
+.celebInfo {
+  text-align: center;
+  font-family: "Jura";
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
+@media screen and (max-width: 600px) {
+  .kcg25 {
+    width: 150px;
+    top: 0;
+  }
+  .HScreen2 .aboutDiv .adBottom .text {
+    gap: 0;
+  }
+  .HScreen1 .logo > img {
+    width: 200px;
+  }
+
+  .HScreen1 .logo > h1 {
+    font-size: 2.8rem;
+  }
+
+  .HScreen1 .logo > p {
+    font-size: 1.3rem;
+  }
+
+  .HScreen2 {
+    height: fit-content;
+  }
+
+  .HScreen2 .aboutDiv {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .HScreen2 .aboutDiv .bg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .HScreen2 .aboutDiv .adTop {
+    width: 100%;
+    /* height: 40%; */
+    position: relative;
+    padding: 5vh 5%;
+    padding-bottom: 10vh;
+  }
+  .HScreen2 .aboutDiv .adBottom {
+    width: 100%;
+    /* height: 60%; */
+    position: relative;
+    padding: 5vh 5%;
+    padding-bottom: 10vh;
+  }
+
+  .HScreen2 .aboutDiv .adTop .text h1,
+  .HScreen2 .aboutDiv .adBottom .text h1 {
+    font-family: "Akira";
+    font-size: 1.6rem;
+  }
+
+  .HScreen2 .aboutDiv .adTop .text p,
+  .HScreen2 .aboutDiv .adBottom .text p {
+    font-family: "Jura";
+    font-size: 1.2rem;
+  }
+
+  .HScreen2 .aboutDiv .adTop .text {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .HScreen2 .aboutDiv .adBottom .text {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .HScreen1 .logo > .customButton {
+    padding: 10px 35px;
+    font-size: 0.8rem;
+    transform: trans late(-50%, 15vh);
+  }
+  .HScreen1 .logo > h2 {
+    font-family: "Akira";
+    font-size: 1.4rem;
+    color: white;
+    position: absolute;
+    top: 100%;
+    left: 0%;
+    transform: translate(-50%, 310%);
+    width: max-content;
+    z-index: 3;
+    text-shadow: 0 0 5px white;
+    letter-spacing: 3px;
+  }
+  .cbs .cbC1,
+  .cbs .cbC1 img {
+    width: 400px;
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: translate(0);
+  }
+
+  .cbs .cbC2,
+  .cbs .cbC2 img {
+    width: 400px;
+    position: relative;
+    top: auto;
+    right: auto;
+    transform: translate(0);
+  }
+
+  .cbs .cbCB,
+  .cbs .cbCB img {
+    width: 600px;
+    position: relative;
+    top: auto;
+    left: auto;
+    /* transform: translateX(20px); */
+  }
+
+  .cbs {
+    padding-bottom: 10vh;
+  }
+
+  .cbCxB h1 {
+    transform: translate(-30%, -50%);
+    text-shadow: 0 0 5px rgb(255, 228, 110);
+  }
+  /* 
+  .cbs .cbC2,
+  .cbs .cbC1 {
+    height: 450px;
+  }
+  .cbs .cbC2,
+  .cbs .cbC2 img {
+    width: 600px;
+  }
+  .cbs .cbC1,
+  .cbs .cbC1 img {
+    width: 600px;
+  } */
+  .HScreen3 > h1 {
+    font-size: 2rem;
+  }
+}
+
+@media screen and (max-width: 300px) {
+  .HScreen1 .logo > img {
+    width: 160px;
+  }
+
+  .HScreen1 .logo > h1 {
+    font-size: 2rem;
+  }
+
+  .HScreen1 .logo > p {
+    font-size: 1rem;
+  }
+  .HScreen1 .logo > .customButton {
+    padding: 10px 35px;
+    font-size: 0.8rem;
+    transform: translate(-50%, 12 vh);
+  }
+  .HScreen1 .logo > h2 {
+    font-family: "Akira";
+    font-size: 1rem;
+    color: white;
+    position: absolute;
+    top: 100%;
+    left: 0%;
+    transform: translate(-50%, 400%);
+    width: max-content;
+    z-index: 3;
+    text-shadow: 0 0 5px white;
+    letter-spacing: 3px;
+  }
+  .HScreen3 > h1 {
+    font-size: 1.6rem;
+  }
+
+  /* .cbs h1,
+  .cbs h2 {
+  }
+  .text2 .cbs .cbCB h1 {
+    transform: translateX(2000px);
+  } */
+}

@@ -1,0 +1,285 @@
+.TeamPage {
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  top: 0;
+  left: 0;
+  padding-top: 20vh;
+  padding-bottom: 10vh;
+}
+
+:root {
+  --size: 250px;
+}
+.teambg {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: -2;
+  /* background-color: rgb(15, 5, 5); */
+  background: linear-gradient(to right, #77a1d3, #79cbca, #e684ae);
+  filter: brightness(0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.teambg img {
+  width: 100%;
+  animation: bgRotate 20s linear infinite;
+  /* height: 100vh; */
+}
+
+.TeamPage .teamGroup {
+  padding-bottom: 5vh;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.TeamPage .teamGroup > h1 {
+  color: white;
+  font-family: "Akira";
+  padding: 5vh 0%;
+  font-size: 2.5rem;
+}
+
+.TeamPage .teamGroup .teamMembers {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+}
+
+.Card,
+.CardM {
+  width: var(--size);
+  overflow: hidden;
+  position: relative;
+  background-color: black;
+  /* background-color: blue; */
+  /* box-shadow: 2px   2px 0px 0px rgba(255, 255, 255, 0.281); */
+}
+
+.Card .imgContainer,
+.CardM .imgContainer {
+  width: var(--size);
+  height: var(--size);
+  overflow: hidden;
+}
+
+.Card .imgContainer img,
+.CardM .imgContainer img {
+  width: var(--size);
+}
+
+/* 
+
+
+
+
+*/
+
+.Card .content,
+.CardM .content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 15px;
+  padding-top: 12px;
+  color: white;
+  backdrop-filter: blur(8px);
+  background-color: white;
+}
+
+.CardM .content {
+  height: 8rem;
+}
+
+.CardM .content {
+  color: white;
+  background-color: rgb(255, 153, 0);
+  background-image: linear-gradient(
+    100deg,
+    #b69f39 0%,
+    #e7bf45 0%,
+    #ac6604 100%
+  );
+}
+
+.Card .content h1,
+.CardM .content h1 {
+  font-family: "Akira";
+  font-size: 1.2rem;
+  color: black;
+}
+
+.CardM .content h1 {
+  color: white;
+  text-align: center;
+}
+
+.Card .content p,
+.CardM .content p {
+  font-family: "Jura";
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: black;
+}
+
+.CardM .content p {
+  text-align: center;
+  color: white;
+  font-weight: 800;
+}
+
+.insta {
+  width: 50px;
+  position: absolute;
+  top: 50%;
+  right: 5px;
+  transform: translateY(-50%);
+  opacity: 0.8;
+}
+
+@media screen and (max-width: 1000px) {
+  :root {
+    --size: 250px;
+  }
+  .Card .content,
+  .CardM .content {
+    padding: 20px;
+    padding-top: 15px;
+  }
+  .TeamPage {
+    padding-top: 10vh;
+    /* padding-bottom: 10vh; */
+  }
+}
+
+@media screen and (max-width: 700px) {
+  :root {
+    --size: 200px;
+  }
+  .Card .content,
+  .CardM .content {
+    padding: 15px;
+    padding-top: 10px;
+  }
+  .TeamPage .teamGroup > h1 {
+    color: white;
+    font-family: "Akira";
+    padding: 5vh 0%;
+    font-size: 2rem;
+  }
+  .Card .content h1,
+  .CardM .content h1 {
+    font-size: 1rem;
+  }
+  .Card .content p,
+  .CardM .content p {
+    font-size: 0.8rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  :root {
+    --size: 150px;
+  }
+
+  .TeamPage .teamGroup {
+    width: 100%;
+  }
+  .Card .content,
+  .CardM .content {
+    padding: 15px;
+    padding-top: 10px;
+  }
+  .CardM .content {
+    padding: 15px;
+    padding-top: 10px;
+    height: 7.5rem;
+  }
+  .TeamPage .teamGroup > h1 {
+    color: white;
+    font-family: "Akira";
+    padding: 5vh 0%;
+    font-size: 2rem;
+    text-align: center;
+  }
+  .TeamPage .teamGroup .teamMembers {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  /* .Card .content, */
+  .CardM .content {
+    padding: 0px 5px;
+    height: 7rem;
+  }
+
+  .Card .content h1,
+  .CardM .content h1 {
+    font-family: "Akira";
+    font-size: 0.8rem;
+    color: black;
+  }
+
+  .CardM .content h1 {
+    color: white;
+    text-align: center;
+  }
+
+  .Card .content p,
+  .CardM .content p {
+    font-family: "Jura";
+    font-weight: 800;
+    font-size: 0.7rem;
+    color: black;
+  }
+
+  .CardM .content p {
+    text-align: center;
+    color: white;
+    font-weight: 800;
+  }
+  /* .Card,
+  .CardM {
+    width: var(--size);
+  }
+
+  .Card .imgContainer,
+  .CardM .imgContainer {
+    width: var(--size);
+    height: var(--size);
+    overflow: hidden;
+  }
+
+  .Card .imgContainer img,
+  .CardM .imgContainer img {
+    width: var(--size);
+  }
+  .TeamPage {
+    width: 100%;
+    min-height: 100vh;
+    position: relative;
+    top: 0;
+    left: 0;
+    padding-top: 20vh;
+    padding-bottom: 10vh;
+  } */
+}
+
+@media screen and (max-width: 300px) {
+  .TeamPage .teamGroup > h1 {
+    font-size: 1.4rem;
+  }
+}

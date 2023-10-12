@@ -1,0 +1,212 @@
+nav .content,
+nav .contentMob {
+  width: 75%;
+  height: 7vh;
+  background-color: white;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  left: 50%;
+  transform: translate(-50%, 8vh);
+  /* top: 8vh;
+  left: 50%;
+  transform: translateX(-50%); */
+  /* position: fixed; */
+  position: absolute;
+  z-index: 999;
+}
+
+.nav .contentMob {
+  height: 100vh;
+}
+
+/* .mbnBG {
+  background-color: red;
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 999999999999999;
+} */
+
+.navLink,
+.navLink * {
+  outline: none;
+}
+
+nav .content > ul,
+nav .contentMob > ul {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  list-style: none;
+}
+
+nav .content > ul > li > .navLink,
+nav .contentMob > ul > li > .navLink,
+nav .content > ul > li > .navLinkActive,
+nav .contentMob > ul > li > .navLinkActive {
+  font-family: "Akira";
+  text-decoration: none;
+  color: black;
+  font-size: 1.2rem;
+  user-select: none;
+  transition: all 200ms ease-in-out;
+}
+
+nav .content > ul > li > .navLinkActive,
+nav .contentMob > ul > li > .navLinkActive {
+  color: rgb(255, 187, 0);
+  text-shadow: 2px 2px 0 rgb(0, 0, 0);
+  -webkit-text-fill-color: white; /* Will override color (regardless of order) */
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: black;
+  user-select: none;
+  transition: all 200ms ease-in-out;
+}
+nav .contentMob > ul > li > * {
+  transition: all 300ms ease-in-out;
+}
+
+@keyframes flow {
+  0% {
+    background-position: 0 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  nav .content,
+  nav .contentMob {
+    width: 85%;
+  }
+  nav .content > ul > li > *,
+  nav .contentMob > ul > li > * {
+    font-size: 1.2rem;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  nav .content,
+  nav .contentMob {
+    width: 90%;
+  }
+
+  nav .content > ul > li > *,
+  nav .contentMob > ul > li > * {
+    font-size: 1.3rem;
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  nav .content,
+  nav .contentMob {
+    width: 85%;
+  }
+  nav .content > ul > li > *,
+  nav .contentMob > ul > li > * {
+    font-size: 1.2rem;
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  .burger,
+  .burgerAct {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    transition: all 200ms ease-in-out;
+    z-index: 9999;
+  }
+
+  .burger > div,
+  .burgerAct > div {
+    width: 40px;
+    height: 5px;
+    background-color: rgb(231, 231, 231);
+    border-radius: 5px;
+    transition: all 200ms ease-in-out;
+    box-shadow: 0 0 10px black;
+  }
+
+  .burgerAct > .line1 {
+    transform: rotate(45deg) translate(5px, 9px);
+    box-shadow: none;
+  }
+  .burgerAct > .line2 {
+    opacity: 0;
+    box-shadow: none;
+  }
+  .burgerAct > .line3 {
+    transform: rotate(-45deg) translate(5px, -9px);
+    box-shadow: none;
+  }
+
+  nav .content,
+  nav .contentMob {
+    width: 100%;
+    height: 100dvh;
+    top: 0;
+    left: 0;
+    transform: translate(0, 0);
+    border-radius: 0;
+    background-color: rgba(0, 0, 0, 0.9);
+    transition: all 300ms ease-in-out;
+    position: fixed;
+  }
+
+  nav .content {
+    top: -100%;
+  }
+
+  nav .content > ul,
+  nav .contentMob > ul {
+    flex-direction: column;
+  }
+  /* nav .content > ul > li > *,
+  nav .contentMob > ul > li > * {
+    color: white;
+    font-size: 1.5rem;
+  } */
+
+  nav .content > ul > li > .navLink,
+  nav .contentMob > ul > li > .navLink,
+  nav .content > ul > li > .navLinkActive,
+  nav .contentMob > ul > li > .navLinkActive {
+    font-family: "Akira";
+    text-decoration: none;
+    color: white;
+    font-size: 1.5rem;
+    user-select: none;
+  }
+
+  .mbnBG {
+    width: 100%;
+    height: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+
+    background-color: rgba(0, 0, 0, 1);
+    opacity: 0;
+    /* box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37); */
+    /* backdrop-filter: blur(20px); */
+    /* -webkit-backdrop-filter: blur(20px); */
+    /* filter: blur(20px); */
+  }
+}

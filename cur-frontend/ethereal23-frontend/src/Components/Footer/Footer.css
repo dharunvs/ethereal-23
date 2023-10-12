@@ -1,0 +1,307 @@
+/* footer {
+  width: 100%;
+  height: 30vh;
+  background-color: rgb(31, 31, 31);
+  color: white;
+  font-family: "Akira";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+} */
+
+footer {
+  width: 100%;
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 99;
+}
+
+footer .fTop {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* grid-area: 10px; */
+  padding: 10vh 0;
+}
+
+footer .fTop .logo img {
+  width: 100px;
+}
+
+footer .fTop h1 {
+  font-family: "Akira";
+  color: white;
+  font-size: 3rem;
+}
+footer .fTop .goldGlow {
+  font-family: "Fasthand";
+  font-size: 1.4em;
+  color: white;
+  text-shadow: 0 0 10px white;
+  letter-spacing: 3px;
+}
+
+footer .fTop .clgName,
+footer .fTop .clgLoc {
+  color: white;
+  font-family: "Jura";
+  text-transform: uppercase;
+}
+
+footer .fTop .clgName {
+  font-size: 1rem;
+  padding-top: 20px;
+  font-weight: 800;
+}
+
+footer .fTop .clgLoc {
+  font-size: 0.8rem;
+  padding-top: 10px;
+  font-weight: 800;
+  color: gray;
+}
+
+footer .fBottom {
+  width: 90%;
+  padding: 30px;
+  display: grid;
+  grid-template-columns: 3fr;
+  margin: 0 auto;
+  gap: 20px;
+}
+
+.fbLeft {
+  overflow: hidden;
+  /* border-radius: 30px; */
+  /* width: 300px; */
+  border-radius: 30px;
+  width: 300px;
+  height: 150px;
+
+  height: 100%;
+  place-items: baseline;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.fbLeft iframe {
+  border-radius: 20px;
+  border: none;
+  outline: none;
+  width: 300px;
+  height: 150px;
+  /* height: 200px; */
+  transform: scale(1);
+}
+
+.fbButtons {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: right;
+  gap: 20px;
+  padding-bottom: 20px;
+}
+
+.fbButtons button {
+  padding: 10px 16px;
+  background-color: white;
+  font-family: "Akira";
+  width: max-content;
+  font-size: 0.8rem;
+  border-radius: 20px;
+  outline: none;
+  border: none;
+}
+
+.fkcg25 {
+  width: 150px;
+  transform: translateY(20px);
+}
+
+.fbRight p {
+  color: white;
+  font-family: "Jura";
+  font-weight: 600;
+  font-size: 1rem;
+  padding-top: 10px;
+}
+
+.ll {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@media screen and (max-width: 1500px) {
+  footer .fBottom {
+    width: 90%;
+    gap: 20px;
+  }
+  .fbButtons button {
+    padding: 6px 14px;
+    font-size: 1rem;
+  }
+
+  .fbRight p {
+    font-family: "Jura";
+    font-weight: 800;
+    font-size: 1rem;
+  }
+}
+
+@media screen and (max-width: 1250px) {
+  footer .fBottom {
+    width: 90%;
+    gap: 20px;
+    grid-template-columns: 1fr;
+  }
+  .fbButtons button {
+    padding: 6px 14px;
+    font-size: 0.8rem;
+  }
+
+  .fbRight p {
+    font-family: "Jura";
+    font-weight: 800;
+    font-size: 0.8rem;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  footer {
+    width: 100%;
+    background-color: black;
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  footer .fTop {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* grid-area: 10px; */
+    padding: 5vh 0;
+  }
+
+  footer .fTop .logo img {
+    width: 50px;
+  }
+
+  footer .fTop h1 {
+    font-size: 1.8rem;
+  }
+  footer .fTop .goldGlow {
+    font-size: 1rem;
+  }
+
+  footer .fTop .clgName {
+    font-size: 1rem;
+    padding-top: 20px;
+  }
+
+  footer .fTop .clgLoc {
+    padding-top: 5px;
+    font-weight: 800;
+    font-size: 0.8rem;
+    color: gray;
+  }
+
+  footer .fBottom {
+    width: 100%;
+    padding: 30px;
+    margin: 0 auto;
+    gap: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+    height: max-content;
+  }
+
+  .fbLeft {
+    overflow: hidden;
+    border-radius: 30px;
+    width: 300px;
+    height: 150px;
+    height: 100%;
+    place-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .fbLeft iframe {
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    width: 300px;
+    height: 150px;
+    /* height: 200px; */
+    transform: scale(1.2);
+  }
+
+  .fbButtons {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    justify-content: right;
+    gap: 20px;
+    padding-bottom: 20px;
+    margin: 0 auto;
+  }
+
+  .fbButtons button {
+    padding: 10px 20px;
+    background-color: rgb(206, 206, 206);
+    font-family: "Akira";
+    width: 200px;
+    font-size: 1rem;
+    border-radius: 20px;
+    outline: none;
+    border: none;
+    /* width: 100%; */
+  }
+
+  .fbRight p {
+    color: white;
+    font-family: "Jura";
+    font-weight: 600;
+    font-size: 1.2rem;
+    padding-top: 10px;
+    text-align: center;
+  }
+
+  .ll {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .ll p:nth-child(1) {
+    display: none;
+  }
+  .ll p:nth-child(2) {
+    padding-top: 5vh;
+    font-weight: bolder;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  footer .fBottom {
+    flex-direction: column;
+  }
+}

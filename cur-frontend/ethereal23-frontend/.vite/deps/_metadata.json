@@ -1,0 +1,71 @@
+{
+  "hash": "19506f40",
+  "browserHash": "ba81c4ea",
+  "optimized": {
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "401e5b87",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "e88a7768",
+      "needsInterop": true
+    },
+    "react-router-dom": {
+      "src": "../../node_modules/react-router-dom/dist/index.js",
+      "file": "react-router-dom.js",
+      "fileHash": "bede1b4f",
+      "needsInterop": false
+    },
+    "axios": {
+      "src": "../../node_modules/axios/index.js",
+      "file": "axios.js",
+      "fileHash": "0ea0f32a",
+      "needsInterop": false
+    },
+    "@splinetool/react-spline": {
+      "src": "../../node_modules/@splinetool/react-spline/dist/react-spline.js",
+      "file": "@splinetool_react-spline.js",
+      "fileHash": "bf40d17d",
+      "needsInterop": false
+    },
+    "@stripe/react-stripe-js": {
+      "src": "../../node_modules/@stripe/react-stripe-js/dist/react-stripe.esm.js",
+      "file": "@stripe_react-stripe-js.js",
+      "fileHash": "d781078e",
+      "needsInterop": false
+    },
+    "qrcode": {
+      "src": "../../node_modules/qrcode/lib/browser.js",
+      "file": "qrcode.js",
+      "fileHash": "a110a1b1",
+      "needsInterop": true
+    }
+  },
+  "chunks": {
+    "physics-UHEW5FBW": {
+      "file": "physics-UHEW5FBW.js"
+    },
+    "process-V4OTVJIN": {
+      "file": "process-V4OTVJIN.js"
+    },
+    "boolean-PWKNGTE6": {
+      "file": "boolean-PWKNGTE6.js"
+    },
+    "opentype-6D2IPGSZ": {
+      "file": "opentype-6D2IPGSZ.js"
+    },
+    "chunk-ZAUFE7H7": {
+      "file": "chunk-ZAUFE7H7.js"
+    },
+    "navmesh-LKI4CY3W": {
+      "file": "navmesh-LKI4CY3W.js"
+    },
+    "chunk-UXIASGQL": {
+      "file": "chunk-UXIASGQL.js"
+    }
+  }
+}

@@ -1,0 +1,199 @@
+import React, { useEffect, useState } from "react";
+import "./Checkout.css";
+import logo from "../../Assets/Images/logo.png";
+import vid from "../../Assets/Spline/gradient-waves.webm";
+import ethVid from "../../Assets/Spline/abstract-gradient-background.webm";
+import img from "../../Assets/Images/Pradeep.png";
+import axios from "axios";
+import { baseURL, events } from "../../data";
+import { useNavigate } from "react-router-dom";
+
+function Checkout() {
+  function scrollToId(id) {
+    var element = document.getElementById(id);
+    element.scrollIntoView({
+      block: "start",
+      behavior: "smooth",
+    });
+  }
+  useEffect(() => {
+    scrollToId("root");
+  }, []);
+
+  const ethVidd = ethVid;
+  const [etActive, setEtActive] = useState(false);
+  const [type, setType] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [showET, setShowET] = useState(false);
+  let selEvents = [];
+
+  const ethViddd = document.createElement("video");
+  ethViddd.src = ethVidd;
+  ethViddd.autoPlay = true;
+  ethViddd.muted = true;
+  ethViddd.loop = true;
+  ethViddd.className = "EIvid";
+
+  function VideoPlayer() {
+    return <video className="EIvid" src={ethVidd} autoPlay muted loop></video>;
+  }
+
+  // autoPlay muted loop
+
+  useEffect(() => {
+    setType(localStorage.getItem("payment"));
+  }, []);
+
+  const handlePayment = () => {
+    const body = {
+      email: localStorage.getItem("email"),
+      type: localStorage.getItem("payment"),
+      events: selEvents,
+      comboEligible: localStorage.getItem("comboEligible"),
+    };
+    axios
+      .post(baseURL + "/initiateTransaction", body)
+      .then((res) => res.data)
+      .then((res) => {
+        console.log(res);
+        window.location.href = res.url;
+      });
+  };
+
+  const EventsTab = () => {
+    const Event = ({ val }) => {
+      const [inSel, setInSel] = useState(false);
+      return (
+        <div
+          className={inSel ? "EvSel" : "Ev"}
+          onClick={() => {
+            setInSel(!inSel);
+
+            if (inSel) {
+              selEvents = selEvents.filter((item) => item !== val.name);
+            } else {
+              selEvents = [...selEvents, val.name];
+            }
+          }}
+        >
+          <p>{val.name}</p>
+          <div className="bd"></div>
+        </div>
+      );
+    };
+    return (
+      <div className="EventsTab">
+        <div
+          className="back"
+          onClick={() => {
+            setEtActive(!etActive);
+            if (!showET) {
+              setTimeout(() => {
+                setShowET(!showET);
+              }, 200);
+            } else {
+              setShowET(!showET);
+            }
+          }}
+        >
+          <h1>{"<-"}</h1>
+        </div>
+        <div className="container">
+          <h1>Select Events</h1>
+
+          {events.map((val, key) => (
+            <Event val={val} key={key} />
+          ))}
+        </div>
+      </div>
+    );
+  };
+
+  const ConItem = () => {
+    return (
+      <div className="ConItem">
+        <h1>Concert</h1>
+        <img src={img} alt="" />
+      </div>
+    );
+  };
+
+  const EthItem = () => {
+    return (
+      <div className="EthItem">
+        <h1>Ethereal</h1>
+        {/* <VideoPlayer /> */}
+        <video className="EIvid" src={ethVidd} autoPlay muted loop></video>
+        <div>
+          <button
+            onClick={() => {
+              setEtActive(!etActive);
+              if (!showET) {
+                setTimeout(() => {
+                  setShowET(!showET);
+                }, 200);
+              } else {
+                setShowET(!showET);
+              }
+            }}
+          >
+            Participate in events
+          </button>
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <div className="Checkout">
+      <div className="checkoutBg">
+        {/* <Spline
+          id="spline"
+          scene="https://prod.spline.design/1CXBumz9jWVu325v/scene.splinecode"
+        /> */}
+        {/* <div className="logo"><img src={logo} alt="logo" /></div> */}
+        <video className="AuthVid" src={vid} autoPlay muted loop></video>
+      </div>
+      <div className="content">
+        <div className="CheckoutScreen">
+          <div className="box">
+            <div className="box2">
+              <div className={etActive ? "ckItemsA" : "ckItems"}>
+                {
+                  // !loading &&(
+                  type == 1 ? (
+                    <EthItem />
+                  ) : type == 2 ? (
+                    <ConItem />
+                  ) : type == 3 ? (
+                    <>
+                      <ConItem />
+                      <EthItem />{" "}
+                    </>
+                  ) : (
+                    <></>
+                  )
+                  // )
+                }
+                {/* <EventsTabMob />   */}
+              </div>
+
+              {showET && <EventsTab />}
+            </div>
+
+            <button
+              className="btButton"
+              onClick={() => {
+                handlePayment();
+              }}
+            >
+              Checkout
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default Checkout;
