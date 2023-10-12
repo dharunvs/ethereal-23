@@ -16,7 +16,7 @@ const PORT = process.env.PORT || 8000;
 
 const allowedOrigins = [
   "https://kcgethereal.com",
-  // "http://localhost:5173",
+  "http://localhost:5173",
   // "https://ethereal-test-2023.web.app",
   "https://ethereal-81f2e.web.app",
   undefined,
@@ -947,16 +947,10 @@ app.post("/admin-tcount-users-specific", async (req, res) => {
         "SELECT name, email, ethereal, concert_code FROM users WHERE concert like 'concert_%' AND email like '%@kcgcollege.com' AND first_year = FALSE";
     } else if (type == "oc_concert") {
       query =
-        "SELECT name, email, ethereal, concert_code FROM users WHERE concert like 'concert_%' AND email not like '%@kcgcollege.com' AND first_year = FALSE";
-    } else if (type == "fy_eth") {
+        "SELECT name, email, ethereal, concert_code WHERE concert like 'concert_%' AND email not like '%@kcgcollege.com' AND first_year = FALSE";
+    } else if (type == "first_year") {
       query =
-        "SELECT name, email, ethereal, concert_code FROM users WHERE first_year = TRUE AND ethereal <> '' AND concert_code IS NULL";
-    } else if (type == "fy_con") {
-      query =
-        "SELECT name, email, ethereal, concert_code FROM users WHERE first_year = TRUE AND concert_code <> '' AND ethereal IS NULL";
-    } else if (type == "fy_combo") {
-      query =
-        "SELECT name, email, ethereal, concert_code FROM users WHERE first_year = TRUE AND (ethereal <> '' OR concert_code <> '')";
+        "SELECT name, email, ethereal, concert_code FROM users WHERE first_year = TRUE";
     }
 
     const result = await client.query(query);
@@ -1006,34 +1000,19 @@ app.post("/admin-events-participants", async (req, res) => {
       const leadId = team.lead;
       const membersId = team.members;
 
-      let leadPaid = "";
-      let leadName = "";
-      let leadEmail = "";
-      let leadPhone = "";
-
       if (leadId != null) {
         const user = users.rows.filter((user) => user.id == leadId)[0];
-        if (user == undefined) {
-          leadName = "--";
-          leadEmail = "--";
-          leadPhone = "--";
-        } else {
-          leadPaid = user.ethereal != null ? "" : " (unpaid)";
-          leadName = user.name + leadPaid;
-          leadEmail = user.email;
-          leadPhone = user.phone;
-        }
+        const leadPaid = user.ethereal != null ? "" : " (unpaid)";
 
+        const leadName = user.name + leadPaid;
+        const leadEmail = user.email;
+        const leadPhone = user.phone;
         let members = [];
         if (membersId != null) {
           membersId.forEach((id) => {
             const filtered = users.rows.filter((user) => user.id == id);
-            if (filtered[0] == undefined) {
-              members.push("--");
-            } else {
-              const paid = filtered[0].ethereal != null ? "" : " (unpaid)";
-              members.push(filtered[0].name + paid);
-            }
+            const paid = filtered[0].ethereal != null ? "" : " (unpaid)";
+            members.push(filtered[0].name + paid);
           });
         }
 
@@ -1102,16 +1081,8 @@ app.get("/admin-tcount", async (req, res) => {
       "SELECT count(*) FROM users WHERE concert like 'concert_%' AND email not like '%@kcgcollege.com' AND first_year = FALSE",
       []
     );
-    const fy_eth = await client.query(
-      "SELECT count(*) FROM users WHERE first_year = TRUE AND ethereal <> '' AND concert_code IS NULL",
-      []
-    );
-    const fy_con = await client.query(
-      "SELECT count(*) FROM users WHERE first_year = TRUE AND concert <> '' AND ethereal IS NULL",
-      []
-    );
-    const fy_combo = await client.query(
-      "SELECT count(*) FROM users WHERE first_year = TRUE AND (ethereal <> '' OR concert <> '')",
+    const fy = await client.query(
+      "SELECT count(*) FROM users WHERE first_year = TRUE",
       []
     );
     const usersLoggedIn = await client.query(
@@ -1123,9 +1094,7 @@ app.get("/admin-tcount", async (req, res) => {
       oc_ethereal: oe.rows[0].count,
       ic_concert: ic.rows[0].count,
       oc_concert: oc.rows[0].count,
-      fy_eth: fy_eth.rows[0].count,
-      fy_con: fy_con.rows[0].count,
-      fy_combo: fy_combo.rows[0].count,
+      first_year: fy.rows[0].count,
       usersLoggedIn: usersLoggedIn.rows[0].count,
     };
     res.send({ data: tcount });
@@ -1308,12 +1277,7 @@ app.post("/admin-get-uuser", async (req, res) => {
     if (resp.rowCount > 0) {
       const user = resp.rows[0];
       res.send({
-        user: {
-          name: user.name,
-          email: user.email,
-          college: user.college,
-          newEmail: email,
-        },
+        user: { name: user.name, email: user.email, college: user.college },
       });
     } else {
       res.send({ mess: "Invalid User", user: false });
@@ -1325,15 +1289,15 @@ app.post("/admin-get-uuser", async (req, res) => {
 
 app.post("/admin-update-uuser", async (req, res) => {
   try {
-    const { email, name, college, newEmail } = req.body;
+    const { email, name, college } = req.body;
     const resp = await client.query(
       "SELECT name, college, email FROM users WHERE email = $1",
       [email]
     );
     if (resp.rowCount > 0) {
       await client.query(
-        "UPDATE users SET name = $1 , college = $2 , email = $3 WHERE email = $4",
-        [name, college, newEmail, email]
+        "UPDATE users SET name = $1 , college = $2 WHERE email = $3",
+        [name, college, email]
       );
       res.send({
         mess: "Updated user",

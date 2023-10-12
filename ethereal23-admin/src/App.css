@@ -92,6 +92,7 @@ button:hover {
   justify-content: left;
   gap: 20px;
   padding-bottom: 30px;
+  flex-wrap: wrap;
 }
 
 .tcounts .trow {
@@ -104,4 +105,13 @@ button:hover {
 .tcounts .trow p:nth-child(2) {
   font-weight: bold;
   font-size: 1.2rem;
+}
+
+.gtButtons {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  gap: 20px;
+  padding-top: 20px;
+  flex-wrap: wrap;
 }
