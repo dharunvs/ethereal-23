@@ -36,7 +36,15 @@ const dbConfig = {
   connectionString: pgURL,
   ssl: true,
 };
-const client = new Client(dbConfig);
+// const client = new Client(dbConfig);
+const client = new Client({
+  host: "localhost",
+  password: "061297",
+  database: "ethereal",
+  port: 5432,
+  user: "postgres",
+});
+
 client.connect().then((res) => {
   console.log("Connected to the Render Database");
 });

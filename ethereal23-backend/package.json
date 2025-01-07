@@ -37,6 +37,5 @@
   },
   "engines": {
     "node": "=18.17.1"
-  },
-  "proxy": "https://laksh-358718.el.r.appspot.com"
+  }
 }

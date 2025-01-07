@@ -40,6 +40,58 @@ This application serves as the platform for KCG Ethereal'23, the annual cultural
 ## Development Prerequisites:
 
 - Node.js (v14 or above)
-- npm
-- Google Cloud SDK (for Google App Engine deployment)
-- Firebase CLI (for frontend deployment)
+- Postgresql
+
+## Local Setup
+
+#### Frontend
+
+In the `cur-frontend/ethereal23-frontend/data.js` file, update the `baseUrl` to the local backend URl. It should look something like this:
+
+```js
+export const baseURL = "http://localhost:8000"; // Your backend url
+```
+
+Run the following commands to install the required node modules and star the frontend server locally.
+
+```bash
+cd cur-frontend/ethereal23-frontend
+npm install
+npm run dev
+```
+
+#### Backend
+
+Create a database in postgresql
+
+In `index.js` find the postgresql client creation and update it with your details. It should look something like this:
+
+```js
+const client = new Client({
+  host: "localhost",
+  password: "password", // Your db password
+  database: "ethereal", // Your db name
+  port: 5432, // Your db port
+  user: "postgres", // Your db username
+});
+```
+
+Note: For cloud database use the connection string by setting it up in the .env file
+
+Run all the create table queries in the `ethereal23-backend/queries.sql` file.
+
+Run the below commands to install the node modules and to start the server locally
+
+```bash
+cd cur-frontend/ethereal23-frontend
+npm install
+node index.js
+```
+
+// "proxy": "https://laksh-358718.el.r.appspot.com"
+
+                    id                  |  name  |            email             |   phone    | ethereal |          concert          | combo_eligible | logged_in | otp |                             college                             | concert_code | first_year
+
+--------------------------------------+--------+------------------------------+------------+----------+---------------------------+----------------+-----------+-----+-----------------------------------------------------------------+--------------+------------
+5978691a-5983-40df-bf9c-71785d4590a6 | Dharun | dharunsivakumar002@gmail.com | 6382298084 | 8bc541 | concert_123_123_123_123_1 | | t | | Sathyabama University (Sathyabama Engineering College), Chennai | 12345 | f
+(1 row)
