@@ -1,4 +1,3 @@
-// import { quantity, price, allowedOrigins } from "./data";
 const randomstring = require("randomstring");
 const nodemailer = require("nodemailer");
 const { v4: uuidv4 } = require("uuid");
@@ -10,7 +9,6 @@ const path = require("path");
 const fs = require("fs");
 
 dotenv.config();
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const PORT = process.env.PORT || 8000;
 
@@ -45,10 +43,8 @@ client.connect().then((res) => {
 
 const fromEmail = process.env.EMAIL_USER;
 const emailTransporter = nodemailer.createTransport({
-  // secure: true,
   port: process.env.EMAIL_PORT,
   host: process.env.EMAIL_HOST,
-  // service: process.env.EMAIL_SERVICE,
   auth: {
     user: fromEmail,
     pass: process.env.EMAIL_PASS,
@@ -70,10 +66,7 @@ const price = {
   OC_CONCERT: process.env.PRICE_OC_CONCERT,
   IC_COMBO_CONCERT: process.env.PRICE_IC_COMBO_CONCERT,
   OC_COMBO_CONCERT: process.env.PRICE_OC_COMBO_CONCERT,
-  // IC_BOTH: process.env.PRICE_IC_COMBO_CONCERT
 };
-
-const quantity = 1;
 
 app.use((req, res, next) => {
   const origin = req.headers.origin;
@@ -134,15 +127,7 @@ app.post("/send-otp", async (req, res) => {
       from: { name: "KCG Ethereal", address: fromEmail },
       to: EMAIL,
       subject: `OTP Verification ${OTP}`,
-      // text: `Your OTP for login is: ${OTP}`,
       html: `<p>Your OTP for login is: ${OTP}</p>`,
-      // attachments: [
-      //   {
-      //     filename: "profile.webp", // The name of the attached file
-      //     path: "./qr/ETHEREAL.webp", // The path to your profile picture file
-      //     cid: "unique_cid", // Content-ID (cid) for referencing in the HTML body
-      //   },
-      // ],
     };
 
     emailTransporter.sendMail(mailOptions, (err, info) => {
@@ -182,17 +167,10 @@ app.post("/events", async (req, res) => {
   const { userId, eventId } = req.body;
 
   try {
-    // const userQuery = await client.query(
-    //   "SELECT events from users WHERE id = $1",
-    //   [userId]
-    // );
-
-    // const college = getCollegeById(userId);
     let college = await client.query(
       "SELECT college FROM users WHERE id = $1",
       [userId]
     );
-    // console.log("-- 101 --> ", );
     if (college.rows[0] != undefined) {
       college = college.rows[0].college;
     } else {
@@ -213,10 +191,6 @@ app.post("/events", async (req, res) => {
       );
     }
 
-    console.log("--- 3 -->", query.rows);
-    // console.log("--- 3 -->", team.members);
-    console.log(filtered);
-
     if (filtered.length > 0) {
       res.json({ found: true, team: filtered[0] });
     } else {
@@ -225,17 +199,6 @@ app.post("/events", async (req, res) => {
     }
 
     return;
-
-    // if(query.rowCount)
-
-    // if (query.rowCount <=0){
-    //   query = await client.query(
-
-    //   )
-    // }
-
-    // console.log(userQuery.rows[0]["events"]);
-    // res.json(JSON.parse(userQuery.rows[0]["events"]));
   } catch (error) {
     console.log(error);
   }
@@ -246,18 +209,15 @@ app.post("/events/:id", async (req, res) => {
   const { userId } = req.body;
 
   try {
-    // const college = getCollegeById(userId);
     let college = await client.query(
       "SELECT college FROM users WHERE id = $1",
       [userId]
     );
-    // console.log("-- 101 --> ", );
     college = college.rows[0].college;
     const query = await client.query(
       "SELECT * from teams WHERE event = $1 AND college = $2",
       [eventId, college]
     );
-    console.log(query.rows);
     res.json(query.rows);
   } catch (error) {
     console.log(error);
@@ -288,12 +248,10 @@ app.post("/events/:id/register", async (req, res) => {
         return;
       }
 
-      // let college = getCollegeById(userId);
       let college = await client.query(
         "SELECT college FROM users WHERE id = $1",
         [userId]
       );
-      // console.log("-- 101 --> ", );
       college = college.rows[0].college;
       console.log("-- 102 --> ", college);
 
@@ -319,8 +277,6 @@ app.post("/events/:id/join", async (req, res) => {
       "SELECT * from events where event_id = $1",
       [eventId]
     );
-
-    // const college = getCollegeById(userId);
 
     let college = await client.query(
       "SELECT college FROM users WHERE id = $1",
@@ -354,9 +310,7 @@ app.post("/events/:id/remove", async (req, res) => {
       teamId,
     ]);
     const team = resp.rows[0];
-    console.log(team.members);
     const members = team.members.filter((member) => member !== memberId);
-    console.log(members);
 
     await client.query("UPDATE teams SET members = $1 WHERE id = $2", [
       members,
@@ -387,16 +341,6 @@ app.post("/users", async (req, res) => {
   res.json({ userIds: arr });
 });
 
-// app.post("/removeTeamate", async (req, res) => {});
-
-// app.post("/team", async (req, res) => {
-//   const {teamId} = req.body;
-
-//   try {
-//     const team =
-//   }
-// })
-
 // Login
 app.post("/login", async (req, res) => {
   const { email, otp } = req.body;
@@ -406,11 +350,6 @@ app.post("/login", async (req, res) => {
       "SELECT id, otp FROM users WHERE email = $1",
       [email]
     );
-
-    // if (userQuery.rows.length === 0) {
-    //   res.json({ message: "User not found" });
-    //   return;
-    // }
 
     const row = userQuery.rows[0];
     const dbOtp = row.otp != null ? row.otp.toString() : "";
@@ -426,7 +365,6 @@ app.post("/login", async (req, res) => {
         loggedIn: true,
         email: email,
         id: row.id,
-        // verified: true,
       });
     } else {
       res.status(401).json({ message: "Invalid OTP" });
@@ -534,8 +472,6 @@ app.post("/transaction", async (req, res) => {
 
   transactionId = transactionId.trim();
 
-  // console.log("-- 1 -->", transactionId, userId, type);
-
   if (transactionId !== "") {
     try {
       const transactions = await client.query("SELECT * from transactions");
@@ -545,7 +481,6 @@ app.post("/transaction", async (req, res) => {
       if (transactions.rowCount > 0) {
         transactions.rows.forEach((row) => {
           if (row.transaction_id == transactionId) {
-            // console.log("-- 2 -->", row.transaction_id, row.user_id, row.type);
             if (row.user_id == userId && row.type == type) {
               sameTypeSameUser = true;
               tid = row.transaction_id;
@@ -562,8 +497,6 @@ app.post("/transaction", async (req, res) => {
       } else {
         found = false;
       }
-
-      // console.log("-- 3 --> sameTypeSameUser:", sameTypeSameUser);
 
       if (sameTypeSameUser) {
         res.json({ message: "Already Submitted", tid: tid });
@@ -620,32 +553,6 @@ app.get("/get-fees", async (req, res) => {
 });
 
 // ---------------------- Helper Functions ----------------------
-
-const getCollegeById = async (id) => {
-  try {
-    const college = await client.query(
-      "SELECT college FROM users WHERE id = $1",
-      [id]
-    );
-    return college.rows[0];
-  } catch (error) {
-    console.log(error);
-    return null;
-  }
-};
-
-const getCollegeByEmail = async (email) => {
-  try {
-    const college = await client.query(
-      "SELECT college FROM users WHERE email = $1",
-      [email]
-    );
-    return college;
-  } catch (error) {
-    console.log(error);
-    return null;
-  }
-};
 
 function isInnerCollege(email) {
   const emailParts = email.split("@");
@@ -729,148 +636,6 @@ const multer = require("multer");
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
-
-// app.post("/upload", upload.single("file"), async (req, res) => {
-//   if (!req.file) {
-//     return res.status(400).json({ message: "No file received" });
-//   }
-
-//   let arr = [];
-//   let verifiedUsers = [];
-//   let doneUsers = [];
-//   let notDoneUsers = [];
-
-//   // Process the uploaded file here
-//   let transactions = loadFile(req.file.buffer);
-//   transactions = transactions.slice(5);
-
-//   transactions.forEach((t) => {
-//     console.log("-- 97 -->", t);
-
-//     const tid = t["__EMPTY_2"].split("/")[1];
-//     const refname = t["__EMPTY_2"].split("/")[3];
-//     arr.push({
-//       tid: tid,
-//       amount: t["__EMPTY_7"],
-//       time: t["Statement of Account"],
-//       refname: refname,
-//     });
-//   });
-//   console.log("-- 98 -->", arr);
-
-//   try {
-//     const fees = await client.query("SELECT * FROM FEES");
-//     console.log(fees.rows[0]);
-
-//     const DbTransactions = await client.query("SELECT * FROM transactions");
-//     console.log(DbTransactions.rows);
-
-//     DbTransactions.rows.forEach((dt) => {
-//       const ft = arr.find((t) => t.tid == dt.transaction_id);
-//       console.log("-- 99 -->", ft);
-//       if (ft != undefined) {
-//         console.log(
-//           ft.amount,
-//           fees[dt.type.toLowerCase()],
-//           dt.type,
-//           dt.type.toLowerCase(),
-//           fees.rows[0]["oc_concert"],
-//           fees.rows[0][dt.type.toLowerCase()]
-//         );
-//         if (ft.amount == fees.rows[0][dt.type.toLowerCase()] + 10) {
-//           verifiedUsers.push({
-//             userId: dt.user_id,
-//             type: dt.type,
-//             transactionId: ft.tid,
-//           });
-//         } else {
-//           console.log("User not verified");
-//         }
-//       }
-//     });
-
-//     console.log(verifiedUsers);
-//   } catch (error) {
-//     console.log(error);
-//   }
-
-//   verifiedUsers.forEach(async (user) => {
-//     if (user.type == "ETHEREAL") {
-//       const ethCode = createCode();
-
-//       try {
-//         await client.query("UPDATE users SET ethereal= $1 WHERE id = $2", [
-//           ethCode,
-//           user.userId,
-//         ]);
-//         doneUsers.push(user);
-//       } catch (err) {
-//         notDoneUsers.push(user);
-//         console.log(err);
-//       }
-
-//       console.log(ethCode);
-//     } else if (
-//       user.type == "IC_CONCERT" ||
-//       user.type == "OC_CONCERT" ||
-//       user.type == "IC_COMBO_CONCERT"
-//     ) {
-//       const conCode = createCode();
-//       const conTicket = createConcert();
-
-//       try {
-//         await client.query("UPDATE users SET concert_code= $1 WHERE id = $2", [
-//           conCode,
-//           user.userId,
-//         ]);
-//         await client.query("UPDATE users SET concert= $1 WHERE id = $2", [
-//           conTicket,
-//           user.userId,
-//         ]);
-//         doneUsers.push(user);
-//       } catch (err) {
-//         notDoneUsers.push(user);
-//         console.log(err);
-//       }
-
-//       console.log(conCode);
-//       console.log(conTicket);
-//     } else if (user.type == "IC_BOTH" || user.type == "OC_COMBO") {
-//       const ethCode = createCode();
-//       const conCode = createCode();
-//       const conTicket = createConcert();
-
-//       try {
-//         await client.query("UPDATE users SET ethereal= $1 WHERE id = $2", [
-//           ethCode,
-//           user.userId,
-//         ]);
-//         await client.query("UPDATE users SET concert_code= $1 WHERE id = $2", [
-//           conCode,
-//           user.userId,
-//         ]);
-//         await client.query("UPDATE users SET concert= $1 WHERE id = $2", [
-//           conTicket,
-//           user.userId,
-//         ]);
-//         doneUsers.push(user);
-//       } catch (err) {
-//         notDoneUsers.push(user);
-//         console.log(err);
-//       }
-
-//       console.log(ethCode);
-//       console.log(conCode);
-//       console.log(conTicket);
-//     }
-//   });
-
-//   // console.log(arr);
-//   // You can do whatever you need with the file data here
-//   // For example, save it to disk or database
-
-//   return res.status(200).json({ message: "File uploaded successfully" });
-// });
 
 const loadFile = (file) => {
   const book = xl.read(file);
@@ -1118,11 +883,6 @@ app.post("/admin-events-participants", async (req, res) => {
 
     const csvData = data.map((row) => Object.values(row).join(","));
 
-    // fs.writeFileSync(
-    //   __dirname + "/adminOut/" + eventName + ".csv",
-    //   csvData.join("\n")
-    // );
-
     res.send(csvData.join("\n"));
   } catch (error) {
     console.error("Error exporting CSV:", error);
@@ -1246,11 +1006,9 @@ app.get("/admin-deptwise-count", async (req, res) => {
 
     rows = [];
     yearwise.forEach((year, key) => {
-      // console.log({ name: yearName[key] });
       rows.push({ name: yearName[key] });
       year.forEach((dept, key) => {
         rows.push({ name: depts[deptKeys[key]] });
-        // console.log({ name: depts[deptKeys[key]] });
 
         dept.forEach((user) => {
           const userData = {
@@ -1259,7 +1017,6 @@ app.get("/admin-deptwise-count", async (req, res) => {
             ethereal: user.ethereal == null ? "" : user.ethereal,
             concert: user.concert_code == null ? "" : user.concert_code,
           };
-          // console.log(userData);
           rows.push(userData);
         });
         rows.push({ dept: "" });
@@ -1527,8 +1284,6 @@ app.post("/upload", upload.single("file"), async (req, res) => {
         console.log("User not verified");
       }
     });
-
-    // console.log(verifiedUsers);
   } catch (error) {
     console.log(error);
   }
@@ -1671,10 +1426,6 @@ app.post("/upload", upload.single("file"), async (req, res) => {
 
   sendEmail_tickets(doneUsers);
 
-  // console.log(arr);
-  // You can do whatever you need with the file data here
-  // For example, save it to disk or database
-
   return res.status(200).json({ message: "File uploaded successfully" });
 });
 
@@ -1752,8 +1503,6 @@ app.post("/upload-test", upload.single("file"), async (req, res) => {
         console.log("User not verified");
       }
     });
-
-    // console.log(verifiedUsers);
   } catch (error) {
     console.log(error);
   }
@@ -1943,13 +1692,7 @@ app.post("/upload-test", upload.single("file"), async (req, res) => {
     outFilename
   );
 
-  // sendEmail_tickets(doneUsers);
-
   console.log(doneUsers);
-
-  // console.log(arr);
-  // You can do whatever you need with the file data here
-  // For example, save it to disk or database
 
   return res.status(200).json({ message: "File uploaded successfully" });
 });
@@ -2025,13 +1768,7 @@ const sendEmail_tickets = async (toSendUsers) => {
       from: { name: "KCG Ethereal", address: fromEmail },
       to: user.user.email,
       subject: `Ticket Status (Updated) ${user.tid}`,
-      // text: `Your OTP for login is: ${OTP}`,
       html: htmlContent,
-      // attachments: [
-      //   {
-      //     filename: "profile.webp", // The name of the attached file
-      //     path: "./qr/ETHEREAL.webp", // The path to your profile picture file
-      //     cid: "unique_cid", // Content-ID (cid) for referencing in the HTML body
     };
 
     emailTransporter.sendMail(mailOptions, (err, info) => {
@@ -2044,65 +1781,13 @@ const sendEmail_tickets = async (toSendUsers) => {
       }
     });
   });
-
-  console.log("///////////////////////////////////////////");
-  console.log("///////////////////////////////////////////");
-  console.log("///////////////////////////////////////////");
-  console.log("///////////////////////////////////////////");
-  console.log(arr);
-  console.log(arr.length);
 };
-
-async function sendMail_tickets(EMAIL, OTP) {
-  const mailOptions = {
-    from: { name: "KCG Ethereal", address: fromEmail },
-    to: EMAIL,
-    subject: `OTP Verification ${OTP}`,
-    // text: `Your OTP for login is: ${OTP}`,
-    html: `<p>Your OTP for login is: ${OTP}</p>`,
-    // attachments: [
-    //   {
-    //     filename: "profile.webp", // The name of the attached file
-    //     path: "./qr/ETHEREAL.webp", // The path to your profile picture file
-    //     cid: "unique_cid", // Content-ID (cid) for referencing in the HTML body
-    //   },
-    // ],
-  };
-
-  emailTransporter.sendMail(mailOptions, (err, info) => {
-    if (err) {
-      console.error(err);
-      res.json({ message: "Failed to send OTP via email", sent: false });
-    } else {
-      console.log(info);
-      res.json({ message: "OTP sent to email", sent: true });
-    }
-  });
-}
-
-// Function to update the JSON file with user data
-function updateUserJsonFile(userId, dataToUpdate) {
-  const jsonFileName = `${userId}.json`; // Assuming you want a separate JSON file for each user
-  let userData = {};
-
-  try {
-    // Read the existing JSON file
-    userData = JSON.parse(fs.readFileSync(jsonFileName));
-  } catch (err) {
-    // If the file doesn't exist, userData will be an empty object
-  }
-
-  // Merge the new data into the existing user data
-  userData = { ...userData, ...dataToUpdate };
-
-  // Write the updated data back to the JSON file
-  fs.writeFileSync(jsonFileName, JSON.stringify(userData));
-}
 
 // Function to save an array as a JSON file
 function saveToJsonFile(data, fileName) {
   fs.writeFileSync(fileName, JSON.stringify(data));
 }
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
