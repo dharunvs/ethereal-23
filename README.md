@@ -87,11 +87,3 @@ cd cur-frontend/ethereal23-frontend
 npm install
 node index.js
 ```
-
-// "proxy": "https://laksh-358718.el.r.appspot.com"
-
-                    id                  |  name  |            email             |   phone    | ethereal |          concert          | combo_eligible | logged_in | otp |                             college                             | concert_code | first_year
-
---------------------------------------+--------+------------------------------+------------+----------+---------------------------+----------------+-----------+-----+-----------------------------------------------------------------+--------------+------------
-5978691a-5983-40df-bf9c-71785d4590a6 | Dharun | dharunsivakumar002@gmail.com | 6382298084 | 8bc541 | concert_123_123_123_123_1 | | t | | Sathyabama University (Sathyabama Engineering College), Chennai | 12345 | f
-(1 row)
