@@ -83,7 +83,7 @@ Run all the create table queries in the `ethereal23-backend/queries.sql` file.
 Run the below commands to install the node modules and to start the server locally
 
 ```bash
-cd cur-frontend/ethereal23-frontend
+cd ethereal23-backend
 npm install
 node index.js
 ```
